@@ -40,13 +40,11 @@ ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910))
 NEUTRINO_DEPS += $(D)/mtd_utils
 NEUTRINO_DEPS += $(D)/gptfdisk
 endif
-#NEUTRINO_DEPS +=  $(D)/minidlna
 endif
 
 ifeq ($(BOXARCH), arm)
 NEUTRINO_DEPS += $(D)/ntfs_3g
 NEUTRINO_DEPS += $(D)/gptfdisk
-#NEUTRINO_DEPS += $(D)/mc
 NEUTRINO_DEPS += $(D)/parted
 endif
 
@@ -57,7 +55,6 @@ N_CFLAGS      += -D__KERNEL_STRICT_NAMES
 N_CFLAGS      += -D__STDC_FORMAT_MACROS
 N_CFLAGS      += -D__STDC_CONSTANT_MACROS
 N_CFLAGS      += -fno-strict-aliasing -funsigned-char -ffunction-sections -fdata-sections
-#N_CFLAGS      += -DCPU_FREQ
 N_CFLAGS      += $(LOCAL_NEUTRINO_CFLAGS)
 
 N_CPPFLAGS     = -I$(TARGET_DIR)/usr/include
@@ -126,7 +123,6 @@ endif
 ifeq ($(EXTERNAL_LCD), lcd4linux)
 N_CONFIG_OPTS += --enable-lcd4linux
 NEUTRINO_DEPS += $(D)/lcd4linux
-#NEUTRINO_DEPS += $(D)/neutrino-plugin-l4l-skins
 endif
 
 ifeq ($(EXTERNAL_LCD), both)
