@@ -1,144 +1,211 @@
 #!/bin/sh
-while [ -z "$(mount | grep '/dev')" ]; do sleep 1; done
-LOG="logger -p user.info -t mdev-mount"
-WARN="logger -p user.warn -t mdev-mount"
-
-MOUNTBASE=/media
-MOUNTPOINT="$MOUNTBASE/$MDEV"
+# no 'add' action if comes from kernel when symlink in /media is absent
+[ "$ACTION" == "add" -a -z "$(readlink /media/mnt)" ] && exit 0
+[ -f /var/etc/msettings.conf ] && . /var/etc/msettings.conf || ( HDDSYM=0 && AUTOFS=0 && NFSD=0 )
+ENABLE_LOG=1
+LOG="/tmp/mdev.log"
+DEV=""
+LAB=""
+LINK=""
+RMREC=0
+RMDEV=""
+AUTO_TOKEN="/tmp/.autofs-starting"
+AUTO_MOUNTBASE="/mnt/usb"
+MEDIA_MOUNTBASE="/media"
 ROOTDEV=$(readlink /dev/root)
 NTFSOPTS="-o big_writes,noatime"
-
-# do not add or remove root device again...
-[ "$ROOTDEV" = "$MDEV" ] && exit 0
-if [ -e /tmp/.nomdevmount ]; then
-	$LOG "no action on $MDEV -- /tmp/.nomdevmount exists"
-	exit 0
+#
+loginfo()
+{
+OUT=$1
+logleft="[$ACTION] $(date +'%H:%M:%S') [$MDEV]"
+if [ "$ENABLE_LOG" == "1" ];then
+	echo "$logleft $OUT" >> $LOG
+else
+	echo "$logleft $OUT"
 fi
-
-create_symlinks() {
-	DEVBASE=${MDEV:0:3} # first 3 characters
-	PARTNUM=${MDEV:3}   # characters 4-
-	read MODEL < /sys/block/$DEVBASE/device/model
-	MODEL=${MODEL// /_} # replace ' ' with '_'
+}
+#
+# do not add or remove root device again...
+[ "$ROOTDEV" == "$MDEV" ] && loginfo "no action on /dev/$MDEV --> do not add or remove root device again..." && exit 0
+#
+[ -e /tmp/.nomdevmount ] && loginfo "no action on /dev/$MDEV --> /tmp/.nomdevmount exists" && exit 0
+#
+BLKID=$(blkid -c /dev/null /dev/$MDEV)
+eval ${BLKID#*:}
+[ "$TYPE" == "swap" ] && loginfo "no action on /dev/$MDEV --> Linux-swap device" && exit 0
+[ "$LABEL" == "SWAP" -a "$AUTOFS" == "0" ] && loginfo "no action on /dev/$MDEV --> device with LABEL=$LABEL no hard mount" && exit 0
+#
+VAL=${MDEV:3:1}
+[ ! $VAL > 0 ] &&  exit 0
+VAL=$((VAL-1))
+[ "$AUTOFS" == "0" ] && NTFSMOUNT=$(which ntfs-3g) && [ "$VAL" != "0" ] && VAL=1
+#
+read_auto_dir() {
+	FOUND=0
+	for i in `ls $AUTO_MOUNTBASE`;do
+		DEV=`echo $i | grep $MDEV | cut -d "-" -f2`
+		LAB=`echo $i | grep $MDEV | cut -d "-" -f1`
+		[ "$DEV" == "$MDEV" ] && FOUND=1 && break
+	done
+}
+#
+read_media_dir() {
+	FOUND=0
 	OLDPWD=$PWD
-	cd $MOUNTBASE
-	# this is a hack and will break with kernel updates, but so might DEVPATH :-(
-	# and DEVPATH is not available at runtime, only at hotplug
-	DEV_P=$(readlink /sys/block/$DEVBASE) # ../devices/...
-	DEV_P=${DEV_P:2} # strip off '..'
-	if which blkid > /dev/null; then
-		BLKID=$(blkid /dev/$MDEV)
-		eval ${BLKID#*:}
-	fi
-	if [ -n "$LABEL" ]; then
-		rm -f "$LABEL"
-		ln -s $MDEV "$LABEL"
-	fi
-	if [ -n "$UUID" ]; then
-		LINK="${TYPE}${TYPE:+-}${UUID}"
-		rm -f "${LINK}"
-		ln -s $MDEV "${LINK}"
-	fi
-	if [ -n "$MODEL" ]; then
-		LINK="${MODEL}${PARTNUM:+-}${PARTNUM}"
-		rm -f "${LINK}"
-		ln -s $MDEV "${LINK}"
-	fi
-	BUS=""
-	PORT=""
-	P=$DEV_P
-	case "$P" in
-	/devices/platform/stm-usb.?/stm-ehci.?/usb?/?-?/?-?.?/?-?.?:?.?/host*) # hub
-		PORT=${P#*.*.*.}	# strip off /devices/platform/stm-usb.?/stm-ehci.?/usb?/?-?/?-?
-		PORT=${PORT%%/*}	# strip off /?-?.?:?.?/host*, leaving the port
-		BUS="usb-${P:37:1}-hub-${PORT}"
-		;;
-	/devices/platform/stm-usb.?/stm-ehci.?/usb?/?-?/?-?:?.?/host*) # no hub
-		#############################^37
-		BUS="usb-${P:37:1}"
-		;;
-	*)
-		# BUS="unknown" # ignored for now
-		;;
-	esac
-	if [ -n "$BUS" ]; then
-		LINK="${BUS}${PARTNUM:+-}${PARTNUM}"
-		rm -f "${LINK}"
-		ln -s $MDEV "${LINK}"
-	fi
-
+	cd $MEDIA_MOUNTBASE
+	for i in `ls ./`;do
+		[ "$i" == "$LINK" ] && FOUND=1 && break
+	done
 	cd $OLDPWD
 }
-
-remove_symlinks() {
+#
+remove_mountpoint() {
 	OLDPWD=$PWD
-	cd $MOUNTBASE
+	cd $MEDIA_MOUNTBASE
 	for i in `ls ./`; do
-		[ -L "$i" ] || continue
-		TARGET=$(readlink "$i")
-		if [ "$TARGET" == "$MDEV" ]; then
-			rm "$i"
+		if [ -L "$i" ];then
+			[ -n "`echo $i | grep '-' | grep $MDEV`" ] && rm -f $i
+		else
+			[ -n "`echo $i | grep '-' | grep $MDEV`" ] && rmdir $i
 		fi
 	done
 	cd $OLDPWD
 }
-
+#
+umount_other_records() {
+	RET=1
+	OLDPWD=$PWD
+	cd $MEDIA_MOUNTBASE
+	for i in `ls ./`; do
+		if [ ! -L "$i" ];then
+			RMDEV=`echo $i | grep $LAB | cut -d "-" -f2`
+			if [ -n "$RMDEV" ];then
+#				umount -lf /dev/$RMDEV
+				umount -lf $MEDIA_MOUNTBASE/$LAB-$RMDEV
+				RET=$?
+				[ $RET = 0 ] && rmdir $i || break
+			fi
+		fi
+	done
+	cd $OLDPWD
+}
+#
 case "$ACTION" in
-	add|"")
-		if [ ${#MDEV} = 3 ]; then # sda, sdb, sdc => whole drive
-			PARTS=$(sed -n "/ ${MDEV}[0-9]$/{s/ *[0-9]* *[0-9]* * [0-9]* //;p}" /proc/partitions)
-			if [ -n "$PARTS" ]; then
-				$LOG "drive has partitions $PARTS, not trying to mount $MDEV"
-				exit 0
+	add)
+		[ -z "$TYPE" ] && loginfo "no action on /dev/$MDEV --> no blkid entry" && exit 0
+		[ -z "$LABEL" ] && LABEL="NOLABEL"
+		sleep $VAL
+# mount with cmds
+		if [ "$AUTOFS" == "1" ];then
+			# wait if cmds during system start is finished
+			while [ -e /tmp/.cmds-start ];do sleep 1;done
+			# wait if autofs actions are running from another script instance
+			while [ -e $AUTO_TOKEN ];do sleep 1;done
+			read_auto_dir
+			if [ "$FOUND" != "1" ];then
+				loginfo "mounting /dev/$MDEV to $AUTO_MOUNTBASE/$LABEL-$MDEV"
+				if [ "$LABEL" == "RECORD" ];then
+					touch $AUTO_TOKEN
+					[ "$HDDSYM" == "0" -o "$NFSD" == "1" ] && echo "`date +'%H:%M:%S'` HDD --> mount hard" >> /tmp/cmds.log && cmds checkhdd >> /tmp/cmds.log
+					[ "$HDDSYM" == "1" -a "$NFSD" == "0" ] && echo "`date +'%H:%M:%S'` HDD --> mount weak" >> /tmp/cmds.log && cmds checkhdd sym >> /tmp/cmds.log
+					rm -f $AUTO_TOKEN
+					exit 0
+				else
+					touch $AUTO_TOKEN
+					if [ -n "`pidof automount`" ];then
+						echo "`date +'%H:%M:%S'` Restart --> autofs" >> /tmp/cmds.log
+				       		cmds autofs restart >> /tmp/cmds.log
+					else
+						echo "`date +'%H:%M:%S'` Start --> autofs" >> /tmp/cmds.log
+						cmds autofs start >> /tmp/cmds.log
+					fi
+					rm -f $AUTO_TOKEN
+				fi
+			else
+				loginfo "/dev/$MDEV already mounted - not mounting again"
 			fi
-		fi
-		if grep -q "/dev/$MDEV " /proc/mounts; then
-			$LOG "/dev/$MDEV already mounted - not mounting again"
-			exit 0
-		fi
-		$LOG "mounting /dev/$MDEV to $MOUNTPOINT"
-		NTFSMOUNT=$(which ntfs-3g)
-		RET2=$?
-		# remove old mountpoint symlinks we might have for this device
-		rm -f $MOUNTPOINT
-		mkdir -p $MOUNTPOINT
-		for i in 1 2 3 4 5; do # retry, my freeagent drive sometimes needs more time
-			# $LOG "mounting /dev/$MDEV to $MOUNTPOINT try $i"
-			OUT1=$(mount -t auto /dev/$MDEV $MOUNTPOINT 2>&1 >/dev/null)
-			RET1=$?
-			[ $RET1 = 0 ] && break
-			sleep 1
-		done
-		if [ $RET1 != 0 -a -n "$NTFSMOUNT" ]; then
-			# failed,retry with ntfs-3g
-			for i in 1 2; do # retry only twice, waited already 5 seconds
-				$NTFSMOUNT $NTFSOPTS /dev/$MDEV $MOUNTPOINT
-				RET2=$?
-				[ $RET2 = 0 ] && break
-				sleep 1
-			done
-		fi
-		if [ $RET1 = 0 -o $RET2 = 0 ]; then
-			create_symlinks
+# mount with busybox
 		else
-			$WARN "mount   /dev/$MDEV $MOUNTPOINT failed with $RET1"
-			$WARN "        $OUT1"
-			if [ -n "$NTFSMOUNT" ]; then
-				$WARN "ntfs-3g /dev/$MDEV $MOUNTPOINT failed with $RET2"
+			LINK=$LABEL"-"$MDEV
+			MOUNTPOINT=$MEDIA_MOUNTBASE"/"$LINK
+			read_media_dir
+			if [ "$FOUND" != "1" ];then
+				loginfo "mounting /dev/$MDEV to $MEDIA_MOUNTBASE/$LABEL-$MDEV"
+				if [ "$LABEL" == "RECORD" -a -z "`ls $MEDIA_MOUNTBASE | grep RECORD-sd`" ];then
+					ln -sf /hdd $MOUNTPOINT
+					[ -n "`mount | grep /dev/$MDEV | grep /hdd`" ] && loginfo "/dev/$MDEV already mounted - not mounting again" && exit 0
+					for i in 1 2;do
+						( [ -n "$NTFSMOUNT" ] && [ "$TYPE" == "ntfs" ] ) && $NTFSMOUNT $NTFSOPTS /dev/$MDEV /hdd || mount -t auto /dev/$MDEV /hdd
+						RET=$?
+						[ $RET == 0 ] && break || loginfo "mount error $LABEL $MDEV"
+						[ $RET != 0 -a "$TYPE" == "jfs" ] && fsck.jfs -a /dev/$MDEV && loginfo "fsck.jfs /dev/$MDEV"
+					done
+					[ $RET != 0 ] && rm -f $MOUNTPOINT
+				else
+					mkdir -p $MOUNTPOINT
+					for i in 1 2;do
+						( [ -n "$NTFSMOUNT" ] && [ "$TYPE" == "ntfs" ] ) && $NTFSMOUNT $NTFSOPTS /dev/$MDEV $MOUNTPOINT || mount -t $TYPE /dev/$MDEV $MOUNTPOINT
+						RET=$?
+						[ $RET == 0 ] && break || loginfo "mount error $LABEL $MDEV"
+						[ $RET != 0 -a "$TYPE" == "jfs" ] && fsck.jfs -a /dev/$MDEV && loginfo "fsck.jfs /dev/$MDEV"
+					done
+					[ $RET != 0 ] && rmdir $MOUNTPOINT
+				fi
+			else
+				loginfo "/dev/$MDEV already mounted - not mounting again"
 			fi
-			rmdir $MOUNTPOINT
 		fi
 		;;
 	remove)
-		$LOG "unmounting /dev/$MDEV"
-		grep -q "^/dev/$MDEV " /proc/mounts || exit 0 # not mounted...
-		umount -lf /dev/$MDEV
-		RET=$?
-		if [ $RET = 0 ]; then
-			rmdir $MOUNTPOINT
-			remove_symlinks
+# umount with cmds
+		if [ "$AUTOFS" == "1" ];then
+			read_auto_dir
+			[ -z "$LAB" ] && exit 0
+			if [ "$HDDSYM" == "0" -o "$NFSD" == "1" ];then
+				cmds check /dev/$MDEV /hdd
+				RET=$?
+				[ $RET == 1 ] && loginfo "umount /hdd --> /dev/$MDEV" && umount -lf /dev/$MDEV
+			fi
+			sleep $VAL
+			while [ -e $AUTO_TOKEN ];do sleep 1;done
+			read_auto_dir
+			if [ "$FOUND" == "1" ];then
+				touch $AUTO_TOKEN
+				if [ -z "`blkid -c /dev/null | grep sd`" ];then
+					echo "`date +'%H:%M:%S'` Stop --> autofs" >> /tmp/cmds.log
+					loginfo "umounting /dev/$MDEV from $MEDIA_MOUNTBASE/$LAB-$MDEV"
+					cmds autofs stop >> /tmp/cmds.log
+				else
+					echo "`date +'%H:%M:%S'` Restart --> autofs" >> /tmp/cmds.log
+					loginfo "umounting /dev/$MDEV from $MEDIA_MOUNTBASE/$LAB-$MDEV"
+					cmds autofs restart >> /tmp/cmds.log
+					cmds mnt /hdd
+					RET=$?
+					if [ $RET == 0 ];then
+						[ "$HDDSYM" == "0" -o "$NFSD" == "1" ] && cmds checkhdd >> /tmp/cmds.log
+					fi
+					[ "$HDDSYM" == "1" -a "$NFSD" == "0" ] && cmds checkhdd sym >> /tmp/cmds.log
+				fi
+				rm -f $AUTO_TOKEN
+			fi
+# umount with busybox
 		else
-			$WARN "umount /dev/$MDEV failed with $RET"
+			sleep $VAL
+			LAB=`ls $MEDIA_MOUNTBASE | grep $MDEV | cut -d "-" -f1`
+			if [ -n "$LAB" ];then
+				loginfo "umounting device /dev/$MDEV from $MEDIA_MOUNTBASE/$LAB-$MDEV"
+				umount -lf $MEDIA_MOUNTBASE/$LAB-$MDEV
+				RET=$?
+				[ $RET == 0 ] && remove_mountpoint || exit 0
+				if [ "$LAB" == "RECORD" ];then
+					umount_other_records
+					[ $RET == 0 ] && mdev -s
+				fi
+			else
+				loginfo "no action on /dev/$MDEV --> not mounted"
+			fi
 		fi
 		;;
 esac
+exit 0
