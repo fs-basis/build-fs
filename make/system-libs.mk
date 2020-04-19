@@ -2091,31 +2091,6 @@ $(D)/lzo: $(D)/bootstrap $(ARCHIVE)/$(LZO_SOURCE)
 	$(TOUCH)
 
 #
-# minidlna
-#
-MINIDLNA_VER = 1.1.5
-MINIDLNA_SOURCE = minidlna-$(MINIDLNA_VER).tar.gz
-MINIDLNA_PATCH = minidlna-$(MINIDLNA_VER).patch
-
-$(ARCHIVE)/$(MINIDLNA_SOURCE):
-	$(DOWNLOAD) https://sourceforge.net/projects/minidlna/files/minidlna/$(MINIDLNA_VER)/$(MINIDLNA_SOURCE)
-
-$(D)/minidlna: $(D)/bootstrap $(D)/zlib $(D)/sqlite $(D)/libexif $(D)/libjpeg $(D)/libid3tag $(D)/libogg $(D)/libvorbis $(D)/flac $(D)/ffmpeg $(ARCHIVE)/$(MINIDLNA_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/minidlna-$(MINIDLNA_VER)
-	$(UNTAR)/$(MINIDLNA_SOURCE)
-	$(CHDIR)/minidlna-$(MINIDLNA_VER); \
-		$(call apply_patches, $(MINIDLNA_PATCH)); \
-		autoreconf -fi $(SILENT_OPT); \
-		$(CONFIGURE) \
-			--prefix=/usr \
-		; \
-		$(MAKE); \
-		$(MAKE) install prefix=/usr DESTDIR=$(TARGET_DIR)
-	$(REMOVE)/minidlna-$(MINIDLNA_VER)
-	$(TOUCH)
-
-#
 # libexif
 #
 LIBEXIF_VER = 0.6.21
