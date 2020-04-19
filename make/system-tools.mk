@@ -1623,27 +1623,6 @@ $(D)/ntp: $(D)/bootstrap $(ARCHIVE)/$(NTP_SOURCE)
 	$(TOUCH)
 
 #
-# wireless_tools
-#
-WIRELESS_TOOLS_VER = 29
-WIRELESS_TOOLS_SOURCE = wireless_tools.$(WIRELESS_TOOLS_VER).tar.gz
-WIRELESS_TOOLS_PATCH = wireless-tools.$(WIRELESS_TOOLS_VER).patch
-
-$(ARCHIVE)/$(WIRELESS_TOOLS_SOURCE):
-	$(DOWNLOAD) http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/$(WIRELESS_TOOLS_SOURCE)
-
-$(D)/wireless_tools: $(D)/bootstrap $(ARCHIVE)/$(WIRELESS_TOOLS_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/wireless_tools.$(WIRELESS_TOOLS_VER)
-	$(UNTAR)/$(WIRELESS_TOOLS_SOURCE)
-	$(CHDIR)/wireless_tools.$(WIRELESS_TOOLS_VER); \
-		$(call apply_patches, $(WIRELESS_TOOLS_PATCH)); \
-		$(MAKE) CC="$(TARGET)-gcc" CFLAGS="$(TARGET_CFLAGS) -I."; \
-		$(MAKE) install PREFIX=$(TARGET_DIR)/usr INSTALL_MAN=$(TARGET_DIR)/.remove
-	$(REMOVE)/wireless_tools.$(WIRELESS_TOOLS_VER)
-	$(TOUCH)
-
-#
 # libnl
 #
 LIBNL_VER = 3.2.25
