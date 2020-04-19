@@ -1689,30 +1689,6 @@ $(D)/dvbsnoop: $(D)/bootstrap $(D)/kernel $(ARCHIVE)/$(DVBSNOOP_SOURCE)
 	$(TOUCH)
 
 #
-# udpxy
-#
-UDPXY_VER    = 612d227
-UDPXY_SOURCE = udpxy-git-$(UDPXY_VER).tar.bz2
-UDPXY_URL    = https://github.com/pcherenkov/udpxy.git
-UDPXY_PATCH  = udpxy-git-$(UDPXY_VER).patch
-UDPXY_PATCH += udpxy-git-$(UDPXY_VER)-fix-build-with-gcc8.patch
-
-$(ARCHIVE)/$(UDPXY_SOURCE):
-	$(SCRIPTS_DIR)/get-git-archive.sh $(UDPXY_URL) $(UDPXY_VER) $(notdir $@) $(ARCHIVE)
-
-$(D)/udpxy: $(D)/bootstrap $(ARCHIVE)/$(UDPXY_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/udpxy-git-$(UDPXY_VER)
-	$(UNTAR)/$(UDPXY_SOURCE)
-	$(CHDIR)/udpxy-git-$(UDPXY_VER)/chipmunk; \
-		$(call apply_patches, $(UDPXY_PATCH)); \
-		$(BUILDENV) \
-		$(MAKE) CC=$(TARGET)-gcc CCKIND=gcc; \
-		$(MAKE) install INSTALLROOT=$(TARGET_DIR)/usr MANPAGE_DIR=$(TARGET_DIR)/.remove
-	$(REMOVE)/udpxy-git-$(UDPXY_VER)
-	$(TOUCH)
-
-#
 # openvpn
 #
 OPENVPN_VER = 2.4.8
