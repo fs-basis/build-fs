@@ -2115,65 +2115,6 @@ $(D)/libexif: $(D)/bootstrap $(ARCHIVE)/$(LIBEXIF_SOURCE)
 	$(TOUCH)
 
 #
-# djmount
-#
-DJMOUNT_VER = 0.71
-DJMOUNT_SOURCE = djmount-$(DJMOUNT_VER).tar.gz
-DJMOUNT_PATCH  = djmount-$(DJMOUNT_VER)-fix-hang-with-asset-upnp.patch
-DJMOUNT_PATCH += djmount-$(DJMOUNT_VER)-fix-incorrect-range-when-retrieving-content-via-HTTP.patch
-DJMOUNT_PATCH += djmount-$(DJMOUNT_VER)-fix-new-autotools.patch
-DJMOUNT_PATCH += djmount-$(DJMOUNT_VER)-fixed-crash-when-using-UTF-8-charset.patch
-DJMOUNT_PATCH += djmount-$(DJMOUNT_VER)-fixed-crash.patch
-DJMOUNT_PATCH += djmount-$(DJMOUNT_VER)-support-fstab-mounting.patch
-DJMOUNT_PATCH += djmount-$(DJMOUNT_VER)-support-seeking-in-large-2gb-files.patch
-
-$(ARCHIVE)/$(DJMOUNT_SOURCE):
-	$(DOWNLOAD) https://sourceforge.net/projects/djmount/files/djmount/$(DJMOUNT_VER)/$(DJMOUNT_SOURCE)
-
-$(D)/djmount: $(D)/bootstrap $(D)/fuse $(ARCHIVE)/$(DJMOUNT_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/djmount-$(DJMOUNT_VER)
-	$(UNTAR)/$(DJMOUNT_SOURCE)
-	$(CHDIR)/djmount-$(DJMOUNT_VER); \
-		touch libupnp/config.aux/config.rpath; \
-		$(call apply_patches, $(DJMOUNT_PATCH)); \
-		autoreconf -fi $(SILENT_OPT); \
-		$(CONFIGURE) -C \
-			--prefix=/usr \
-			--disable-debug \
-		; \
-		make; \
-		make install DESTDIR=$(TARGET_DIR)
-	$(REMOVE)/djmount-$(DJMOUNT_VER)
-	$(TOUCH)
-
-#
-# libupnp
-#
-LIBUPNP_VER = 1.6.22
-LIBUPNP_SOURCE = libupnp-$(LIBUPNP_VER).tar.bz2
-
-$(ARCHIVE)/$(LIBUPNP_SOURCE):
-	$(DOWNLOAD) https://sourceforge.net/projects/pupnp/files/pupnp/libUPnP\ $(LIBUPNP_VER)/$(LIBUPNP_SOURCE)
-
-$(D)/libupnp: $(D)/bootstrap $(ARCHIVE)/$(LIBUPNP_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/libupnp-$(LIBUPNP_VER)
-	$(UNTAR)/$(LIBUPNP_SOURCE)
-	$(CHDIR)/libupnp-$(LIBUPNP_VER); \
-		$(CONFIGURE) \
-			--prefix=/usr \
-		; \
-		$(MAKE) all; \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libupnp.pc
-	$(REWRITE_LIBTOOL)/libixml.la
-	$(REWRITE_LIBTOOL)/libthreadutil.la
-	$(REWRITE_LIBTOOL)/libupnp.la
-	$(REMOVE)/libupnp-$(LIBUPNP_VER)
-	$(TOUCH)
-
-#
 # rarfs
 #
 RARFS_VER = 0.1.1
