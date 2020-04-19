@@ -29,7 +29,7 @@ loginfo() {
 if [ "$ACTION" == "add" -a "$MDEV" == "$BOOTPART" ];then
 	if [ -z "$(mount | grep $MDEV | grep /boot)" ];then
 		loginfo "mounting $MDEV to /boot"
-		mount -t auto /dev/$MDEV /boot
+		mount -t vfat /dev/$MDEV /boot
 	else
 		loginfo "/dev/$MDEV already mounted - not mounting again"
 	fi
