@@ -213,7 +213,7 @@ echo "MEDIAFW=$MEDIAFW" >> config
 ##############################################
 
 case $5 in
-	[1-3]) REPLY=$6;;
+	[1-3]) REPLY=$5;;
 	*)	echo -e "\nWhich Neutrino variant do you want to build?:"
 		echo "   1)  neutrino-fs                [ arm/sh4 ]"
 		echo "   2)  neutrino-fs-lcd4l          [ arm/sh4 ]"
@@ -232,7 +232,7 @@ echo "FLAVOUR=$FLAVOUR" >> config
 ##############################################
 
 case $6 in
-	[1-4]) REPLY=$7;;
+	[1-4]) REPLY=$6;;
 	*)	echo -e "\nExternal LCD support:"
 		echo "   1)  No external LCD"
 		echo "   2)  graphlcd for external LCD"
@@ -255,7 +255,7 @@ echo "EXTERNAL_LCD=$EXTERNAL_LCD" >> config
 # gcc version for ARM/MIPS
 if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
 	case $7 in
-		[1-4]) REPLY=$8;;
+		[1-4]) REPLY=$7;;
 		*)	echo -e "\nSelect GCC version:"
 			echo "   1)  GCC version 6.5.0 (default)"
 			echo "   2)  GCC version 7.5.0"
@@ -280,7 +280,7 @@ fi
 # old/actual kernel modules for VUPLUS_ARM
 if [ $BOXTYPE == 'vuduo4k' -o $BOXTYPE == 'vuultimo4k' -o $BOXTYPE == 'vuuno4k' -o $BOXTYPE == 'vuuno4kse' ]; then
 	case $8 in
-		[1-2]) REPLY=$9;;
+		[1-2]) REPLY=$8;;
 		*)	echo -e "\nOld or actual kernel modules:"
 			echo "   1)  OLD kernel modules    (default)"
 			echo "   2)  ACTUAL kernel modules"
