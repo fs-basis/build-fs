@@ -19,11 +19,10 @@ if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 2 (MIPS/ARM): unused, use \"-\" as placeholder for batch mode"
 	echo "Parameter 3           : Optimization (1-4)"
 	echo "Parameter 4           : Media Framework (1-2)"
-	echo "Parameter 5           : Image Neutrino (1-2)"
-	echo "Parameter 6           : Neutrino variant (1-4)"
-	echo "Parameter 7           : External LCD support (1-4)"
-	echo "Parameter 8 (ARM/MIPS): GCC Version (1-4)"
-	echo "Parameter 9 (ARM VU+) : old/actual kernel modules (1-2)"
+	echo "Parameter 5           : Neutrino variant (1-4)"
+	echo "Parameter 6           : External LCD support (1-4)"
+	echo "Parameter 7 (ARM/MIPS): GCC Version (1-4)"
+	echo "Parameter 8 (ARM VU+) : old/actual kernel modules (1-2)"
 	exit
 fi
 
