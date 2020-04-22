@@ -2376,6 +2376,34 @@ $(D)/libgpg-error: $(D)/bootstrap $(ARCHIVE)/$(LIBGPG_ERROR_SOURCE)
 	$(TOUCH)
 
 #
+# libgcrypt
+#
+LIBGCRYPT_VER    = 1.8.5
+LIBGCRYPT_DIR    = libgcrypt-$(LIBGCRYPT_VER)
+LIBGCRYPT_SOURCE = libgcrypt-$(LIBGCRYPT_VER).tar.bz2
+LIBGCRYPT_URL    = https://gnupg.org/ftp/gcrypt/libgcrypt
+
+$(ARCHIVE)/$(LIBGCRYPT_SOURCE):
+	$(DOWNLOAD) $(LIBGCRYPT_URL)/$(LIBGCRYPT_SOURCE)
+
+$(D)/libgcrypt: $(D)/bootstrap $(D)/libgpg-error $(ARCHIVE)/$(LIBGCRYPT_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/$(LIBGCRYPT_DIR)
+	$(UNTAR)/$(LIBGCRYPT_SOURCE)
+	$(CHDIR)/$(LIBGCRYPT_DIR); \
+		$(CONFIGURE) \
+			--prefix=/usr \
+			--disable-tests \
+			--with-gpg-error-prefix=$(TARGET_DIR)/usr \
+			--mandir=/.remove \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(REWRITE_LIBTOOL)/libgcrypt.la
+	$(REMOVE)/$(LIBGCRYPT_DIR)
+	$(TOUCH)
+
+#
 # glib-networking
 #
 GLIB_NETWORKING_VER_MAJOR = 2.50
