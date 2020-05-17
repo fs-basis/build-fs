@@ -574,28 +574,6 @@ endif
 	fi
 
 #
-# neutrino
-#
-#	ln -sf /usr/share $(RELEASE_DIR)/usr/local/share
-#	cp $(TARGET_DIR)/usr/local/bin/neutrino $(RELEASE_DIR)/usr/local/bin/
-#	cp $(TARGET_DIR)/usr/local/bin/pzapit $(RELEASE_DIR)/usr/local/bin/
-#	cp $(TARGET_DIR)/usr/local/bin/sectionsdcontrol $(RELEASE_DIR)/usr/local/bin/
-#	if [ -e $(TARGET_DIR)/usr/local/bin/install.sh ]; then \
-#		cp -aR $(TARGET_DIR)/usr/local/bin/install.sh $(RELEASE_DIR)/bin/; \
-#	fi
-#	if [ -e $(TARGET_DIR)/usr/local/bin/luaclient ]; then \
-#		cp $(TARGET_DIR)/usr/local/bin/luaclient $(RELEASE_DIR)/bin/; \
-#	fi
-#	if [ -e $(TARGET_DIR)/usr/local/bin/rcsim ]; then \
-#		cp $(TARGET_DIR)/usr/local/bin/rcsim $(RELEASE_DIR)/bin/; \
-#	fi
-#	if [ -e $(TARGET_DIR)/usr/local/sbin/udpstreampes ]; then \
-#		cp $(TARGET_DIR)/usr/local/sbin/udpstreampes $(RELEASE_DIR)/usr/local/sbin/; \
-#	fi
-#	if [ -e $(TARGET_DIR)/usr/local/bin/udpstreampes ]; then \
-#		cp $(TARGET_DIR)/usr/local/bin/udpstreampes $(RELEASE_DIR)/usr/local/bin/; \
-#	fi
-#
 # channellist / tuxtxt /control
 #
 	cp -aR $(TARGET_DIR)/var/tuxbox/config/* $(RELEASE_DIR)/var/tuxbox/config
