@@ -91,12 +91,9 @@ N_CONFIG_OPTS += --enable-freesatepg
 #N_CONFIG_OPTS += --disable-webif
 #N_CONFIG_OPTS += --enable-fribidi
 
-ifeq ($(BOXARCH), arm)
-N_CONFIG_OPTS += --enable-reschange
-endif
-
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE),bre2ze4k, h7, hd51, vuduo4k vuuno4k vuuno4kse vuultimo4k vusolo4k vuzero4k))
+N_CONFIG_OPTS += --enable-reschange
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k h7 hd51 vuduo4k vuuno4k vuuno4kse vuultimo4k vusolo4k vuzero4k))
 N_CONFIG_OPTS += --enable-arm-acc
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo))
