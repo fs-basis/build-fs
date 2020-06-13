@@ -1909,6 +1909,7 @@ $(D)/alsa_lib: $(D)/bootstrap $(ARCHIVE)/$(ALSA_LIB_SOURCE)
 			--disable-resmgr \
 			--disable-old-symbols \
 			--disable-alisp \
+			--disable-ucm \
 			--disable-hwdep \
 			--disable-python \
 			--disable-topology \
