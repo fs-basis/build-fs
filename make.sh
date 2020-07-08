@@ -194,18 +194,16 @@ echo "OPTIMIZATIONS=$OPTIMIZATIONS" >> config
 ##############################################
 
 case $4 in
-	[1-3]) REPLY=$4;;
+	[1-2]) REPLY=$4;;
 	*)	echo -e "\nWhich Neutrino variant do you want to build?:"
 		echo "   1)  neutrino-fs                [ arm/sh4 ]"
 		echo "   2)  neutrino-fs-lcd4l          [ arm/sh4 ]"
-		echo "   3)  neutrino-fs-test           [ arm/sh4 ] !! NO LCD4L GLCD SUPPORT"
-		read -p "Select Image to build   (1-3)? ";;
+		read -p "Select Image to build   (1-2)? ";;
 esac
 
 case "$REPLY" in
 	1) FLAVOUR="neutrino-fs";;
 	2) FLAVOUR="neutrino-fs-lcd4l";;
-	3) FLAVOUR="neutrino-fs-test";;
 	*) FLAVOUR="neutrino-fs";;
 esac
 echo "FLAVOUR=$FLAVOUR" >> config
