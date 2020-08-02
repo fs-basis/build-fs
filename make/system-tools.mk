@@ -26,6 +26,9 @@ endif
 
 ifeq ($(BUSYBOX_SNAPSHOT), 1)
 #BUSYBOX_PATCH += busybox-snapshot-tar-fix.patch
+ifeq ($(BOXARCH), sh4)
+BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-sh4-revert_ifa_flags.patch
+endif
 $(D)/busybox: $(D)/bootstrap $(PATCHES)/$(BUSYBOX_CONFIG)
 	$(START_BUILD)
 	$(REMOVE)/busybox$(BB_SNAPSHOT)
@@ -152,7 +155,7 @@ SYSVINIT_PATCH  = sysvinit-$(SYSVINIT_VER)-crypt-lib.patch
 SYSVINIT_PATCH += sysvinit-$(SYSVINIT_VER)-change-INIT_FIFO.patch
 
 $(ARCHIVE)/$(SYSVINIT_SOURCE):
-		$(DOWNLOAD) https://download.savannah.gnu.org/releases/sysvinit/$(SYSVINIT_SOURCE)
+	$(DOWNLOAD) https://download.savannah.gnu.org/releases/sysvinit/$(SYSVINIT_SOURCE)
 
 $(D)/sysvinit: $(D)/bootstrap $(ARCHIVE)/$(SYSVINIT_SOURCE)
 	$(START_BUILD)
