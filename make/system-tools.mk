@@ -26,8 +26,8 @@ endif
 
 ifeq ($(BUSYBOX_SNAPSHOT), 1)
 #BUSYBOX_PATCH += busybox-snapshot-tar-fix.patch
-ifeq ($(BOXARCH), sh4)
-BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-sh4-revert_ifa_flags.patch
+ifeq ($(BOXARCH), $(filter $(BOXARCH), sh4 mips))
+BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-sh4-mips-revert_ifa_flags.patch
 endif
 $(D)/busybox: $(D)/bootstrap $(PATCHES)/$(BUSYBOX_CONFIG)
 	$(START_BUILD)
