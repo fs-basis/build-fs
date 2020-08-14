@@ -14,7 +14,7 @@ fi
 
 if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 1           : Target system (1-70)"
-	echo "Parameter 2 (SH4)     : Kernel (1-2)"
+	echo "Parameter 2 (SH4)     : unused, use \"-\" as placeholder for batch mode"
 	echo "Parameter 2 (ARM VU+) : Single/Multiboot (1-2)"
 	echo "Parameter 2 (MIPS/ARM): unused, use \"-\" as placeholder for batch mode"
 	echo "Parameter 3           : Optimization (1-4)"
