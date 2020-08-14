@@ -154,20 +154,7 @@ if [ $BOXARCH == "sh4" ]; then
 	echo " [OK]"
 	echo
 
-	case $2 in
-		[1-2]) REPLY=$2;;
-		*)	echo -e "\nKernel:"
-			echo "   1)  STM 24 P0209 [2.6.32.46]"
-			echo "   2)  STM 24 P0217 [2.6.32.71]    (default)"
-			read -p "Select kernel (1-2)? ";;
-	esac
-
-	case "$REPLY" in
-		1)  KERNEL_STM="p0209";;
-		2)  KERNEL_STM="p0217";;
-		*)  KERNEL_STM="p0217";;
-	esac
-	echo "KERNEL_STM=$KERNEL_STM" >> config
+	echo "KERNEL_STM=p0217" >> config
 fi
 
 ##############################################
