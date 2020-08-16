@@ -191,11 +191,11 @@ case $4 in
 esac
 
 case "$REPLY" in
-	1) FLAVOUR="neutrino-fs";;
-	2) FLAVOUR="neutrino-fs-lcd4l";;
-	3) FLAVOUR="neutrino-fs-test";;
-	4) FLAVOUR="neutrino-ddt";;
-	*) FLAVOUR="neutrino-fs";;
+	1) FLAVOUR="FS_MASTER";;
+	2) FLAVOUR="FS_LCD4L";;
+	3) FLAVOUR="FS_TEST";;
+	4) FLAVOUR="DDT";;
+	*) FLAVOUR="FS-MASTER";;
 esac
 echo "FLAVOUR=$FLAVOUR" >> config
 
