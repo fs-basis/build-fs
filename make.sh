@@ -195,7 +195,7 @@ case "$REPLY" in
 	2) FLAVOUR="FS_LCD4L";;
 	3) FLAVOUR="FS_TEST";;
 	4) FLAVOUR="DDT";;
-	*) FLAVOUR="FS-MASTER";;
+	*) FLAVOUR="FS_MASTER";;
 esac
 echo "FLAVOUR=$FLAVOUR" >> config
 
