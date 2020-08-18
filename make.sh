@@ -183,7 +183,7 @@ echo "OPTIMIZATIONS=$OPTIMIZATIONS" >> config
 case $4 in
 	[1-4]) REPLY=$4;;
 	*)	echo -e "\nWhich Neutrino variant do you want to build?:"
-		echo "   1)  neutrino-fs                [ arm/sh4 ]"
+		echo "   1)  neutrino-fs-master         [ arm/sh4 ]"
 		echo "   2)  neutrino-fs-lcd4l          [ arm/sh4 ]"
 		echo "   3)  neutrino-fs-test           [ arm/sh4 ]  !! NO LCD4L GLCD SUPPORT"
 		echo "   4)  neutrino-ddt               [ arm/sh4 ]"
