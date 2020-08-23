@@ -14,7 +14,7 @@ fi
 
 if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 1           : Target system (1-70)"
-	echo "Parameter 2           : Optimization (1-4)"
+	echo "Parameter 2           : Optimization (1-6)"
 	echo "Parameter 3           : Neutrino variant (1-3)"
 	echo "Parameter 4           : External LCD support (1-4)"
 	echo "Parameter 5 (ARM/MIPS): GCC Version (1-4)"
@@ -138,23 +138,35 @@ fi
 ##############################################
 
 case $2 in
-	[1-4]) REPLY=$2;;
+	[1-6]) REPLY=$2;;
 	*)	echo -e "\nOptimization:"
 		echo "   1)  optimization for size"
 		echo "   2)  optimization normal (current only SH4 or ARM/MIPS with GCC 6)"
-		echo "   3)  Kernel debug"
-		echo "   4)  debug (includes Kernel debug)"
-		read -p "Select optimization (1-4)? ";;
+		echo "   3)  optimization for size, incl. PNG/JPG"
+		echo "   4)  optimization normal (current only SH4 or ARM/MIPS with GCC 6), incl. PNG/JPG"
+		echo "   5)  Kernel debug"
+		echo "   6)  debug (includes Kernel debug)"
+		read -p "Select optimization (1-6)? ";;
 esac
 
 case "$REPLY" in
-	1)  OPTIMIZATIONS="size";;
-	2)  OPTIMIZATIONS="normal";;
-	3)  OPTIMIZATIONS="kerneldebug";;
-	4)  OPTIMIZATIONS="debug";;
-	*)  OPTIMIZATIONS="size";;
+	1)  OPTIMIZATIONS="size"
+	    OPTIMIZE_PICS="0";;
+	2)  OPTIMIZATIONS="normal"
+	    OPTIMIZE_PICS="0";;
+	3)  OPTIMIZATIONS="size"
+	    OPTIMIZE_PICS="1";;
+	4)  OPTIMIZATIONS="normal"
+	    OPTIMIZE_PICS="1";;
+	5)  OPTIMIZATIONS="kerneldebug"
+	    OPTIMIZE_PICS="0";;
+	6)  OPTIMIZATIONS="debug"
+	    OPTIMIZE_PICS="0";;
+	*)  OPTIMIZATIONS="size"
+	    OPTIMIZE_PICS="0";;
 esac
 echo "OPTIMIZATIONS=$OPTIMIZATIONS" >> config
+echo "OPTIMIZE_PICS=$OPTIMIZE_PICS" >> config
 
 ##############################################
 
