@@ -14,13 +14,11 @@ fi
 
 if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 1           : Target system (1-70)"
-	echo "Parameter 2 (SH4)     : unused, use \"-\" as placeholder for batch mode"
-	echo "Parameter 2 (ARM VU+) : Single/Multiboot (1-2)"
-	echo "Parameter 2 (MIPS/ARM): unused, use \"-\" as placeholder for batch mode"
-	echo "Parameter 3           : Optimization (1-4)"
-	echo "Parameter 4           : Neutrino variant (1-3)"
-	echo "Parameter 5           : External LCD support (1-4)"
-	echo "Parameter 6 (ARM/MIPS): GCC Version (1-4)"
+	echo "Parameter 2           : Optimization (1-4)"
+	echo "Parameter 3           : Neutrino variant (1-3)"
+	echo "Parameter 4           : External LCD support (1-4)"
+	echo "Parameter 5 (ARM/MIPS): GCC Version (1-4)"
+	echo "Parameter 6 (ARM VU+) : Single/Multiboot (1-2)"
 	echo "Parameter 7 (ARM VU+) : old/actual kernel modules (1-2)"
 	exit
 fi
@@ -116,26 +114,6 @@ echo "BOXTYPE=$BOXTYPE" >> config
 
 ##############################################
 
-# Multiboot for VUPLUS_ARM
-if [ $BOXTYPE == 'vusolo4k' -o $BOXTYPE == 'vuduo4k' -o $BOXTYPE == 'vuultimo4k' -o $BOXTYPE == 'vuuno4k' -o $BOXTYPE == 'vuuno4kse' -o $BOXTYPE == 'vuzero4k' ]; then
-	case $2 in
-		[1-2]) REPLY=$2;;
-		*)	echo -e "\nNormal or MultiBoot:"
-			echo "   1)  Normal    (default)"
-			echo "   2)  Multiboot"
-			read -p "Select mode (1-2)? ";;
-	esac
-
-	case "$REPLY" in
-		1)  VU_MULTIBOOT="0";;
-		2)  VU_MULTIBOOT="1";;
-		*)  VU_MULTIBOOT="0";;
-	esac
-	echo "VU_MULTIBOOT=$VU_MULTIBOOT" >> config
-fi
-
-##############################################
-
 if [ $BOXARCH == "sh4" ]; then
 	CURDIR=`pwd`
 	echo -ne "\n    Checking the .elf files in $CURDIR/root/boot..."
@@ -159,8 +137,8 @@ fi
 
 ##############################################
 
-case $3 in
-	[1-4]) REPLY=$3;;
+case $2 in
+	[1-4]) REPLY=$2;;
 	*)	echo -e "\nOptimization:"
 		echo "   1)  optimization for size"
 		echo "   2)  optimization normal (current only SH4 or ARM/MIPS with GCC 6)"
@@ -180,8 +158,8 @@ echo "OPTIMIZATIONS=$OPTIMIZATIONS" >> config
 
 ##############################################
 
-case $4 in
-	[1-4]) REPLY=$4;;
+case $3 in
+	[1-4]) REPLY=$3;;
 	*)	echo -e "\nWhich Neutrino variant do you want to build?:"
 		echo "   1)  neutrino-fs-master         [ arm/sh4 ]"
 		echo "   2)  neutrino-fs-lcd4l          [ arm/sh4 ]"
@@ -201,8 +179,8 @@ echo "FLAVOUR=$FLAVOUR" >> config
 
 ##############################################
 
-case $5 in
-	[1-4]) REPLY=$5;;
+case $4 in
+	[1-4]) REPLY=$4;;
 	*)	echo -e "\nExternal LCD support:"
 		echo "   1)  No external LCD"
 		echo "   2)  graphlcd for external LCD"
@@ -224,8 +202,8 @@ echo "EXTERNAL_LCD=$EXTERNAL_LCD" >> config
 
 # gcc version for ARM/MIPS
 if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
-	case $6 in
-		[1-4]) REPLY=$6;;
+	case $5 in
+		[1-4]) REPLY=$5;;
 		*)	echo -e "\nSelect GCC version:"
 			echo "   1)  GCC version 6.5.0 (default)"
 			echo "   2)  GCC version 7.5.0"
@@ -246,6 +224,24 @@ if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
 fi
 
 ##############################################
+
+# Multiboot for VUPLUS_ARM
+if [ $BOXTYPE == 'vusolo4k' -o $BOXTYPE == 'vuduo4k' -o $BOXTYPE == 'vuultimo4k' -o $BOXTYPE == 'vuuno4k' -o $BOXTYPE == 'vuuno4kse' -o $BOXTYPE == 'vuzero4k' ]; then
+	case $6 in
+		[1-2]) REPLY=$6;;
+		*)	echo -e "\nNormal or MultiBoot:"
+			echo "   1)  Normal    (default)"
+			echo "   2)  Multiboot"
+			read -p "Select mode (1-2)? ";;
+	esac
+
+	case "$REPLY" in
+		1)  VU_MULTIBOOT="0";;
+		2)  VU_MULTIBOOT="1";;
+		*)  VU_MULTIBOOT="0";;
+	esac
+	echo "VU_MULTIBOOT=$VU_MULTIBOOT" >> config
+fi
 
 # old/actual kernel modules for VUPLUS_ARM
 if [ $BOXTYPE == 'vuduo4k' -o $BOXTYPE == 'vuultimo4k' -o $BOXTYPE == 'vuuno4k' -o $BOXTYPE == 'vuuno4kse' ]; then
