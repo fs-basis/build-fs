@@ -215,13 +215,14 @@ echo "EXTERNAL_LCD=$EXTERNAL_LCD" >> config
 # gcc version for ARM/MIPS
 if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
 	case $5 in
-		[1-4]) REPLY=$5;;
+		[1-5]) REPLY=$5;;
 		*)	echo -e "\nSelect GCC version:"
 			echo "   1)  GCC version 6.5.0 (default)"
 			echo "   2)  GCC version 7.5.0"
 			echo "   3)  GCC version 8.3.0"
-			echo "   4)  GCC version 9.2.0"
-			read -p "Select modul version (1-4)? [1] "
+			echo "   4)  GCC version 8.4.0"
+			echo "   5)  GCC version 9.2.0"
+			read -p "Select modul version (1-5)? [1] "
 			REPLY="${REPLY:-1}";;
 	esac
 
@@ -229,7 +230,8 @@ if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
 		1)  BS_GCC_VER="6.5.0";;
 		2)  BS_GCC_VER="7.5.0";;
 		3)  BS_GCC_VER="8.3.0";;
-		4)  BS_GCC_VER="9.2.0";;
+		4)  BS_GCC_VER="8.4.0";;
+		5)  BS_GCC_VER="9.2.0";;
 		*)  BS_GCC_VER="6.5.0";;
 	esac
 	echo "BS_GCC_VER=$BS_GCC_VER" >> config
