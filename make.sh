@@ -15,9 +15,9 @@ fi
 if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 1           : Target system (1-70)"
 	echo "Parameter 2           : Optimization (1-6)"
-	echo "Parameter 3           : Neutrino variant (1-3)"
+	echo "Parameter 3           : Neutrino variant (1-4)"
 	echo "Parameter 4           : External LCD support (1-4)"
-	echo "Parameter 5 (ARM/MIPS): GCC Version (1-4)"
+	echo "Parameter 5 (ARM/MIPS): GCC Version (1-5)"
 	echo "Parameter 6 (ARM VU+) : Single/Multiboot (1-2)"
 	echo "Parameter 7 (ARM VU+) : old/actual kernel modules (1-2)"
 	exit
@@ -131,7 +131,6 @@ if [ $BOXARCH == "sh4" ]; then
 	done
 	echo " [OK]"
 	echo
-
 	echo "KERNEL_STM=p0217" >> config
 fi
 
@@ -172,7 +171,7 @@ echo "OPTIMIZE_PICS=$OPTIMIZE_PICS" >> config
 
 case $3 in
 	[1-4]) REPLY=$3;;
-	*)	echo -e "\nWhich Neutrino variant do you want to build?:"
+	*)	echo -e "\nWhich Neutrino variant do you want to build:"
 		echo "   1)  neutrino-fs-master         [ arm/sh4 ]"
 		echo "   2)  neutrino-fs-lcd4l          [ arm/sh4 ]"
 		echo "   3)  neutrino-fs-test           [ arm/sh4 ]  !! NO LCD4L GLCD SUPPORT"
@@ -222,7 +221,7 @@ if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
 			echo "   3)  GCC version 8.3.0"
 			echo "   4)  GCC version 8.4.0"
 			echo "   5)  GCC version 9.2.0"
-			read -p "Select modul version (1-5)? [1] "
+			read -p "Select modul version (1-5)? "
 			REPLY="${REPLY:-1}";;
 	esac
 
