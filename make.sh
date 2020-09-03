@@ -149,20 +149,20 @@ case $2 in
 esac
 
 case "$REPLY" in
-	1) OPTIMIZATIONS="size"
-	   OPTIMIZE_PICS="0";;
-	2) OPTIMIZATIONS="normal"
-	   OPTIMIZE_PICS="0";;
-	3) OPTIMIZATIONS="size"
-	   OPTIMIZE_PICS="1";;
-	4) OPTIMIZATIONS="normal"
-	   OPTIMIZE_PICS="1";;
-	5) OPTIMIZATIONS="kerneldebug"
-	   OPTIMIZE_PICS="0";;
-	6) OPTIMIZATIONS="debug"
-	   OPTIMIZE_PICS="0";;
-	*) OPTIMIZATIONS="size"
-	   OPTIMIZE_PICS="0";;
+	1)  OPTIMIZATIONS="size"
+	    OPTIMIZE_PICS="0";;
+	2)  OPTIMIZATIONS="normal"
+	    OPTIMIZE_PICS="0";;
+	3)  OPTIMIZATIONS="size"
+	    OPTIMIZE_PICS="1";;
+	4)  OPTIMIZATIONS="normal"
+	    OPTIMIZE_PICS="1";;
+	5)  OPTIMIZATIONS="kerneldebug"
+	    OPTIMIZE_PICS="0";;
+	6)  OPTIMIZATIONS="debug"
+	    OPTIMIZE_PICS="0";;
+	*)  OPTIMIZATIONS="size"
+	    OPTIMIZE_PICS="0";;
 esac
 echo "OPTIMIZATIONS=$OPTIMIZATIONS" >> config
 echo "OPTIMIZE_PICS=$OPTIMIZE_PICS" >> config
@@ -180,11 +180,11 @@ case $3 in
 esac
 
 case "$REPLY" in
-	1) FLAVOUR="FS_MASTER";;
-	2) FLAVOUR="FS_LCD4L";;
-	3) FLAVOUR="FS_TEST";;
-	4) FLAVOUR="DDT";;
-	*) FLAVOUR="FS_MASTER";;
+	1)  FLAVOUR="FS_MASTER";;
+	2)  FLAVOUR="FS_LCD4L";;
+	3)  FLAVOUR="FS_TEST";;
+	4)  FLAVOUR="DDT";;
+	*)  FLAVOUR="FS_MASTER";;
 esac
 echo "FLAVOUR=$FLAVOUR" >> config
 
