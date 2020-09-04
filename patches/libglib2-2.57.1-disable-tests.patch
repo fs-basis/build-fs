@@ -1,6 +1,6 @@
 --- a/gio/Makefile.am
 +++ b/gio/Makefile.am
-@@ -253,7 +253,7 @@
+@@ -246,7 +246,7 @@
  platform_deps += win32/libgiowin32.la
  endif
  
