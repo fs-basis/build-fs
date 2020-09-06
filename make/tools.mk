@@ -13,6 +13,7 @@ tools-clean:
 	-$(MAKE) -C $(TOOLS_DIR)/spf_tool distclean
 	-$(MAKE) -C $(TOOLS_DIR)/tuxcal distclean
 	-$(MAKE) -C $(TOOLS_DIR)/tuxcom distclean
+	-$(MAKE) -C $(TOOLS_DIR)/tuxwetter distclean
 	-$(MAKE) -C $(TOOLS_DIR)/read-edid distclean
 ifeq ($(BOXARCH), sh4)
 	-$(MAKE) -C $(TOOLS_DIR)/devinit distclean
@@ -453,6 +454,21 @@ $(D)/tools-tuxcom: $(D)/bootstrap $(D)/freetype
 	$(TOUCH)
 
 #
+# tuxwetter
+#
+$(D)/tools-tuxwetter: $(D)/bootstrap $(D)/libpng $(D)/freetype $(D)/libcurl $(D)/giflib
+	$(START_BUILD)
+	set -e; cd $(TOOLS_DIR)/tuxwetter; \
+		$(CONFIGURE_TOOLS) \
+			--prefix= \
+			--with-boxmodel=$(BOXTYPE) \
+			--with-boxtype=$(BOXTYPE) \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(TOUCH)
+
+#
 # ustslave
 #
 $(D)/tools-ustslave: $(D)/bootstrap
@@ -515,6 +531,9 @@ TOOLS += $(D)/tools-satfind
 TOOLS += $(D)/tools-showiframe
 #TOOLS += $(D)/tools-tuxcal
 TOOLS += $(D)/tools-tuxcom
+#ifneq ($(BOXARCH), sh4)
+#TOOLS += $(D)/tools-tuxwetter
+#endif
 ifeq ($(BOXARCH), sh4)
 TOOLS += $(D)/tools-devinit
 TOOLS += $(D)/tools-evremote2
@@ -550,6 +569,7 @@ endif
 ifneq ($(wildcard $(TOOLS_DIR)/own-tools),)
 TOOLS += $(D)/tools-own-tools
 endif
+TOOLS += $(LOCAL_TOOLS)
 
 $(D)/tools: $(TOOLS)
 	@touch $@
