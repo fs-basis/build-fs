@@ -60,7 +60,7 @@ endif
 	@echo -e "LOCAL_NEUTRINO_CFLAGS        : $(TERM_GREEN)$(LOCAL_NEUTRINO_CFLAGS)$(TERM_NORMAL)"
 	@echo -e "LOCAL_NEUTRINO_PLUGINS       : $(TERM_GREEN)$(LOCAL_NEUTRINO_PLUGINS)$(TERM_NORMAL)"
 	@echo -e "LOCAL_NEUTRINO_DEPS          : $(TERM_GREEN)$(LOCAL_NEUTRINO_DEPS)$(TERM_NORMAL)"
-	@echo -e "LOCAL_TOOLS                  : $(TERM_GREEN)$(LOCAL_TOOLS)$(TERM_NORMAL)"
+	@echo -e "LOCAL_TOOLS_DEPS             : $(TERM_GREEN)$(LOCAL_TOOLS_DEPS)$(TERM_NORMAL)"
 	@echo '================================================================================'
 	@make --no-print-directory toolcheck
 ifeq ($(MAINTAINER),)

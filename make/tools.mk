@@ -569,7 +569,7 @@ endif
 ifneq ($(wildcard $(TOOLS_DIR)/own-tools),)
 TOOLS += $(D)/tools-own-tools
 endif
-TOOLS += $(LOCAL_TOOLS)
+TOOLS += $(LOCAL_TOOLS_DEPS)
 
 $(D)/tools: $(TOOLS)
 	@touch $@
