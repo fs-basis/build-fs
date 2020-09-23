@@ -1,5 +1,5 @@
 #!/bin/sh
-ENABLE_LOG=1
+ENABLE_LOG=0
 LOG="/tmp/mdev.log"
 MOUNTBASE=/media
 MOUNTPOINT="$MOUNTBASE/$MDEV"

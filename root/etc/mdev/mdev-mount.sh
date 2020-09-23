@@ -2,7 +2,7 @@
 # no 'add' action if comes from kernel when symlink in /media is absent
 [ "$ACTION" == "add" -a -z "$(readlink /media/mnt)" ] && exit 0
 [ -f /var/etc/msettings.conf ] && . /var/etc/msettings.conf || ( HDDSYM=0 && AUTOFS=0 && NFSD=0 )
-ENABLE_LOG=1
+ENABLE_LOG=0
 LOG="/tmp/mdev.log"
 DEV=""
 LAB=""

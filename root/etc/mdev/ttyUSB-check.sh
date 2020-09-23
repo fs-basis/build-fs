@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 while [ -z "$(mount | grep '/dev ')" ];do sleep 1;done
-ENABLE_LOG=1
+ENABLE_LOG=0
 LOG="/dev/.mdev/modalias.log"
 MODFILE="/etc/modules.extra"
 ftdi_bus=0

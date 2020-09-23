@@ -1,7 +1,7 @@
 #!/bin/sh
 while [ -z "$(mount | grep '/dev ')" ];do sleep 1;done
 [ "$SHLVL" != "2" ] && exit 0
-ENABLE_LOG=1
+ENABLE_LOG=0
 LOG="/dev/.mdev/mdev-events.log"
 #
 loginfo()

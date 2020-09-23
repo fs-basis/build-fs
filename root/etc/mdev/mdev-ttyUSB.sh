@@ -1,6 +1,6 @@
 #!/bin/sh
 while [ -z "$(mount | grep '/tmp ')" ];do sleep 1;done
-ENABLE_LOG=1
+ENABLE_LOG=0
 LOG="/tmp/ttyUSB.log"
 LOG2="/tmp/mdev.log"
 private_rule_file="/etc/mdev/ttyUSB-private.rules"
