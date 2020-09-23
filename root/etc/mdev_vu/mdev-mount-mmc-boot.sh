@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-ENABLE_LOG=1
+ENABLE_LOG=0
 LOG="/tmp/mdev.log"
 
 model=`cat /proc/stb/info/model`
