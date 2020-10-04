@@ -154,7 +154,7 @@ GIT_URL     ?= https://github.com/Duckbox-Developers
 NEUTRINO  = neutrino-ddt
 LIBSTB_HAL   = libstb-hal-ddt
 NMP_BRANCH  ?= test
-HAL_BRANCH  ?= master
+HAL_BRANCH  ?= test
 NMP_PATCHES  = $(NEUTRINO_DDT_PATCHES)
 HAL_PATCHES  = $(NEUTRINO_LIBSTB_DDT_PATCHES)
 endif
