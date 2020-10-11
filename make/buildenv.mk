@@ -286,6 +286,7 @@ TUXBOX_CUSTOMIZE = [ -x $(CUSTOM_DIR)/$(notdir $@)-local.sh ] && \
 	$(BOXTYPE) \
 	$(FLAVOUR) \
 	$(RELEASE_IMAGE_DIR) \
+	$(SWPADATA) \
 	$(KERNEL_VER) \
 	|| true
 
