@@ -13,14 +13,14 @@ fi
 ##############################################
 
 if [ "$1" == -h ] || [ "$1" == --help ]; then
-	echo "Parameter 1           : Target system (1-70)"
-	echo "Parameter 2           : Optimization (1-6)"
-	echo "Parameter 3           : Neutrino variant (1-4)"
-	echo "Parameter 4           : External LCD support (1-4)"
-	echo "Parameter 5 (ARM/MIPS): Swap Data and Linux Swap ( 1-2)"
-	echo "Parameter 6 (ARM/MIPS): GCC Version (1-7)"
-	echo "Parameter 7 (ARM VU+) : Single/Multiboot (1-2)"
-	echo "Parameter 8 (ARM VU+) : old/actual kernel modules (1-2)"
+	echo "Parameter 1                   : Target system (1-70)"
+	echo "Parameter 2                   : Optimization (1-6)"
+	echo "Parameter 3                   : Neutrino variant (1-4)"
+	echo "Parameter 4                   : External LCD support (1-4)"
+	echo "Parameter 5 (HD51/H7/BRE2ZE4K): Swap Data and Linux Swap ( 1-2)"
+	echo "Parameter 6 (ARM/MIPS)        : GCC Version (1-7)"
+	echo "Parameter 7 (ARM VU+)         : Single/Multiboot (1-2)"
+	echo "Parameter 8 (ARM VU+)         : old/actual kernel modules (1-2)"
 	exit
 fi
 
@@ -213,7 +213,7 @@ echo "EXTERNAL_LCD=$EXTERNAL_LCD" >> config
 ##############################################
 # dataswap linuxswap
 
-if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
+if [ $BOXTYPE == 'hd51' -o $BOXTYPE == 'h7' -o $BOXTYPE == 'bre2ze4k' ]; then
 	case $5 in
 		[1-2]) REPLY=$5;;
 		*)	echo -e "\nSelect Swap Data and Linux Swap:"
@@ -223,9 +223,9 @@ if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
 	esac
 
 case "$REPLY" in
-	1) SWAPDATA="off";;
-	2) SWAPDATA="on";;
-	*) SWAPDATA="off";;
+	1) SWAPDATA="0";;
+	2) SWAPDATA="1";;
+	*) SWAPDATA="0";;
 esac
 echo "SWAPDATA=$SWAPDATA" >> config
 fi
