@@ -1044,55 +1044,6 @@ $(D)/autofs: $(D)/bootstrap $(D)/e2fsprogs $(AUTOFS_LIBNSL) $(ARCHIVE)/$(AUTOFS_
 	$(TOUCH)
 
 #
-# shairport
-#
-$(D)/shairport: $(D)/bootstrap $(D)/openssl $(D)/howl $(D)/alsa_lib
-	$(START_BUILD)
-	$(REMOVE)/shairport
-	set -e; if [ -d $(ARCHIVE)/shairport.git ]; \
-		then cd $(ARCHIVE)/shairport.git; git pull; \
-		else cd $(ARCHIVE); git clone -b 1.0-dev git://github.com/abrasive/shairport.git shairport.git; \
-		fi
-	cp -ra $(ARCHIVE)/shairport.git $(BUILD_TMP)/shairport
-	$(CHDIR)/shairport; \
-		sed -i 's|pkg-config|$$PKG_CONFIG|g' configure; \
-		PKG_CONFIG=$(PKG_CONFIG) \
-		$(BUILDENV) \
-		$(MAKE); \
-		$(MAKE) install PREFIX=$(TARGET_DIR)/usr
-	$(REMOVE)/shairport
-	$(TOUCH)
-
-#
-# shairport-sync
-#
-$(D)/shairport-sync: $(D)/bootstrap $(D)/libdaemon $(D)/libpopt $(D)/libconfig $(D)/openssl $(D)/alsa_lib
-	$(START_BUILD)
-	$(REMOVE)/shairport-sync
-	set -e; if [ -d $(ARCHIVE)/shairport-sync.git ]; \
-		then cd $(ARCHIVE)/shairport-sync.git; git pull; \
-		else cd $(ARCHIVE); git clone https://github.com/mikebrady/shairport-sync.git shairport-sync.git; \
-		fi
-	cp -ra $(ARCHIVE)/shairport-sync.git $(BUILD_TMP)/shairport-sync
-	$(CHDIR)/shairport-sync; \
-		autoreconf -fi $(SILENT_OPT); \
-		PKG_CONFIG=$(PKG_CONFIG) \
-		$(BUILDENV) \
-		$(CONFIGURE) \
-			--prefix=/usr \
-			--with-alsa \
-			--with-ssl=openssl \
-			--with-metadata \
-			--with-tinysvcmdns \
-			--with-pipe \
-			--with-stdout \
-		; \
-		$(MAKE); \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	$(REMOVE)/shairport-sync
-	$(TOUCH)
-
-#
 # dbus
 #
 DBUS_VER = 1.12.6
