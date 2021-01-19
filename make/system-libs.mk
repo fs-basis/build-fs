@@ -2409,7 +2409,7 @@ $(D)/libgpg-error: $(D)/bootstrap $(ARCHIVE)/$(LIBGPG_ERROR_SOURCE)
 #
 # libgcrypt
 #
-LIBGCRYPT_VER    = 1.8.5
+LIBGCRYPT_VER    = 1.8.7
 LIBGCRYPT_DIR    = libgcrypt-$(LIBGCRYPT_VER)
 LIBGCRYPT_SOURCE = libgcrypt-$(LIBGCRYPT_VER).tar.bz2
 LIBGCRYPT_URL    = https://gnupg.org/ftp/gcrypt/libgcrypt
@@ -2430,6 +2430,7 @@ $(D)/libgcrypt: $(D)/bootstrap $(D)/libgpg-error $(ARCHIVE)/$(LIBGCRYPT_SOURCE)
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	mv $(TARGET_DIR)/usr/bin/libgcrypt-config $(HOST_DIR)/bin
 	$(REWRITE_LIBTOOL)/libgcrypt.la
 	$(REMOVE)/$(LIBGCRYPT_DIR)
 	$(TOUCH)
