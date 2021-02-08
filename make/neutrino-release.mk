@@ -388,6 +388,14 @@ neutrino-release-vuduo:
 	cp $(TARGET_DIR)/boot/kernel_cfe_auto.bin $(RELEASE_DIR)/boot/
 
 #
+# dm8000
+#
+neutrino-release-dm8000:
+	install -m 0755 $(SKEL_ROOT)/release/halt_dm8000 $(RELEASE_DIR)/etc/init.d/halt
+	cp -f $(SKEL_ROOT)/release/fstab_dm8000 $(RELEASE_DIR)/etc/fstab
+	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm8000/extra/*.ko $(RELEASE_DIR)/lib/modules/
+
+#
 # neutrino-release-base
 #
 # the following target creates the common file base
@@ -555,6 +563,11 @@ ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/usb/serial/usbserial.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/usb/serial/usbserial.ko $(RELEASE_DIR)/lib/modules/ || true
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/usb/serial/ftdi_sio.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/usb/serial/ftdi_sio.ko $(RELEASE_DIR)/lib/modules/ftdi_sio.ko || true
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/usb/serial/pl2303.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/usb/serial/pl2303.ko $(RELEASE_DIR)/lib/modules/ || true
+ifeq ($(BOXTYPE), dm8000)
+	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/kernel/drivers/usb/serial/usbserial.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/kernel/drivers/usb/serial/usbserial.ko $(RELEASE_DIR)/lib/modules/ || true
+	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/kernel/drivers/usb/serial/ftdi_sio.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/kernel/drivers/usb/serial/ftdi_sio.ko $(RELEASE_DIR)/lib/modules/ftdi_sio.ko || true
+	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/kernel/drivers/usb/serial/pl2303.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/kernel/drivers/usb/serial/pl2303.ko $(RELEASE_DIR)/lib/modules/ || true
+endif
 #
 endif
 #
@@ -598,7 +611,7 @@ endif
 # copy root_neutrino
 #
 	cp -aR $(SKEL_ROOT)/root_neutrino/* $(RELEASE_DIR)/
-ifneq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark7162 cuberevo_mini2 cuberevo_3000hd hd51 h7 vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark7162 cuberevo_mini2 cuberevo_3000hd hd51 h7 vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k dm8000))
 	rm -f $(RELEASE_DIR)/var/tuxbox/config/cables.xml
 	rm -f $(RELEASE_DIR)/var/tuxbox/config/terrestrial.xml
 endif
@@ -705,6 +718,7 @@ endif
 	rm -f $(RELEASE_DIR)/lib/libthread_db*
 	rm -f $(RELEASE_DIR)/lib/libanl*
 	rm -rf $(RELEASE_DIR)/lib/modules/$(KERNEL_VER)
+	rm -rf $(RELEASE_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)
 	rm -rf $(RELEASE_DIR)/usr/lib/alsa
 	rm -rf $(RELEASE_DIR)/usr/lib/glib-2.0
 	rm -rf $(RELEASE_DIR)/usr/lib/cmake
