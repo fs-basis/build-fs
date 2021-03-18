@@ -676,7 +676,7 @@ endif
 		cp -af $(TARGET_DIR)/var/tuxbox/plugins $(RELEASE_DIR)/var/tuxbox/; \
 	fi
 	if [ -d $(TARGET_DIR)/lib/tuxbox/plugins ]; then \
-		cp -af $(TARGET_DIR)/lib/tuxbox/plugins $(RELEASE_DIR)/lib/tuxbox/; \
+		cp -af $(TARGET_DIR)/lib/tuxbox/plugins $(RELEASE_DIR)/var/tuxbox/; \
 	fi
 	if [ -e $(RELEASE_DIR)/var/tuxbox/plugins/tuxwetter.so ]; then \
 		cp -rf $(TARGET_DIR)/var/tuxbox/config/tuxwetter $(RELEASE_DIR)/var/tuxbox/config; \
@@ -795,11 +795,10 @@ $(D)/neutrino-release: neutrino-release-base neutrino-release-$(BOXTYPE)
 	ln -s /var/boot/scan.jpg $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/start.jpg
 #
 	ln -sf /var/tuxbox/plugins $(RELEASE_DIR)/var/plugins
-	ln -sf /var/tuxbox/plugins $(RELEASE_DIR)/var/tuxbox/luaplugins
-	ln -sf /var/tuxbox/plugins $(RELEASE_DIR)/var/tuxbox/games
+#	ln -sf /var/tuxbox/plugins $(RELEASE_DIR)/var/tuxbox/games
 	ln -sf /var/tuxbox/webtv $(RELEASE_DIR)/var/tuxbox/config/webtv
-	ln -sf /var/tuxbox $(RELEASE_DIR)/lib/tuxbox
-	ln -sf /var/tuxbox $(RELEASE_DIR)/usr/lib/tuxbox
+#	ln -sf /var/tuxbox $(RELEASE_DIR)/lib/tuxbox
+#	ln -sf /var/tuxbox $(RELEASE_DIR)/usr/lib/tuxbox
 
 #
 # linux-strip all
