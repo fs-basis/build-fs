@@ -797,8 +797,8 @@ $(D)/neutrino-release: neutrino-release-base neutrino-release-$(BOXTYPE)
 	ln -sf /var/tuxbox/plugins $(RELEASE_DIR)/var/plugins
 #	ln -sf /var/tuxbox/plugins $(RELEASE_DIR)/var/tuxbox/games
 	ln -sf /var/tuxbox/webtv $(RELEASE_DIR)/var/tuxbox/config/webtv
-#	ln -sf /var/tuxbox $(RELEASE_DIR)/lib/tuxbox
-#	ln -sf /var/tuxbox $(RELEASE_DIR)/usr/lib/tuxbox
+	ln -sf /var/tuxbox $(RELEASE_DIR)/lib/tuxbox
+	ln -sf /var/tuxbox $(RELEASE_DIR)/usr/lib/tuxbox
 
 #
 # linux-strip all
