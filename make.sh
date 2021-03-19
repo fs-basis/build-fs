@@ -193,12 +193,12 @@ case $3 in
 esac
 
 case "$REPLY" in
-	1)  FLAVOUR="FS_MASTER";;
+	1)  FLAVOUR="FS";;
 	2)  FLAVOUR="FS_LCD4L";;
 	3)  FLAVOUR="FS_TEST";;
-	4)  FLAVOUR="DDT_MASTER";;
+	4)  FLAVOUR="DDT";;
 	5)  FLAVOUR="DDT_TEST";;
-	*)  FLAVOUR="FS_MASTER";;
+	*)  FLAVOUR="FS";;
 esac
 echo "FLAVOUR=$FLAVOUR" >> config
 

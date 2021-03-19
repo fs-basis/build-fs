@@ -131,7 +131,7 @@ N_CONFIG_OPTS += --enable-lcd4linux
 NEUTRINO_DEPS += $(D)/lcd4linux
 endif
 
-ifeq  ($(FLAVOUR), FS_MASTER)
+ifeq  ($(FLAVOUR), FS)
 GIT_URL      ?= https://github.com/fs-basis
 NEUTRINO  = neutrino-fs
 LIBSTB_HAL   = libstb-hal-fs
@@ -155,7 +155,7 @@ NMP_BRANCH  ?= test
 HAL_BRANCH  ?= master
 NMP_PATCHES  = $(NEUTRINO_FS_TEST_PATCHES)
 HAL_PATCHES  = $(LIBSTB_HAL_FS_PATCHES)
-else ifeq  ($(FLAVOUR), DDT_MASTER)
+else ifeq  ($(FLAVOUR), DDT)
 GIT_URL     ?= https://github.com/Duckbox-Developers
 NEUTRINO  = neutrino-ddt
 LIBSTB_HAL   = libstb-hal-ddt
