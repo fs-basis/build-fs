@@ -6,6 +6,7 @@
 #
 NEUTRINO_PLUGINS  = $(D)/neutrino-plugin
 NEUTRINO_PLUGINS += $(LOCAL_NEUTRINO_PLUGINS)
+PLUGINS_PATCHES  += $(NEUTRINO_PLUGINS_PATCHES)
 
 NP_OBJDIR = $(BUILD_TMP)/neutrino-plugins
 
@@ -23,6 +24,8 @@ $(D)/neutrino-plugin.do_prepare:
 		fi
 	cp -ra $(ARCHIVE)/plugins.git $(SOURCE_DIR)/neutrino-plugins
 	cp -ra $(SOURCE_DIR)/neutrino-plugins $(SOURCE_DIR)/neutrino-plugins.org
+	set -e; cd $(SOURCE_DIR)/neutrino-plugins; \
+		$(call apply_patches, $(PLUGINS_PATCHES))
 	@touch $@
 
 $(D)/neutrino-plugin.config.status: $(D)/bootstrap
