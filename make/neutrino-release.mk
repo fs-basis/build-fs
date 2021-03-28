@@ -403,7 +403,6 @@ neutrino-release-base:
 	rm -rf $(RELEASE_DIR) || true
 	install -d $(RELEASE_DIR)
 	install -d $(RELEASE_DIR)/{bin,boot,dev,dev.static,etc,hdd,lib,media,mnt,proc,ram,root,sbin,swap,sys,tmp,usr,var}
-	install -d $(RELEASE_DIR)/lib/{modules,udev,firmware}
 	install -d $(RELEASE_DIR)/var/{bin,boot,emu,etc,epg,httpd,keys,lib,tuxbox}
 	install -d $(RELEASE_DIR)/var/tuxbox/{config,control,plugins,themes,webtv}
 	install -d $(RELEASE_DIR)/var/tuxbox/config/zapit
@@ -584,7 +583,7 @@ endif
 	cp -R $(TARGET_DIR)/lib/* $(RELEASE_DIR)/lib/
 	rm -f $(RELEASE_DIR)/lib/*.{a,o,la}
 	chmod 755 $(RELEASE_DIR)/lib/*
-#	ln -s /var/tuxbox/plugins/libfx2.so $(RELEASE_DIR)/lib/libfx2.so
+	ln -s /var/tuxbox/plugins/libfx2.so $(RELEASE_DIR)/lib/libfx2.so
 	cp -R $(TARGET_LIB_DIR)/* $(RELEASE_DIR)/usr/lib/
 	rm -rf $(RELEASE_DIR)/usr/lib/{engines,gconv,libxslt-plugins,pkgconfig,python$(PYTHON_VER),sigc++-2.0}
 	rm -f $(RELEASE_DIR)/usr/lib/*.{a,o,la}
@@ -675,18 +674,12 @@ endif
 	if [ -d $(TARGET_DIR)/var/tuxbox/plugins ]; then \
 		cp -af $(TARGET_DIR)/var/tuxbox/plugins $(RELEASE_DIR)/var/tuxbox/; \
 	fi
-	if [ -d $(TARGET_DIR)/lib/tuxbox/plugins ]; then \
-		cp -af $(TARGET_DIR)/lib/tuxbox/plugins $(RELEASE_DIR)/var/tuxbox/; \
-	fi
 	if [ -e $(RELEASE_DIR)/var/tuxbox/plugins/tuxwetter.so ]; then \
 		cp -rf $(TARGET_DIR)/var/tuxbox/config/tuxwetter $(RELEASE_DIR)/var/tuxbox/config; \
 	fi
 	if [ -e $(RELEASE_DIR)/var/tuxbox/plugins/sokoban.so ]; then \
 		cp -rf $(TARGET_DIR)/usr/share/tuxbox/sokoban $(RELEASE_DIR)/var/tuxbox/plugins; \
 		ln -s /var/tuxbox/plugins/sokoban $(RELEASE_DIR)/usr/share/tuxbox/sokoban; \
-	fi
-	if [ -e $(RELEASE_DIR)/var/tuxbox/plugins/libfx2.so ]; then \
-		ln -s /var/tuxbox/plugins/libfx2.so $(RELEASE_DIR)/lib/libfx2.so; \
 	fi
 
 #
@@ -798,10 +791,7 @@ $(D)/neutrino-release: neutrino-release-base neutrino-release-$(BOXTYPE)
 	ln -s /var/boot/scan.jpg $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/start.jpg
 #
 	ln -sf /var/tuxbox/plugins $(RELEASE_DIR)/var/plugins
-#	ln -sf /var/tuxbox/plugins $(RELEASE_DIR)/var/tuxbox/games
 	ln -sf /var/tuxbox/webtv $(RELEASE_DIR)/var/tuxbox/config/webtv
-	ln -sf /var/tuxbox $(RELEASE_DIR)/lib/tuxbox
-	ln -sf /var/tuxbox $(RELEASE_DIR)/usr/lib/tuxbox
 
 #
 # linux-strip all
