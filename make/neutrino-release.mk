@@ -438,7 +438,6 @@ endif
 	ln -sf usr/share $(RELEASE_DIR)/share
 	ln -sf /usr/share/tuxbox/neutrino/icons/logo $(RELEASE_DIR)/logos
 	ln -sf /usr/share/tuxbox/neutrino/icons/logo $(RELEASE_DIR)/var/httpd/logos
-	ln -sf /var/tuxbox/plugins $(RELEASE_DIR)/var/plugins
 	touch $(RELEASE_DIR)/var/etc/.firstboot
 	cp -a $(TARGET_DIR)/bin/* $(RELEASE_DIR)/bin/
 	cp -a $(TARGET_DIR)/usr/bin/* $(RELEASE_DIR)/usr/bin/
@@ -792,6 +791,7 @@ $(D)/neutrino-release: neutrino-release-base neutrino-release-$(BOXTYPE)
 #
 	ln -sf /var/tuxbox/plugins $(RELEASE_DIR)/var/plugins
 	ln -sf /var/tuxbox/webtv $(RELEASE_DIR)/var/tuxbox/config/webtv
+	ln -sf /var/tuxbox $(RELEASE_DIR)/lib/tuxbox
 
 #
 # linux-strip all
