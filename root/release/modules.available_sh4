@@ -2,6 +2,6 @@
 # the Neutrino Kernel Options menue.
 #
 #
-cec(activemode=1 deviceName=DuckBox deviceType=3) # HDMI CEC
-pl2303             # Prolific PL-2303 USB-to-serial
-ftdi_sio           # FTDI_SIO USB-to-serial
+cec(activemode=1 deviceName=DuckBox deviceType=3)	# HDMI CEC
+ftdi_sio				# FTDI_SIO USB-to-serial
+pl2303					# Prolific PL-2303 USB-to-serial
