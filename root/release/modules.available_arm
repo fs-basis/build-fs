@@ -2,5 +2,7 @@
 # the Neutrino Kernel Options menue.
 #
 #
+ch341					# CH 341 USB-to-serial
+cpx210x					# CPX 210 USB-to-serial
 ftdi_sio				# FTDI_SIO USB-to-serial
 pl2303					# Prolific PL-2303 USB-to-serial
