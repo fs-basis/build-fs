@@ -92,7 +92,7 @@ endif
 
 ifeq ($(BOXTYPE), dm8000)
 N_CONFIG_OPTS += --disable-mips-acc
-N_CONFIG_OPTS *= --enable-lcd
+N_CONFIG_OPTS += --enable-lcd
 endif
 
 ifeq ($(AUDIODEC), ffmpeg)
