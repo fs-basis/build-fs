@@ -322,9 +322,9 @@ neutrino: $(D)/neutrino.do_prepare $(D)/neutrino.config.status $(D)/neutrino.do_
 	PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR)
 	make $(TARGET_DIR)/.version
-ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
-	make e2-multiboot
-endif
+#ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+#	make e2-multiboot
+#endif
 	touch $(D)/$(notdir $@)
 	make neutrino-release
 	$(TUXBOX_CUSTOMIZE)
@@ -348,9 +348,9 @@ neutrino-plugins: $(D)/neutrino-plugins.do_prepare $(D)/neutrino-plugins.config.
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR)
 	make $(TARGET_DIR)/.version
 	make $(NEUTRINO_PLUGINS)
-ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
-	make e2-multiboot
-endif
+#ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+#	make e2-multiboot
+#endif
 	touch $(D)/$(notdir $@)
 	make neutrino-release
 	$(TUXBOX_CUSTOMIZE)
