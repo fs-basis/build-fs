@@ -421,11 +421,11 @@ neutrino-release-base:
 	install -d $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/logo
 	install -d $(RELEASE_DIR)/usr/share/lua/5.2
 #
-ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
-	install -d $(RELEASE_DIR)/var/lib/{nfs,modules,opkg}
-else
+#ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+#	install -d $(RELEASE_DIR)/var/lib/{nfs,modules,opkg}
+#else
 	install -d $(RELEASE_DIR)/var/lib/{nfs,modules}
-endif
+#endif
 #
 	mkdir -p $(RELEASE_DIR)/etc/rc.d/rc0.d
 	ln -s ../init.d/sendsigs $(RELEASE_DIR)/etc/rc.d/rc0.d/S20sendsigs
