@@ -3,7 +3,7 @@
 #
 # -----------------------------------------------------------------------------
 
-OSCAM_FLAVOUR ?= oscam-smod
+OSCAM_FLAVOUR ?= oscam-svn
 
 ifeq ($(OSCAM_FLAVOUR), oscam)
 OSCAM_FLAVOUR_URL = https://repo.or.cz/oscam.git
