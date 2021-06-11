@@ -119,6 +119,7 @@ PACKAGES="\
 	${UBUNTU:+optipng}                                                                                            \
 	${UBUNTU:+jpegoptim}                                                                                          \
 	${UBUNTU:+libreadline-dev}                                                                                    \
+	${UBUNTU:+autoconf-archive}                                                                                   \
 ";
 
 if [ "$UBUNTU" == 1 ]; then
