@@ -1797,7 +1797,7 @@ endif
 #
 # gd
 #
-GD_VER = 2.3.0
+GD_VER = 2.3.2
 GD_SOURCE = libgd-$(GD_VER).tar.xz
 
 $(ARCHIVE)/$(GD_SOURCE):
