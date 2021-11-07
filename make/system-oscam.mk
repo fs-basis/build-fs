@@ -30,7 +30,7 @@ endif
 #OSCAM_VER = $(OSCAM_FLAVOUR)
 #OSCAM_SOURCE = $(OSCAM_FLAVOUR_URL)
 OSCAM_CONFIG ?= \
-		--disable-all
+		--disable-all \
 		--enable \
 			WEBIF \
 			CS_ANTICASC \
