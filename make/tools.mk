@@ -521,7 +521,7 @@ $(D)/tools-own-tools: $(D)/bootstrap $(D)/libcurl
 			--prefix= \
 		; \
 		$(MAKE); \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
+		$(MAKE) install DESTDIR=$(TARGET_DIR)/usr
 	$(TOUCH)
 
 TOOLS  = $(D)/tools-aio-grab
