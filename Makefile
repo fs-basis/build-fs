@@ -40,10 +40,10 @@ printenv:
 	@echo "TARGET_DIR        : $(TARGET_DIR)"
 	@echo "KERNEL_DIR        : $(KERNEL_DIR)"
 	@echo "MAINTAINER        : $(MAINTAINER)"
-	@echo "BOXARCH           : $(BOXARCH)"
+	@echo -e "BOXARCH           : $(TERM_GREEN_BOLD)$(BOXARCH)$(TERM_NORMAL)"
 	@echo "BUILD             : $(BUILD)"
 	@echo "TARGET            : $(TARGET)"
-	@echo "BOXTYPE           : $(BOXTYPE)"
+	@echo -e "BOXTYPE           : $(TERM_GREEN_BOLD)$(BOXTYPE)$(TERM_NORMAL)"
 	@echo "KERNEL_VERSION    : $(KERNEL_VER)"
 ifneq ($(BOXARCH), sh4)
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 h7 bre2ze4k))
@@ -55,7 +55,7 @@ endif
 	@echo "EXTERNAL_LCD      : $(EXTERNAL_LCD)"
 	@echo "OPTIMIZATIONS     : $(OPTIMIZATIONS)"
 	@echo "OPTIMIZE_PICS     : $(shell [ $(OPTIMIZE_PICS) == 1 ] && echo -e enabled || echo -e disabled)"
-	@echo -e "FLAVOUR           : $(TERM_YELLOW)$(FLAVOUR)$(TERM_NORMAL)"
+	@echo -e "FLAVOUR           : $(TERM_YELLOW_BOLD)$(FLAVOUR)$(TERM_NORMAL)"
 	@echo "PARALLEL_JOBS     : $(PARALLEL_JOBS)"
 	@echo '================================================================================'
 	@echo -e "LOCAL_OSCAM_FLAVOUR          : $(TERM_GREEN)$(OSCAM_FLAVOUR)$(TERM_NORMAL)"
