@@ -679,6 +679,9 @@ endif
 	if [ -d $(TARGET_DIR)/var/tuxbox/plugins ]; then \
 		cp -af $(TARGET_DIR)/var/tuxbox/plugins $(RELEASE_DIR)/var/tuxbox/; \
 	fi
+	if [ -d $(TARGET_DIR)/var/tuxbox/webtv ]; then \
+		cp -af $(TARGET_DIR)/var/tuxbox/webtv $(RELEASE_DIR)/var/tuxbox/; \
+	fi
 	if [ -e $(RELEASE_DIR)/var/tuxbox/plugins/tuxwetter.so ]; then \
 		cp -rf $(TARGET_DIR)/var/tuxbox/config/tuxwetter $(RELEASE_DIR)/var/tuxbox/config; \
 	fi

@@ -76,6 +76,24 @@ neutrino-plugin-distclean:
 	rm -f $(D)/neutrino-plugin*
 
 #
+# bestbitrate
+#
+$(D)/bestbitrate:
+	$(START_BUILD)
+	$(REMOVE)/plugins-lua
+	set -e; if [ -d $(ARCHIVE)/plugins-lua.git ]; \
+		then cd $(ARCHIVE)/plugins-lua.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/fs-basis/plugins-lua.git plugins-lua.git; \
+		fi
+	cp -ra $(ARCHIVE)/plugins-lua.git $(BUILD_TMP)/plugins-lua
+	install -d $(TARGET_DIR)/var/tuxbox/webtv
+	$(CHDIR)/plugins-lua; \
+		install -d $(TARGET_DIR)/var/tuxbox/webtv
+		cp -R $(BUILD_TMP)/plugins-lua/bestbitrate/* $(TARGET_DIR)/var/tuxbox/webtv/
+	$(REMOVE)/plugins-lua
+	$(TOUCH)
+
+#
 # annie's settingsupdater
 #
 $(D)/neutrino-plugin-settings-update:
