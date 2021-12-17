@@ -557,7 +557,7 @@ TOOLS += $(D)/tools-tffpctl
 endif
 TOOLS += $(D)/tools-ustslave
 TOOLS += $(D)/tools-vfdctl
-TOOLS += $(D)/tools-wait4button
+#TOOLS += $(D)/tools-wait4button
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k dm8000))
 TOOLS += $(D)/tools-oled_ctrl
