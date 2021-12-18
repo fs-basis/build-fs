@@ -1,0 +1,20 @@
+#!/bin/bash
+
+locals_h=src/system/locals.h
+locals_l=src/system/locals.l
+
+mv $locals_h $locals_l
+
+cat $locals_l | while read -r line; do
+    l=$(echo $line | cut -d, -f1)
+    if [ "${l:0:7}" != "LOCALE_" ]; then
+        continue
+    fi
+    #echo $locale
+    git grep "$l" > /dev/null
+    if [ $? == 1 ]; then
+        echo "unused: $l"
+    fi
+done
+
+mv $locals_l $locals_h
