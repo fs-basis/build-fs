@@ -514,7 +514,7 @@ $(D)/tools-wait4button: $(D)/bootstrap
 #
 # own-tools
 #
-$(D)/tools-own-tools: $(D)/bootstrap $(D)/libcurl
+$(D)/tools-own-tools: $(D)/bootstrap $(D)/libcurl $(D)/e2fsprogs
 	$(START_BUILD)
 	set -e; cd $(TOOLS_DIR)/own-tools; \
 		$(CONFIGURE_TOOLS) \
