@@ -1401,7 +1401,7 @@ $(D)/libdreamdvd: $(D)/bootstrap $(D)/libdvdnav
 	$(REMOVE)/libdreamdvd
 	set -e; if [ -d $(ARCHIVE)/libdreamdvd.git ]; \
 		then cd $(ARCHIVE)/libdreamdvd.git; git pull; \
-		else cd $(ARCHIVE); git clone git://github.com/mirakels/libdreamdvd.git libdreamdvd.git; \
+		else cd $(ARCHIVE); git clone https://github.com/mirakels/libdreamdvd.git libdreamdvd.git; \
 		fi
 	cp -ra $(ARCHIVE)/libdreamdvd.git $(BUILD_TMP)/libdreamdvd
 	$(CHDIR)/libdreamdvd; \
@@ -1766,7 +1766,7 @@ $(D)/lcd4linux: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb $(D)/libdp
 	$(REMOVE)/lcd4linux
 	set -e; if [ -d $(ARCHIVE)/lcd4linux.git ]; \
 		then cd $(ARCHIVE)/lcd4linux.git; git pull; \
-		else cd $(ARCHIVE); git clone git://github.com/TangoCash/lcd4linux.git lcd4linux.git; \
+		else cd $(ARCHIVE); git clone https://github.com/TangoCash/lcd4linux.git lcd4linux.git; \
 		fi
 	cp -ra $(ARCHIVE)/lcd4linux.git $(BUILD_TMP)/lcd4linux
 	$(CHDIR)/lcd4linux; \
@@ -2011,7 +2011,7 @@ $(D)/libopenthreads: $(D)/bootstrap $(ARCHIVE)/$(LIBOPENTHREADS_SOURCE)
 #
 LIBRTMP_VER = ad70c64
 LIBRTMP_SOURCE = rtmpdump-git-$(LIBRTMP_VER).tar.bz2
-LIBRTMP_URL = git://github.com/oe-alliance/rtmpdump.git
+LIBRTMP_URL = https://github.com/oe-alliance/rtmpdump.git
 LIBRTMP_PATCH = rtmpdump-git-$(LIBRTMP_VER).patch
 
 $(ARCHIVE)/$(LIBRTMP_SOURCE):
@@ -2036,7 +2036,7 @@ $(D)/librtmp: $(D)/bootstrap $(D)/zlib $(D)/openssl $(ARCHIVE)/$(LIBRTMP_SOURCE)
 #
 LIBDVBSI_VER = f3c40ea
 LIBDVBSI_SOURCE = libdvbsi-git-$(LIBDVBSI_VER).tar.bz2
-LIBDVBSI_URL = git://github.com/OpenVisionE2/libdvbsi.git
+LIBDVBSI_URL = https://github.com/OpenVisionE2/libdvbsi.git
 #LIBDVBSI_PATCH = libdvbsi-git-$(LIBDVBSI_VER).patch
 
 $(ARCHIVE)/$(LIBDVBSI_SOURCE):
