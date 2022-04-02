@@ -351,6 +351,7 @@ neutrino-plugins: $(D)/neutrino-plugins.do_prepare $(D)/neutrino-plugins.config.
 #	make e2-multiboot
 #endif
 	touch $(D)/$(notdir $@)
+	$(HOST_DIR)/bin/qrencode -o $(TARGET_DIR)/usr/share/tuxbox/neutrino/icons/qr.png "$(GIT_URL)" -m 1 -s 5
 	make neutrino-release
 	$(TUXBOX_CUSTOMIZE)
 
