@@ -2,10 +2,7 @@
 STM_RELOCATE     = /opt/STM/STLinux-2.4
 
 # updates / downloads
-STL_FTP          = http://archive.stlinux.com/stlinux/2.4
-STL_FTP_UPD_SRC  = $(STL_FTP)/updates/SRPMS
-STL_FTP_UPD_SH4  = $(STL_FTP)/updates/RPMS/sh4
-STL_FTP_UPD_HOST = $(STL_FTP)/updates/RPMS/host
+STL_FTP          = $(GITHUB)/fs-basis/stlinux/raw/master
 STL_ARCHIVE      = $(ARCHIVE)/stlinux
 STL_GET          = $(DOWNLOAD)/stlinux
 
@@ -14,15 +11,15 @@ STL_GET          = $(DOWNLOAD)/stlinux
 ## even reliable :-(
 $(STL_ARCHIVE)/stlinux24-host-%.i386.rpm \
 $(STL_ARCHIVE)/stlinux24-host-%noarch.rpm:
-	$(STL_GET) $(STL_FTP_UPD_HOST)/$(subst $(STL_ARCHIVE)/,"",$@)
+	$(STL_GET) $(STL_FTP)/$(subst $(STL_ARCHIVE)/,"",$@)
 
 $(STL_ARCHIVE)/stlinux24-host-%.src.rpm:
-	$(STL_GET) $(STL_FTP_UPD_SRC)/$(subst $(STL_ARCHIVE)/,"",$@)
+	$(STL_GET) $(STL_FTP)/$(subst $(STL_ARCHIVE)/,"",$@)
 
 $(STL_ARCHIVE)/stlinux24-sh4-%.sh4.rpm \
 $(STL_ARCHIVE)/stlinux24-cross-%.i386.rpm \
 $(STL_ARCHIVE)/stlinux24-sh4-%.noarch.rpm:
-	$(STL_GET) $(STL_FTP_UPD_SH4)/$(subst $(STL_ARCHIVE)/,"",$@)
+	$(STL_GET) $(STL_FTP)/$(subst $(STL_ARCHIVE)/,"",$@)
 
 #
 # install the RPMs
