@@ -40,7 +40,7 @@ NEUTRINO_DEPS += $(D)/lua $(D)/luaexpat $(D)/luacurl $(D)/luasocket $(D)/luafeed
 #NEUTRINO_DEPS += $(D)/libfribidi
 NEUTRINO_DEPS += $(LOCAL_NEUTRINO_DEPS)
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark spark7162 ufs912 ufs913 ufs910 vuduo dm8000))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark spark7162 ufs912 ufs913 ufs910 vuduo))
 NEUTRINO_DEPS += $(D)/ntfs_3g
 ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910))
 NEUTRINO_DEPS += $(D)/mtd_utils
@@ -100,11 +100,6 @@ N_CONFIG_OPTS += --enable-reschange
 #N_CONFIG_OPTS += --enable-quadpip
 endif
 
-ifeq ($(BOXTYPE), dm8000)
-N_CONFIG_OPTS += --disable-mips-acc
-N_CONFIG_OPTS += --enable-lcd
-endif
-
 ifeq ($(AUDIODEC), ffmpeg)
 # enable ffmpeg audio decoder in neutrino
 N_CONFIG_OPTS += --enable-ffmpegdec
@@ -119,7 +114,7 @@ N_CONFIG_OPTS += --enable-flac
 NEUTRINO_DEPS += $(D)/flac
 endif
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k dm8000))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k))
 N_CONFIG_OPTS += --enable-graphlcd
 NEUTRINO_DEPS += $(D)/graphlcd
 endif

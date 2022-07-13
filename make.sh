@@ -76,7 +76,6 @@ case $1 in
 		echo
 		echo "  mips-based receivers"
 		echo "   70)  VU+ Duo"
-#		echo "   80)  DM8000"
 		echo
 		read -p "Select target (1-80)? ";;
 esac
@@ -119,7 +118,6 @@ case "$REPLY" in
 	58) BOXARCH="arm";BOXTYPE="bre2ze4k";;
 
 	70) BOXARCH="mips";BOXTYPE="vuduo";;
-#	80) BOXARCH="mips";BOXTYPE="dm8000";;
 	 *) BOXARCH="arm";BOXTYPE="hd51";;
 esac
 echo "BOXARCH=$BOXARCH" > config
