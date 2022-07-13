@@ -1763,7 +1763,7 @@ $(D)/lcd4linux: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb $(D)/libdp
 	$(REMOVE)/lcd4linux
 	set -e; if [ -d $(ARCHIVE)/lcd4linux.git ]; \
 		then cd $(ARCHIVE)/lcd4linux.git; git pull; \
-		else cd $(ARCHIVE); git clone https://github.com/TangoCash/lcd4linux.git lcd4linux.git; \
+		else cd $(ARCHIVE); git clone https://github.com/fs-basis/lcd4linux.git lcd4linux.git; \
 		fi
 	cp -ra $(ARCHIVE)/lcd4linux.git $(BUILD_TMP)/lcd4linux
 	$(CHDIR)/lcd4linux; \
