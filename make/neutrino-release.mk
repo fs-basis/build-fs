@@ -396,7 +396,7 @@ neutrino-release-base:
 	install -d $(RELEASE_DIR)
 	install -d $(RELEASE_DIR)/{bin,boot,dev,dev.static,etc,hdd,lib,media,mnt,proc,ram,root,sbin,swap,sys,tmp,usr,var}
 	install -d $(RELEASE_DIR)/var/{bin,boot,emu,etc,epg,httpd,keys,lib,tuxbox}
-	install -d $(RELEASE_DIR)/var/tuxbox/{config,control,httpd,icons,locale,plugins,themes,webtv}
+	install -d $(RELEASE_DIR)/var/tuxbox/{config,control,icons,locale,plugins,themes,webtv}
 	install -d $(RELEASE_DIR)/var/tuxbox/config/zapit
 #
 	install -d $(RELEASE_DIR)/etc/{init.d,network,mdev,ssl}
