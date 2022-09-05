@@ -396,7 +396,7 @@ neutrino-release-base:
 	install -d $(RELEASE_DIR)
 	install -d $(RELEASE_DIR)/{bin,boot,dev,dev.static,etc,hdd,lib,media,mnt,proc,ram,root,sbin,swap,sys,tmp,usr,var}
 	install -d $(RELEASE_DIR)/var/{bin,boot,emu,etc,epg,httpd,keys,lib,tuxbox}
-	install -d $(RELEASE_DIR)/var/tuxbox/{config,control,icons,locale,plugins,themes,webtv}
+	install -d $(RELEASE_DIR)/var/tuxbox/{config,control,icons,locale,plugins,themes,webscripts,webchannels}
 	install -d $(RELEASE_DIR)/var/tuxbox/config/zapit
 #
 	install -d $(RELEASE_DIR)/etc/{init.d,network,mdev,ssl}
@@ -592,12 +592,11 @@ endif
 	fi
 
 #
-# channellist / tuxtxt /control
+# channellist / tuxtxt / control / webchannels
 #
 	cp -aR $(TARGET_DIR)/var/tuxbox/config/* $(RELEASE_DIR)/var/tuxbox/config
-ifeq ($(FLAVOUR), $(filter $(FLAVOUR), FS FS_LCD4L FS_TEST DD_TEST))
 	cp -aR $(TARGET_DIR)/var/tuxbox/control/* $(RELEASE_DIR)/var/tuxbox/control
-endif
+	cp -aR $(TARGET_DIR)/var/tuxbox/webchannels/* $(RELEASE_DIR)/var/tuxbox/webchannels
 #
 # copy root_neutrino
 #
@@ -667,8 +666,8 @@ endif
 	if [ -d $(TARGET_DIR)/var/tuxbox/plugins ]; then \
 		cp -af $(TARGET_DIR)/var/tuxbox/plugins $(RELEASE_DIR)/var/tuxbox/; \
 	fi
-	if [ -d $(TARGET_DIR)/var/tuxbox/webtv ]; then \
-		cp -af $(TARGET_DIR)/var/tuxbox/webtv $(RELEASE_DIR)/var/tuxbox/; \
+	if [ -d $(TARGET_DIR)/var/tuxbox/webscripts ]; then \
+		cp -af $(TARGET_DIR)/var/tuxbox/webscripts $(RELEASE_DIR)/var/tuxbox/; \
 	fi
 	if [ -e $(RELEASE_DIR)/var/tuxbox/plugins/tuxwetter.so ]; then \
 		cp -rf $(TARGET_DIR)/var/tuxbox/config/tuxwetter $(RELEASE_DIR)/var/tuxbox/config; \
@@ -799,7 +798,7 @@ $(D)/neutrino-release: neutrino-release-base neutrino-release-$(BOXTYPE)
 	ln -s /var/boot/scan.jpg $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/start.jpg
 #
 	ln -sf /var/tuxbox/plugins $(RELEASE_DIR)/var/plugins
-	ln -sf /var/tuxbox/webtv $(RELEASE_DIR)/var/tuxbox/config/webtv
+	ln -sf /var/tuxbox/webscripts $(RELEASE_DIR)/var/tuxbox/config/webscripts
 	ln -sf /var/tuxbox $(RELEASE_DIR)/lib/tuxbox
 
 #

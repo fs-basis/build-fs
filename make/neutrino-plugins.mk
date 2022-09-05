@@ -86,10 +86,10 @@ $(D)/bestbitrate:
 		else cd $(ARCHIVE); git clone https://github.com/fs-basis/plugins-lua.git plugins-lua.git; \
 		fi
 	cp -ra $(ARCHIVE)/plugins-lua.git $(BUILD_TMP)/plugins-lua
-	install -d $(TARGET_DIR)/var/tuxbox/webtv
+	install -d $(TARGET_DIR)/var/tuxbox/webscripts
 	$(CHDIR)/plugins-lua; \
-		install -d $(TARGET_DIR)/var/tuxbox/webtv
-		cp -R $(BUILD_TMP)/plugins-lua/bestbitrate/* $(TARGET_DIR)/var/tuxbox/webtv/
+		install -d $(TARGET_DIR)/var/tuxbox/webscripts
+		cp -R $(BUILD_TMP)/plugins-lua/bestbitrate/* $(TARGET_DIR)/var/tuxbox/webscripts/
 	$(REMOVE)/plugins-lua
 	$(TOUCH)
 
