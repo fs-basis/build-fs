@@ -26,7 +26,7 @@ if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 1                    : Target system (1-70)"
 	echo "Parameter 2 (not UFS910/UFS922 : FFMPEG Version (1-3)"
 	echo "Parameter 2                    : Optimization (1-6)"
-	echo "Parameter 3                    : Neutrino variant (1-4)"
+	echo "Parameter 3                    : Neutrino variant (1-3)"
 	echo "Parameter 4                    : External LCD support (1-4)"
 	echo "Parameter 5 (HD51/H7/BRE2ZE4K) : Swap Data and Linux Swap (1-2)"
 	echo "Parameter 6 (ARM/MIPS)         : GCC Version (1-7)"
@@ -222,15 +222,13 @@ case $4 in
 		echo -e "   \033[01;32m1)  neutrino-fs-master         [ arm/sh4 ]\033[00m"
 		echo "   2)  neutrino-fs-lcd4l          [ arm/sh4 ]"
 		echo "   3)  neutrino-fs-test           [ arm/sh4 ]  !! NO LCD4L GLCD SUPPORT"
-		echo "   4)  neutrino-ddt master        [ arm/sh4 ]"
-		read -p "Select Image to build   (1-4)? ";;
+		read -p "Select Image to build   (1-3)? ";;
 esac
 
 case "$REPLY" in
 	1)  FLAVOUR="FS";;
 	2)  FLAVOUR="FS_LCD4L";;
 	3)  FLAVOUR="FS_TEST";;
-	4)  FLAVOUR="DDT";;
 	*)  FLAVOUR="FS";;
 esac
 echo "FLAVOUR=$FLAVOUR" >> config

@@ -160,14 +160,6 @@ NMP_BRANCH  ?= test
 HAL_BRANCH  ?= test
 NMP_PATCHES  = $(NEUTRINO_FS_TEST_PATCHES)
 HAL_PATCHES  = $(LIBSTB_HAL_FS_PATCHES)
-else ifeq  ($(FLAVOUR), DDT)
-GIT_URL     ?= https://github.com/Duckbox-Developers
-NEUTRINO  = neutrino-ddt
-LIBSTB_HAL   = libstb-hal-ddt
-NMP_BRANCH  ?= master
-HAL_BRANCH  ?= master
-NMP_PATCHES  = $(NEUTRINO_DDT_PATCHES)
-HAL_PATCHES  = $(NEUTRINO_LIBSTB_DDT_PATCHES)
 endif
 
 N_OBJDIR = $(BUILD_TMP)/$(NEUTRINO)
