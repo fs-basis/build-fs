@@ -149,7 +149,7 @@ GIT_URL      ?= https://github.com/fs-basis
 NEUTRINO  = neutrino-fs
 LIBSTB_HAL   = libstb-hal-fs
 NMP_BRANCH  ?= lcd4l
-HAL_BRANCH  ?= master
+HAL_BRANCH  ?= lcd4l
 NMP_PATCHES  = $(NEUTRINO_FS_LCD4L_PATCHES)
 HAL_PATCHES  = $(LIBSTB_HAL_FS_PATCHES)
 else ifeq  ($(FLAVOUR), FS_TEST)
