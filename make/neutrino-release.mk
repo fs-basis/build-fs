@@ -790,6 +790,7 @@ $(D)/neutrino-release: neutrino-release-base neutrino-release-$(BOXTYPE)
 #	rm -f $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/radiomode.jpg
 #	rm -f $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/start.jpg
 
+	mv -f $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/bootlogo.mvi $(RELEASE_DIR)/var/boot/
 	mv -f $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/scan.jpg $(RELEASE_DIR)/var/boot/
 	ln -s /var/boot/scan.jpg $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/
 	ln -s /var/boot/scan.jpg $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/mp3.jpg
