@@ -592,8 +592,9 @@ endif
 	fi
 
 #
-# channellist / tuxtxt / control / webchannels
+# backgrounds / config / control / webchannels
 #
+	cp -aR $(TARGET_DIR)/var/boot/* $(RELEASE_DIR)/var/boot
 	cp -aR $(TARGET_DIR)/var/tuxbox/config/* $(RELEASE_DIR)/var/tuxbox/config
 	cp -aR $(TARGET_DIR)/var/tuxbox/control/* $(RELEASE_DIR)/var/tuxbox/control
 	cp -aR $(TARGET_DIR)/var/tuxbox/webchannels/* $(RELEASE_DIR)/var/tuxbox/webchannels
@@ -789,14 +790,6 @@ $(D)/neutrino-release: neutrino-release-base neutrino-release-$(BOXTYPE)
 #	rm -f $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/shutdown.jpg
 #	rm -f $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/radiomode.jpg
 #	rm -f $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/start.jpg
-
-	mv -f $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/bootlogo.mvi $(RELEASE_DIR)/var/boot/
-	mv -f $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/scan.jpg $(RELEASE_DIR)/var/boot/
-	ln -s /var/boot/scan.jpg $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/
-	ln -s /var/boot/scan.jpg $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/mp3.jpg
-	ln -s /var/boot/scan.jpg $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/shutdown.jpg
-	ln -s /var/boot/scan.jpg $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/radiomode.jpg
-	ln -s /var/boot/scan.jpg $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/start.jpg
 #
 	ln -sf /var/tuxbox/plugins $(RELEASE_DIR)/var/plugins
 	ln -sf /var/tuxbox/webscripts $(RELEASE_DIR)/var/tuxbox/config/webscripts
