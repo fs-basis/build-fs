@@ -333,9 +333,9 @@ make printenv
 ##############################################
 echo "Your next step could be:"
 case "$FLAVOUR" in
-	neutrino*)
-		echo "  make neutrino"
-		echo "  make neutrino-plugins";;
+	FS*)
+		echo "  make neutrino / make mp"
+		echo "  make neutrino-plugins / make mpp";;
 	*)
 		echo "  make flashimage"
 		echo "  make ofgimage";;
