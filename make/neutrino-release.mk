@@ -776,7 +776,8 @@ $(D)/neutrino-release: neutrino-release-base neutrino-release-$(BOXTYPE)
 #
 	cp -dpfr $(RELEASE_DIR)/etc $(RELEASE_DIR)/var
 	rm -fr $(RELEASE_DIR)/etc
-	ln -sf var/etc $(RELEASE_DIR)/etc
+#	ln -sf var/etc $(RELEASE_DIR)/etc (DD)
+	ln -sf /var/etc $(RELEASE_DIR)/etc 
 #
 	ln -s /tmp $(RELEASE_DIR)/lib/init
 	ln -s /tmp $(RELEASE_DIR)/var/lib/urandom
