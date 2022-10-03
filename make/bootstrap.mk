@@ -225,28 +225,6 @@ $(D)/host_resize2fs: $(D)/directories $(ARCHIVE)/$(HOST_E2FSPROGS_SOURCE)
 	$(TOUCH)
 
 #
-# host dm buildimage
-#
-BUILDIMAGE_PATCH = buildimage.patch
-
-$(D)/buildimage: $(D)/bootstrap $(ARCHIVE)/$(BUILDIMAGE_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/buildimage
-	set -e; if [ -d $(ARCHIVE)/buildimage.git ]; \
-		then cd $(ARCHIVE)/buildimage.git; git pull; \
-		else cd $(ARCHIVE); git clone git://git.opendreambox.org/git/buildimage.git buildimage.git; \
-		fi
-	cp -ra $(ARCHIVE)/buildimage.git $(BUILD_TMP)/buildimage
-	$(CHDIR)/buildimage; \
-		$(call apply_patches,$(BUILDIMAGE_PATCH)); \
-		autoreconf -fi; \
-		./configure; \
-		$(MAKE); \
-	install -m 755 $(BUILD_TMP)/buildimage/src/buildimage $(HOST_DIR)/bin
-	$(REMOVE)/buildimage
-	$(TOUCH)
-
-#
 # qrencode
 #
 HOST_QRENCODE_VER = 4.1.1
