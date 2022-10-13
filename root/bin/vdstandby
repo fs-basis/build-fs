@@ -19,8 +19,6 @@ if [ $# -eq 1 ]; then
        stfbcontrol he
        #clear display
        fp_control -c
-       #the next two should only be done on cuberevos
-       #but I'm to lazy to enter a modelspecific part here :D
        fp_control -i 1 0
        fp_control -dt 0
        pid=`pidof fp_control`

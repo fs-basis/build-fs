@@ -43,23 +43,11 @@ case $1 in
 		echo "Target receivers:"
 		echo
 		echo "  sh4-based receivers"
-		echo "  Kathrein               Fortis"
-		echo "    1)  UFS-910            6)  FS9000 / FS9200 (formerly Fortis HDBox / Atevio AV7000)"
-		echo "    2)  UFS-912            7)  HS9510          (formerly Octagon SF1008P / Atevio AV700)"
-		echo "    3)  UFS-913            8)  HS8200          (formerly Atevio AV7500)"
+		echo "  Kathrein"
+		echo "    1)  UFS-910"
+		echo "    2)  UFS-912"
+		echo "    3)  UFS-913"
 		echo "    4)  UFS-922"
-		echo
-		echo "  Topfield"
-		echo "    5)  TF77X0 HDPVR"
-		echo
-		echo "  AB IPBox               Cuberevo"
-		echo "    9)  55HD              12)  id."
-		echo "   10)  99HD              13)  mini"
-		echo "   11)  9900HD            14)  mini2"
-		echo "   12)  9000HD            15)  250HD"
-		echo "   13)  900HD             16)  2000HD"
-		echo "   14)  910HD             17)  3000HD / Xsarius Alpha"
-		echo "   15)  91HD"
 		echo
 		echo "  Fulan"
 		echo "   27)  Spark"
@@ -88,22 +76,6 @@ case "$REPLY" in
 	 2) BOXARCH="sh4";BOXTYPE="ufs912";;
 	 3) BOXARCH="sh4";BOXTYPE="ufs913";;
 	 4) BOXARCH="sh4";BOXTYPE="ufs922";;
-
-	 5) BOXARCH="sh4";BOXTYPE="tf7700";;
-
-	 6) BOXARCH="sh4";BOXTYPE="fortis_hdbox";;
-	 7) BOXARCH="sh4";BOXTYPE="octagon1008";;
-	 8) BOXARCH="sh4";BOXTYPE="atevio7500";;
-
-	 9) BOXARCH="sh4";BOXTYPE="ipbox55";;
-	10) BOXARCH="sh4";BOXTYPE="ipbox99";;
-	11) BOXARCH="sh4";BOXTYPE="ipbox9900";;
-	12) BOXARCH="sh4";BOXTYPE="cuberevo";;
-	13) BOXARCH="sh4";BOXTYPE="cuberevo_mini";;
-	14) BOXARCH="sh4";BOXTYPE="cuberevo_mini2";;
-	15) BOXARCH="sh4";BOXTYPE="cuberevo_250hd";;
-	16) BOXARCH="sh4";BOXTYPE="cuberevo_2000hd";;
-	17) BOXARCH="sh4";BOXTYPE="cuberevo_3000hd";;
 
 	27) BOXARCH="sh4";BOXTYPE="spark";;
 	28) BOXARCH="sh4";BOXTYPE="spark7162";;
@@ -153,7 +125,7 @@ fi
 ##############################################
 
 if [ "$BOXARCH" == "sh4" ]; then
-	LOCAL_FFMPEG_BOXTYPE_LIST='octagon1008 fortis_hdbox cuberevo cuberevo_3000hd cuberevo_mini cuberevo_mini2 ufs912 ufs913 spark atevio7500'
+	LOCAL_FFMPEG_BOXTYPE_LIST='ufs912 ufs913 spark'
 	for i in $LOCAL_FFMPEG_BOXTYPE_LIST; do
 		if [ "$BOXTYPE" == "$i" ]; then
 			LOCAL_FFMPEG_BOXTYPE_LIST=$BOXTYPE

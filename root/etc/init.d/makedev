@@ -21,7 +21,7 @@ start()
 
 	# Decide if we have CI and/or TWIN/TRIPLET
 	CI="No"
-	for BOXLIST in ufs910 ufs912 ufs913 ufs922 fortis_hdbox atevio7500 octagon1008 tf7700 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_3000hd ipbox9900; do
+	for BOXLIST in ufs910 ufs912 ufs913 ufs922; do
 		if [ "${BOXTYPE}" == "${BOXLIST}" ]; then
 			CI="Yes"
 			break
@@ -29,7 +29,7 @@ start()
 	done
 
 	TUNER="1"
-	for BOXLIST in ufs913 ufs922 fortis_hdbox atevio7500 tf7700 cuberevo ipbox9900; do
+	for BOXLIST in ufs913 ufs922; do
 		if [ "${BOXTYPE}" == "${BOXLIST}" ]; then
 			TUNER="2"
 			break
@@ -45,7 +45,7 @@ start()
 
 	# Decide if we support HDMI CEC
 	HDMI_CEC="No"
-	for BOXLIST in ufs912 ufs913 atevio7500 spark spark7162; do
+	for BOXLIST in ufs912 ufs913 spark spark7162; do
 		if [ "${BOXTYPE}" == "${BOXLIST}" ]; then
 			HDMI_CEC="Yes"
 			break
@@ -115,11 +115,8 @@ start()
 	${MAKEDEV} ttyusb
 	${MAKEDEV} rfkill
 
-	if [ "${BOXTYPE}" == "fortis_hdbox" ]; then
-		${MAKEDEV} sci_fortis
-	else
-		${MAKEDEV} sci
-	fi
+	${MAKEDEV} sci
+
 
 	# Additional box specific stuff
 	for BOXLIST in spark spark7162; do

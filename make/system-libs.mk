@@ -610,7 +610,7 @@ $(D)/freetype: $(D)/bootstrap $(D)/zlib $(D)/libpng $(ARCHIVE)/$(FREETYPE_SOURCE
 #
 # lirc
 #
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ipbox55 ipbox99 ipbox9900 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_250hd cuberevo_2000hd cuberevo_3000hd spark spark7162 ufs910))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), spark spark7162 ufs910))
 
 LIRC_VER = 0.9.0
 LIRC_SOURCE = lirc-$(LIRC_VER).tar.bz2
@@ -689,7 +689,7 @@ $(D)/jpeg: $(D)/bootstrap $(ARCHIVE)/$(JPEG_SOURCE)
 #
 # libjpg
 #
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922 ipbox55 ipbox99 ipbox9900 cuberevo_250hd cuberevo_2000hd))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
 $(D)/libjpeg: $(D)/jpeg
 	@touch $@
 else

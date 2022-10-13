@@ -26,12 +26,6 @@ COMMON_PATCHES_24 = \
 		linux-defined_is_deprecated_timeconst.pl_stm24_$(KERNEL_LABEL).patch \
 		linux-patch_swap_notify_core_support_stm24_$(KERNEL_LABEL).patch
 
-TF7700_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-tf7700_setup_stm24_$(KERNEL_LABEL).patch \
-		linux-usbwait123_stm24.patch \
-		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch
-
 UFS910_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-stx7100_fdma_fix_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-sata_32bit_fix_stm24_$(KERNEL_LABEL).patch \
@@ -52,17 +46,6 @@ UFS913_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-ufs913_setup_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch
 
-OCTAGON1008_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-octagon1008_setup_stm24_$(KERNEL_LABEL).patch \
-		linux-usbwait123_stm24.patch \
-		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch
-
-ATEVIO7500_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-atevio7500_setup_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch
-
 UFS922_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-ufs922_setup_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
@@ -79,59 +62,6 @@ SPARK7162_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-spark7162_setup_stm24_$(KERNEL_LABEL).patch
-
-FORTIS_HDBOX_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-fortis_hdbox_setup_stm24_$(KERNEL_LABEL).patch \
-		linux-usbwait123_stm24.patch \
-		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch
-
-IPBOX9900_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-ipbox9900_setup_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-ipbox_bdinfo_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-ipbox_dvb_ca_stm24_$(KERNEL_LABEL).patch
-
-IPBOX99_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-ipbox99_setup_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-ipbox_bdinfo_stm24_$(KERNEL_LABEL).patch
-
-IPBOX55_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-ipbox55_setup_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-ipbox_bdinfo_stm24_$(KERNEL_LABEL).patch
-
-CUBEREVO_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-cuberevo_setup_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-cuberevo_rtl8201_stm24_$(KERNEL_LABEL).patch
-
-CUBEREVO_MINI_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-cuberevo_mini_setup_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-cuberevo_rtl8201_stm24_$(KERNEL_LABEL).patch
-
-CUBEREVO_MINI2_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-cuberevo_mini2_setup_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-cuberevo_rtl8201_stm24_$(KERNEL_LABEL).patch
-
-CUBEREVO_250HD_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-cuberevo_250hd_setup_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-cuberevo_rtl8201_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-cuberevo_250hd_sound_stm24_$(KERNEL_LABEL).patch
-
-CUBEREVO_2000HD_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-cuberevo_2000hd_setup_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-cuberevo_rtl8201_stm24_$(KERNEL_LABEL).patch
-
-CUBEREVO_3000HD_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-cuberevo_3000hd_setup_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-cuberevo_rtl8201_stm24_$(KERNEL_LABEL).patch
 
 #
 # KERNEL
@@ -198,41 +128,10 @@ kernel-clean:
 	rm -f $(D)/kernel.do_compile
 
 #
-# TF7700 installer
-#
-TFINSTALLER_DIR := $(BASE_DIR)/tfinstaller
-
-tfinstaller: $(D)/bootstrap $(TFINSTALLER_DIR)/u-boot.ftfd $(D)/kernel
-	$(START_BUILD)
-	$(MAKE) $(MAKE_OPTS) -C $(TFINSTALLER_DIR) HOST_DIR=$(HOST_DIR) BASE_DIR=$(BASE_DIR) KERNEL_DIR=$(KERNEL_DIR)
-	$(TOUCH)
-
-$(TFINSTALLER_DIR)/u-boot.ftfd: $(D)/uboot $(TFINSTALLER_DIR)/tfpacker
-	$(START_BUILD)
-	$(TFINSTALLER_DIR)/tfpacker $(BUILD_TMP)/u-boot-$(U_BOOT_VER)/u-boot.bin $(TFINSTALLER_DIR)/u-boot.ftfd
-	$(TFINSTALLER_DIR)/tfpacker -t $(BUILD_TMP)/u-boot-$(U_BOOT_VER)/u-boot.bin $(TFINSTALLER_DIR)/Enigma_Installer.tfd
-	$(REMOVE)/u-boot-$(U_BOOT_VER)
-	$(TOUCH)
-
-$(TFINSTALLER_DIR)/tfpacker:
-	$(START_BUILD)
-	$(MAKE) -C $(TFINSTALLER_DIR) tfpacker
-	$(TOUCH)
-
-$(D)/tfkernel:
-	$(START_BUILD)
-	cd $(KERNEL_DIR); \
-		$(MAKE) $(if $(TF7700),TF7700=y) ARCH=sh CROSS_COMPILE=$(TARGET)- uImage
-	$(TOUCH)
-
-#
 # u-boot
 #
 UBOOT_VER = 1.3.1
 UBOOT_PATCH  =  u-boot-$(UBOOT_VER).patch
-ifeq ($(BOXTYPE), tf7700)
-UBOOT_PATCH += u-boot-$(UBOOT_VER)-tf7700.patch
-endif
 
 $(ARCHIVE)/u-boot-$(UBOOT_VER).tar.bz2:
 	$(DOWNLOAD) ftp://ftp.denx.de/pub/u-boot/u-boot-$(UBOOT_VER).tar.bz2
