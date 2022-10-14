@@ -4,37 +4,37 @@
 tools-clean:
 	rm -f $(D)/tools-*
 	-$(MAKE) -C $(TOOLS_DIR)/aio-grab-$(BOXARCH) distclean
-	-$(MAKE) -C $(TOOLS_DIR)/asc2uni distclean
-	-$(MAKE) -C $(TOOLS_DIR)/gitVCInfo distclean
-	-$(MAKE) -C $(TOOLS_DIR)/minimon-$(BOXARCH) distclean
-	-$(MAKE) -C $(TOOLS_DIR)/msgbox distclean
-	-$(MAKE) -C $(TOOLS_DIR)/satfind distclean
-	-$(MAKE) -C $(TOOLS_DIR)/showiframe-$(BOXARCH) distclean
-	-$(MAKE) -C $(TOOLS_DIR)/spf_tool distclean
-	-$(MAKE) -C $(TOOLS_DIR)/read-edid distclean
-	-$(MAKE) -C $(TOOLS_DIR)/tuxcal distclean
-	-$(MAKE) -C $(TOOLS_DIR)/tuxcom distclean
-	-$(MAKE) -C $(TOOLS_DIR)/tuxwetter distclean
+#	-$(MAKE) -C $(TOOLS_DIR)/asc2uni distclean
 	-$(MAKE) -C $(TOOLS_DIR)/devinit distclean
 	-$(MAKE) -C $(TOOLS_DIR)/evremote2 distclean
-	-$(MAKE) -C $(TOOLS_DIR)/fp_control distclean
 	-$(MAKE) -C $(TOOLS_DIR)/flashtool-fup distclean
 	-$(MAKE) -C $(TOOLS_DIR)/flashtool-mup distclean
 	-$(MAKE) -C $(TOOLS_DIR)/flashtool_mup distclean
 	-$(MAKE) -C $(TOOLS_DIR)/flashtool-pad distclean
-	-$(MAKE) -C $(TOOLS_DIR)/hotplug distclean
-	-$(MAKE) -C $(TOOLS_DIR)/ipbox_eeprom distclean
+	-$(MAKE) -C $(TOOLS_DIR)/fp_control distclean
+#	-$(MAKE) -C $(TOOLS_DIR)/gitVCInfo distclean
+#	-$(MAKE) -C $(TOOLS_DIR)/hotplug distclean
+	-$(MAKE) -C $(TOOLS_DIR)/initfb distclean
+#	-$(MAKE) -C $(TOOLS_DIR)/ipbox_eeprom distclean
+#	-$(MAKE) -C $(TOOLS_DIR)/minimon-$(BOXARCH) distclean
+	-$(MAKE) -C $(TOOLS_DIR)/msgbox distclean
+	-$(MAKE) -C $(TOOLS_DIR)/oled_ctrl distclean
+	-$(MAKE) -C $(TOOLS_DIR)/own-tools distclean
+	-$(MAKE) -C $(TOOLS_DIR)/read-edid distclean
+	-$(MAKE) -C $(TOOLS_DIR)/satfind distclean
+	-$(MAKE) -C $(TOOLS_DIR)/showiframe-$(BOXARCH) distclean
+#	-$(MAKE) -C $(TOOLS_DIR)/spf_tool distclean
 	-$(MAKE) -C $(TOOLS_DIR)/stfbcontrol distclean
 	-$(MAKE) -C $(TOOLS_DIR)/streamproxy distclean
-	-$(MAKE) -C $(TOOLS_DIR)/tfd2mtd distclean
-	-$(MAKE) -C $(TOOLS_DIR)/tffpctl distclean
+#	-$(MAKE) -C $(TOOLS_DIR)/tfd2mtd distclean
+#	-$(MAKE) -C $(TOOLS_DIR)/tffpctl distclean
+	-$(MAKE) -C $(TOOLS_DIR)/turnoff_power distclean
+#	-$(MAKE) -C $(TOOLS_DIR)/tuxcal distclean
+	-$(MAKE) -C $(TOOLS_DIR)/tuxcom distclean
+#	-$(MAKE) -C $(TOOLS_DIR)/tuxwetter distclean
 	-$(MAKE) -C $(TOOLS_DIR)/ustslave distclean
 	-$(MAKE) -C $(TOOLS_DIR)/vfdctl distclean
-	-$(MAKE) -C $(TOOLS_DIR)/wait4button distclean
-	-$(MAKE) -C $(TOOLS_DIR)/oled_ctrl distclean
-	-$(MAKE) -C $(TOOLS_DIR)/initfb distclean
-	-$(MAKE) -C $(TOOLS_DIR)/turnoff_power distclean
-	-$(MAKE) -C $(TOOLS_DIR)/own-tools distclean
+#	-$(MAKE) -C $(TOOLS_DIR)/wait4button distclean
 
 #
 # aio-grab
