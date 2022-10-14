@@ -511,46 +511,43 @@ $(D)/tools-own-tools: $(D)/bootstrap $(D)/libcurl $(D)/e2fsprogs
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)/usr
 	$(TOUCH)
-
+#
 TOOLS  = $(D)/tools-aio-grab
-#TOOLS += $(D)/tools-asc2uni
 TOOLS += $(D)/tools-msgbox
 TOOLS += $(D)/tools-satfind
 TOOLS += $(D)/tools-showiframe
-#TOOLS += $(D)/tools-tuxcal
 TOOLS += $(D)/tools-tuxcom
-#ifneq ($(BOXARCH), sh4)
-#TOOLS += $(D)/tools-tuxwetter
-#endif
+#
 ifeq ($(BOXARCH), sh4)
 TOOLS += $(D)/tools-devinit
 TOOLS += $(D)/tools-evremote2
-TOOLS += $(D)/tools-fp_control
 TOOLS += $(D)/tools-flashtool-fup
+TOOLS += $(D)/tools-flashtool-mup
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs912))
 TOOLS += $(D)/tools_flashtool_mup
 endif
-TOOLS += $(D)/tools-flashtool-mup
 TOOLS += $(D)/tools-flashtool-pad
-#TOOLS += $(D)/tools-gitVCInfo
-#TOOLS += $(D)/tools-hotplug
+TOOLS += $(D)/tools-fp_control
 TOOLS += $(D)/tools-stfbcontrol
 TOOLS += $(D)/tools-streamproxy
 TOOLS += $(D)/tools-ustslave
 TOOLS += $(D)/tools-vfdctl
-#TOOLS += $(D)/tools-wait4button
 endif
+#
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hdultra vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k))
 TOOLS += $(D)/tools-oled_ctrl
 endif
+#
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 TOOLS += $(D)/tools-initfb
 TOOLS += $(D)/tools-turnoff_power
 endif
+#
 ifneq ($(wildcard $(TOOLS_DIR)/own-tools),)
 TOOLS += $(D)/tools-own-tools
 endif
+#
 TOOLS += $(LOCAL_TOOLS_DEPS)
-
+#
 $(D)/tools: $(TOOLS)
 	@touch $@
