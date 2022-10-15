@@ -40,7 +40,7 @@ NEUTRINO_DEPS += $(D)/lua $(D)/luaexpat $(D)/luacurl $(D)/luasocket $(D)/luafeed
 #NEUTRINO_DEPS += $(D)/libfribidi
 NEUTRINO_DEPS += $(LOCAL_NEUTRINO_DEPS)
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), spark spark7162 ufs912 ufs913 ufs910 vuduo))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs912 ufs913 vuduo))
 NEUTRINO_DEPS += $(D)/ntfs_3g
 ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910))
 NEUTRINO_DEPS += $(D)/mtd_utils
@@ -76,10 +76,6 @@ endif
 ifeq ($(BOXARCH), sh4)
 N_CPPFLAGS    += -I$(DRIVER_DIR)/bpamem
 N_CPPFLAGS    += -I$(KERNEL_DIR)/include
-endif
-
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), spark spark7162))
-N_CPPFLAGS += -I$(DRIVER_DIR)/frontcontroller/aotom_spark
 endif
 
 LH_CONFIG_OPTS = $(LOCAL_LIBHAL_BUILD_OPTIONS)

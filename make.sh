@@ -49,10 +49,6 @@ case $1 in
 		echo "    3)  UFS-913"
 		echo "    4)  UFS-922"
 		echo
-		echo "  Fulan"
-		echo "   27)  Spark"
-		echo "   28)  Spark7162"
-		echo
 		echo "  arm-based receivers"
 		echo "  VU+"
 		echo "   41)  VU+ Solo 4K       42)  VU+ Uno 4K          43)  VU+ Ultimo 4K"
@@ -76,9 +72,6 @@ case "$REPLY" in
 	 2) BOXARCH="sh4";BOXTYPE="ufs912";;
 	 3) BOXARCH="sh4";BOXTYPE="ufs913";;
 	 4) BOXARCH="sh4";BOXTYPE="ufs922";;
-
-	27) BOXARCH="sh4";BOXTYPE="spark";;
-	28) BOXARCH="sh4";BOXTYPE="spark7162";;
 
 	41) BOXARCH="arm";BOXTYPE="vusolo4k";;
 	42) BOXARCH="arm";BOXTYPE="vuuno4k";;
@@ -125,7 +118,7 @@ fi
 ##############################################
 
 if [ "$BOXARCH" == "sh4" ]; then
-	LOCAL_FFMPEG_BOXTYPE_LIST='ufs912 ufs913 spark'
+	LOCAL_FFMPEG_BOXTYPE_LIST='ufs912 ufs913'
 	for i in $LOCAL_FFMPEG_BOXTYPE_LIST; do
 		if [ "$BOXTYPE" == "$i" ]; then
 			LOCAL_FFMPEG_BOXTYPE_LIST=$BOXTYPE

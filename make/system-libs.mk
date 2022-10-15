@@ -610,7 +610,7 @@ $(D)/freetype: $(D)/bootstrap $(D)/zlib $(D)/libpng $(ARCHIVE)/$(FREETYPE_SOURCE
 #
 # lirc
 #
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), spark spark7162 ufs910))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910))
 
 LIRC_VER = 0.9.0
 LIRC_SOURCE = lirc-$(LIRC_VER).tar.bz2
@@ -620,11 +620,7 @@ LIRC = $(D)/lirc
 $(ARCHIVE)/$(LIRC_SOURCE):
 	$(DOWNLOAD) https://sourceforge.net/projects/lirc/files/LIRC/$(LIRC_VER)/$(LIRC_SOURCE)
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), spark spark7162))
-LIRC_OPTS = -D__KERNEL_STRICT_NAMES -DUINPUT_NEUTRINO_HACK -DSPARK -I$(DRIVER_DIR)/frontcontroller/aotom_spark
-else
 LIRC_OPTS = -D__KERNEL_STRICT_NAMES
-endif
 
 $(D)/lirc: $(D)/bootstrap $(ARCHIVE)/$(LIRC_SOURCE)
 	$(START_BUILD)

@@ -52,17 +52,6 @@ UFS922_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-fortis_hdbox_i2c_st40_stm24_$(KERNEL_LABEL).patch
 
-SPARK_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-spark_setup_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-lirc_stm_stm24_$(KERNEL_LABEL).patch
-
-SPARK7162_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-spark7162_setup_stm24_$(KERNEL_LABEL).patch
-
 #
 # KERNEL
 #

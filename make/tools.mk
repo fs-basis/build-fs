@@ -472,10 +472,6 @@ $(D)/tools-ustslave: $(D)/bootstrap
 #
 # vfdctl
 #
-ifeq ($(BOXTYPE), spark7162)
-EXTRA_CPPFLAGS=-DHAVE_SPARK7162_HARDWARE
-endif
-
 $(D)/tools-vfdctl: $(D)/bootstrap
 	$(START_BUILD)
 	set -e; cd $(TOOLS_DIR)/vfdctl; \
