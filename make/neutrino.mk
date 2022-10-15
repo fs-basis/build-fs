@@ -132,21 +132,13 @@ N_CONFIG_OPTS += --enable-lcd4linux
 NEUTRINO_DEPS += $(D)/lcd4linux
 endif
 
-ifeq  ($(FLAVOUR), FS)
+ifeq  ($(FLAVOUR), FS_MASTER)
 GIT_URL      ?= https://github.com/fs-basis
 NEUTRINO  = neutrino-fs
 LIBSTB_HAL   = libstb-hal-fs
 NMP_BRANCH  ?= master
 HAL_BRANCH  ?= master
 NMP_PATCHES  = $(NEUTRINO_FS_PATCHES)
-HAL_PATCHES  = $(LIBSTB_HAL_FS_PATCHES)
-else ifeq  ($(FLAVOUR), FS_LCD4L)
-GIT_URL      ?= https://github.com/fs-basis
-NEUTRINO  = neutrino-fs
-LIBSTB_HAL   = libstb-hal-fs
-NMP_BRANCH  ?= lcd4l
-HAL_BRANCH  ?= lcd4l
-NMP_PATCHES  = $(NEUTRINO_FS_LCD4L_PATCHES)
 HAL_PATCHES  = $(LIBSTB_HAL_FS_PATCHES)
 else ifeq  ($(FLAVOUR), FS_TEST)
 GIT_URL      ?= https://github.com/fs-basis
