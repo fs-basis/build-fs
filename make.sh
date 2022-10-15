@@ -189,7 +189,7 @@ echo "OPTIMIZE_PICS=$OPTIMIZE_PICS" >> config
 case $4 in
 	[1-4]) REPLY=$4;;
 	*)	echo -e "\nWhich Neutrino variant do you want to build:"
-		echo -e "   \033[01;32m1)  neutrino-fs-master         [ arm/sh4 ]\033[00m"
+		echo -e "   \033[01;32m1)  neutrino-fs-master         [ arm/sh4/vu ]\033[00m"
 		echo "   2)  neutrino-fs-test           [ arm/sh4 ]  !! NO LCD4L GLCD SUPPORT NO VU BOX"
 		read -p "Select Image to build   (1-2)? ";;
 esac
