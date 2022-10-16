@@ -219,6 +219,8 @@ flash-image-$(BOXTYPE)-online:
 	mkdir -p $(IMAGE_BUILD_DIR)/$(BOXTYPE)
 	@if [ "$(BOXTYPE)" == "e4hdultra" ]; then \
 		cp $(RELEASE_DIR)/boot/zImage $(IMAGE_BUILD_DIR)/$(BOXTYPE)/kernel.bin; \
+		cd $(IMAGE_BUILD_DIR)/$(BOXTYPE); \
+		md5sum -b kernel.bin | awk -F " " '{print $$1}' > kernel.bin.md5; \
 	else \
 		cp $(RELEASE_DIR)/boot/zImage.dtb $(IMAGE_BUILD_DIR)/$(BOXTYPE)/kernel.bin; \
 		cd $(IMAGE_BUILD_DIR)/$(BOXTYPE); \
