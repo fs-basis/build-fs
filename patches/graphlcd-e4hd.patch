@@ -6,8 +6,8 @@ index 270cae8..d256e4b 100644
  
  ########################################################################
  
-+[e4hdultra]
-+# Default for e4hdultra
++[e4hd]
++# Default for e4hd
 +Driver=serdisp
 +Controller=framebuffer
 +Options=FBDEVICE=/dev/fb1

@@ -19,7 +19,7 @@ HD51_PATCHES = \
 		armbox/hd51_export_pmpoweroffprepare.patch \
 		armbox/4_10_fix-multiple-defs-yyloc.patch
 
-E4HDULTRA_PATCHES = \
+E4HD_PATCHES = \
 		armbox/hd51_TBS-fixes-for-4.10-kernel.patch \
 		armbox/hd51_0001-Support-TBS-USB-drivers-for-4.6-kernel.patch \
 		armbox/hd51_0001-TBS-fixes-for-4.6-kernel.patch \
@@ -32,16 +32,16 @@ E4HDULTRA_PATCHES = \
 		armbox/hd51_blacklist_mmc0.patch \
 		armbox/hd51_export_pmpoweroffprepare.patch \
 		armbox/4_10_fix-multiple-defs-yyloc.patch \
-		armbox/e4hdultra_v3-1-3-media-si2157-Add-support-for-Si2141-A10.patch \
-		armbox/e4hdultra_v3-2-3-media-si2168-add-support-for-Si2168-D60.patch \
-		armbox/e4hdultra_v3-3-3-media-dvbsky-MyGica-T230C-support.patch \
-		armbox/e4hdultra_v3-3-4-media-dvbsky-MyGica-T230C-support.patch \
-		armbox/e4hdultra_v3-3-5-media-dvbsky-MyGica-T230C-support.patch \
-		armbox/e4hdultra_0002-cp1emu-do-not-use-bools-for-arithmetic.patch \
-		armbox/e4hdultra_move-default-dialect-to-SMB3.patch \
-		armbox/e4hdultra_add-more-devices-rtl8xxxu.patch \
-		armbox/e4hdultra_0005-xbox-one-tuner-4.10.patch \
-		armbox/e4hdultra_0006-dvb-media-tda18250-support-for-new-silicon-tuner.patch \
+		armbox/e4hd_v3-1-3-media-si2157-Add-support-for-Si2141-A10.patch \
+		armbox/e4hd_v3-2-3-media-si2168-add-support-for-Si2168-D60.patch \
+		armbox/e4hd_v3-3-3-media-dvbsky-MyGica-T230C-support.patch \
+		armbox/e4hd_v3-3-4-media-dvbsky-MyGica-T230C-support.patch \
+		armbox/e4hd_v3-3-5-media-dvbsky-MyGica-T230C-support.patch \
+		armbox/e4hd_0002-cp1emu-do-not-use-bools-for-arithmetic.patch \
+		armbox/e4hd_move-default-dialect-to-SMB3.patch \
+		armbox/e4hd_add-more-devices-rtl8xxxu.patch \
+		armbox/e4hd_0005-xbox-one-tuner-4.10.patch \
+		armbox/e4hd_0006-dvb-media-tda18250-support-for-new-silicon-tuner.patch \
 
 COMMON_PATCHES_3_14 = \
 		armbox/vuplus_common/3_14_bcm_genet_disable_warn.patch \
@@ -178,7 +178,7 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7))
 		$(MAKE) -C $(KERNEL_DIR) ARCH=arm CROSS_COMPILE=$(TARGET)- DEPMOD=$(DEPMOD) INSTALL_MOD_PATH=$(TARGET_DIR) modules_install
 	@touch $@
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k e4hdultra))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k e4hd))
 	set -e; cd $(KERNEL_DIR); \
 		$(MAKE) -C $(KERNEL_DIR) ARCH=arm oldconfig
 		$(MAKE) -C $(KERNEL_DIR) ARCH=arm CROSS_COMPILE=$(TARGET)- zImage modules
@@ -198,7 +198,7 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7))
 	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/source || true
 	$(TOUCH)
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k e4hdultra))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k e4hd))
 	install -m 644 $(KERNEL_DIR)/arch/arm/boot/zImage $(BOOT_DIR)/vmlinux
 	install -m 644 $(KERNEL_DIR)/vmlinux $(TARGET_DIR)/boot/vmlinux-arm-$(KERNEL_VER)
 	install -m 644 $(KERNEL_DIR)/System.map $(TARGET_DIR)/boot/System.map-arm-$(KERNEL_VER)
