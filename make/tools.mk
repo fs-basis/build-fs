@@ -190,6 +190,8 @@ $(D)/tools-initfb: $(D)/bootstrap
 	set -e; cd $(TOOLS_DIR)/initfb; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
+			--with-boxmodel=$(BOXTYPE) \
+			--with-boxtype=$(BOXTYPE) \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
@@ -530,13 +532,17 @@ TOOLS += $(D)/tools-ustslave
 TOOLS += $(D)/tools-vfdctl
 endif
 #
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hd vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k))
 TOOLS += $(D)/tools-oled_ctrl
 endif
 #
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 TOOLS += $(D)/tools-initfb
 TOOLS += $(D)/tools-turnoff_power
+endif
+#
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hd))
+TOOLS += $(D)/tools-initfb
 endif
 #
 ifneq ($(wildcard $(TOOLS_DIR)/own-tools),)

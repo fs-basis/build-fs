@@ -68,7 +68,9 @@ insmod /lib/modules/e4hd_2.ko
 insmod /lib/modules/e4hd_3.ko
 insmod /lib/modules/e4hd_4.ko
 
-echo 100 > /proc/stb/fp/oled_brightness
+/bin/initfb
+
+echo 200 > /proc/stb/lcd/oled_brightness
 oled -tc "Booting... DDT"
 
 echo "[rcS] starting mdev"

@@ -112,7 +112,6 @@ endif
 
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hd))
 N_CONFIG_OPTS += --with-lcddev=/dev/fb1
-N_CONFIG_OPTS += --enable-lcd
 endif
 
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hd vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k))
