@@ -6,8 +6,8 @@ index 270cae8..d256e4b 100644
  
  ########################################################################
  
-+[e4hd]
-+# Default for e4hd
++[e4hdultra]
++# Default for e4hdultra
 +Driver=framebuffer
 +Device=/dev/fb1
 +Zoom=0

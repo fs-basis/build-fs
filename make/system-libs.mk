@@ -520,7 +520,7 @@ $(D)/bzip2: $(D)/bootstrap $(ARCHIVE)/$(BZIP2_SOURCE)
 		mv Makefile-libbz2_so Makefile; \
 		$(MAKE) all CC=$(TARGET)-gcc AR=$(TARGET)-ar RANLIB=$(TARGET)-ranlib; \
 		$(MAKE) install PREFIX=$(TARGET_DIR)/usr
-ifneq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hd vuduo vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hdultra vuduo vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 	cd $(TARGET_DIR) && rm -f usr/bin/bzip2
 endif
 	$(REMOVE)/bzip2-$(BZIP2_VER)
@@ -1698,8 +1698,8 @@ GRAPHLCD_PATCH = graphlcd-git-$(GRAPHLCD_VER).patch
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k))
 GRAPHLCD_PATCH += graphlcd-vuplus4k.patch
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hd))
-GRAPHLCD_PATCH += graphlcd-e4hd.patch
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hdultra))
+GRAPHLCD_PATCH += graphlcd-e4hdultra.patch
 endif
 
 $(ARCHIVE)/$(GRAPHLCD_SOURCE):

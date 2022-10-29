@@ -10,7 +10,7 @@ endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs912 ufs913))
 	cd $(BASE_DIR)/flash/$(BOXTYPE) && $(SUDOCMD) ./$(BOXTYPE).sh $(MAINTAINER)
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hd))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hdultra))
 	$(MAKE) flash-image-$(BOXTYPE)-multi-disk flash-image-$(BOXTYPE)-multi-rootfs
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
@@ -27,7 +27,7 @@ endif
 
 ofg \
 ofgimage:
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hd))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hdultra))
 	$(MAKE) flash-image-$(BOXTYPE)-multi-rootfs
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
@@ -37,7 +37,7 @@ endif
 
 oi \
 online-image:
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hd))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hdultra))
 	$(MAKE) flash-image-$(BOXTYPE)-online
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
@@ -47,7 +47,7 @@ endif
 
 disk \
 diskimage:
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hd))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hdultra))
 	$(MAKE) flash-image-$(BOXTYPE)-multi-disk flash-image-$(BOXTYPE)-disk-image
 endif
 	$(TUXBOX_CUSTOMIZE)
@@ -62,7 +62,7 @@ flash-clean:
 # general
 IMAGE_BUILD_DIR = $(BUILD_TMP)/image-build
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hd))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hdultra))
 ### armbox bre2ze4k hd51 h7
 # general
 $(BOXTYPE)_IMAGE_NAME = disk
@@ -76,7 +76,7 @@ endif
 ifeq ($(BOXTYPE), h7)
 	IMAGEDIR = zgemma/$(BOXTYPE)
 endif
-ifeq ($(BOXTYPE), e4hd)
+ifeq ($(BOXTYPE), e4hdultra)
 	IMAGEDIR = e4hd
 endif
 
@@ -124,8 +124,8 @@ endif
 flash-image-$(BOXTYPE)-multi-disk: $(D)/host_resize2fs $(D)/host_parted
 	rm -rf $(IMAGE_BUILD_DIR)
 	mkdir -p $(IMAGE_BUILD_DIR)/$(IMAGEDIR)
-	# lcd flashlogo for e4hd
-	@if [ "$(BOXTYPE)" == "e4hd" ]; then \
+	# lcd flashlogo for e4hdultra
+	@if [ "$(BOXTYPE)" == "e4hdultra" ]; then \
 		cp $(SKEL_ROOT)/release/lcdflashing.bmp $(IMAGE_BUILD_DIR)/$(IMAGEDIR)/; \
 	fi
 	# move kernel files from $(RELEASE_DIR)/boot to $(IMAGE_BUILD_DIR)
@@ -156,7 +156,7 @@ else
 endif
 	dd if=/dev/zero of=$(IMAGE_BUILD_DIR)/$($(BOXTYPE)_BOOT_IMAGE) bs=$(BLOCK_SIZE) count=$(shell expr $(BOOT_PARTITION_SIZE) \* $(BLOCK_SECTOR))
 	mkfs.msdos -S 512 $(IMAGE_BUILD_DIR)/$($(BOXTYPE)_BOOT_IMAGE)
-	@if [ "$(BOXTYPE)" == "e4hd" ]; then \
+	@if [ "$(BOXTYPE)" == "e4hdultra" ]; then \
 		echo "boot emmcflash0.kernel1 'brcm_cma=504M@264M brcm_cma=192M@768M brcm_cma=1024M@2048M root=/dev/mmcblk0p3 rw rootwait $(BOXTYPE)_4.boxmode=5'" > $(IMAGE_BUILD_DIR)/STARTUP; \
 		echo "boot emmcflash0.kernel1 'brcm_cma=504M@264M brcm_cma=192M@768M brcm_cma=1024M@2048M root=/dev/mmcblk0p3 rw rootwait $(BOXTYPE)_4.boxmode=5'" > $(IMAGE_BUILD_DIR)/STARTUP_1; \
 		echo "boot emmcflash0.kernel2 'brcm_cma=504M@264M brcm_cma=192M@768M brcm_cma=1024M@2048M root=/dev/mmcblk0p5 rw rootwait $(BOXTYPE)_4.boxmode=5'" > $(IMAGE_BUILD_DIR)/STARTUP_2; \
@@ -175,7 +175,7 @@ endif
 	mcopy -i $(IMAGE_BUILD_DIR)/$($(BOXTYPE)_BOOT_IMAGE) -v $(IMAGE_BUILD_DIR)/STARTUP_3 ::
 	mcopy -i $(IMAGE_BUILD_DIR)/$($(BOXTYPE)_BOOT_IMAGE) -v $(IMAGE_BUILD_DIR)/STARTUP_4 ::
 	dd conv=notrunc if=$(IMAGE_BUILD_DIR)/$($(BOXTYPE)_BOOT_IMAGE) of=$(EMMC_IMAGE) bs=$(BLOCK_SIZE) seek=$(shell expr $(IMAGE_ROOTFS_ALIGNMENT) \* $(BLOCK_SECTOR))
-	@if [ "$(BOXTYPE)" == "e4hd" ]; then \
+	@if [ "$(BOXTYPE)" == "e4hdultra" ]; then \
 		dd conv=notrunc if=$(RELEASE_DIR)/boot/zImage of=$(EMMC_IMAGE) bs=$(BLOCK_SIZE) seek=$(shell expr $(KERNEL_PARTITION_OFFSET) \* $(BLOCK_SECTOR)); \
 	else \
 		dd conv=notrunc if=$(RELEASE_DIR)/boot/zImage.dtb of=$(EMMC_IMAGE) bs=$(BLOCK_SIZE) seek=$(shell expr $(KERNEL_PARTITION_OFFSET) \* $(BLOCK_SECTOR)); \
@@ -190,7 +190,7 @@ endif
 flash-image-$(BOXTYPE)-multi-rootfs:
 	# Create final USB-image
 	mkdir -p $(IMAGE_BUILD_DIR)/$(IMAGEDIR)
-	@if [ "$(BOXTYPE)" == "e4hd" ]; then \
+	@if [ "$(BOXTYPE)" == "e4hdultra" ]; then \
 		cp $(SKEL_ROOT)/release/lcdflashing.bmp $(IMAGE_BUILD_DIR)/$(IMAGEDIR)/; \
 		cp $(RELEASE_DIR)/boot/zImage $(IMAGE_BUILD_DIR)/$(IMAGEDIR)/kernel.bin; \
 	else \
@@ -204,7 +204,7 @@ flash-image-$(BOXTYPE)-multi-rootfs:
 	cd $(IMAGE_BUILD_DIR)/$(IMAGEDIR); \
 	md5sum -b rootfs.tar.bz2 | awk -F " " '{print $$1}' > rootfs.tar.bz2.md5; \
 	echo $(BOXTYPE)_$(FLAVOUR)_multi_usb_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(IMAGEDIR)/imageversion
-	@if [ "$(BOXTYPE)" == "e4hd" ]; then \
+	@if [ "$(BOXTYPE)" == "e4hdultra" ]; then \
 		cd $(IMAGE_BUILD_DIR) && \
 		zip -r $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_$(FLAVOUR)_multi_usb_$(shell date '+%d.%m.%Y-%H.%M').zip $(IMAGEDIR)/rootfs.tar.bz2 $(IMAGEDIR)/rootfs.tar.bz2.md5 $(IMAGEDIR)/kernel.bin $(IMAGEDIR)/kernel.bin.md5 $(IMAGEDIR)/disk.img $(IMAGEDIR)/disk.img.md5 $(IMAGEDIR)/imageversion $(IMAGEDIR)/lcdflashing.bmp; \
 	else \
@@ -217,7 +217,7 @@ flash-image-$(BOXTYPE)-multi-rootfs:
 flash-image-$(BOXTYPE)-online:
 	# Create final USB-image
 	mkdir -p $(IMAGE_BUILD_DIR)/$(BOXTYPE)
-	@if [ "$(BOXTYPE)" == "e4hd" ]; then \
+	@if [ "$(BOXTYPE)" == "e4hdultra" ]; then \
 		cp $(RELEASE_DIR)/boot/zImage $(IMAGE_BUILD_DIR)/$(BOXTYPE)/kernel.bin; \
 		cd $(IMAGE_BUILD_DIR)/$(BOXTYPE); \
 		md5sum -b kernel.bin | awk -F " " '{print $$1}' > kernel.bin.md5; \
@@ -243,7 +243,7 @@ flash-image-$(BOXTYPE)-disk-image:
 	mkdir -p $(IMAGE_BUILD_DIR)/$(IMAGEDIR)
 	cd $(RELEASE_DIR); \
 	echo $(BOXTYPE)_$(FLAVOUR)_usb_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(IMAGEDIR)/imageversion
-	@if [ "$(BOXTYPE)" == "e4hd" ]; then \
+	@if [ "$(BOXTYPE)" == "e4hdultra" ]; then \
 		cp $(SKEL_ROOT)/release/lcdflashing.bmp $(IMAGE_BUILD_DIR)/$(IMAGEDIR)/; \
 		cd $(IMAGE_BUILD_DIR) && \
 		zip -r $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_$(FLAVOUR)_multi_disk_img_$(shell date '+%d.%m.%Y-%H.%M').zip $(IMAGEDIR)/disk.img $(IMAGEDIR)/disk.img.md5 $(IMAGEDIR)/imageversion $(IMAGEDIR)/lcdflashing.bmp; \

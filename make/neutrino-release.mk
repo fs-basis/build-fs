@@ -91,7 +91,7 @@ neutrino-release-h7:
 #
 # E4HD 4K Ultra
 #
-neutrino-release-e4hd:
+neutrino-release-e4hdultra:
 	install -m 0755 $(SKEL_ROOT)/release/halt_hd51 $(RELEASE_DIR)/etc/init.d/halt
 	install -m 0755 $(SKEL_ROOT)/etc/init.d/mmcblk-by-name_hd51 $(RELEASE_DIR)/etc/init.d/mmcblk-by-name
 	cp -f $(SKEL_ROOT)/release/fstab_hd51 $(RELEASE_DIR)/etc/fstab
@@ -433,7 +433,7 @@ endif
 # copy root_neutrino
 #
 	cp -aR $(SKEL_ROOT)/root_neutrino/* $(RELEASE_DIR)/
-ifneq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 h7 e4hd vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 h7 e4hdultra vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 	rm -f $(RELEASE_DIR)/var/tuxbox/config/cables.xml
 	rm -f $(RELEASE_DIR)/var/tuxbox/config/terrestrial.xml
 endif

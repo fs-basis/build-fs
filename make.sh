@@ -85,7 +85,7 @@ case "$REPLY" in
 	57) BOXARCH="arm";BOXTYPE="h7";;
 	58) BOXARCH="arm";BOXTYPE="bre2ze4k";;
 
-	66) BOXARCH="arm";BOXTYPE="e4hd";;
+	66) BOXARCH="arm";BOXTYPE="e4hdultra";;
 
 	70) BOXARCH="mips";BOXTYPE="vuduo";;
 	 *) BOXARCH="arm";BOXTYPE="hd51";;
@@ -224,9 +224,9 @@ echo "EXTERNAL_LCD=$EXTERNAL_LCD" >> config
 
 ##############################################
 
-# dataswap linuxswap hd51/h7/bre2ze4k/e4hd
+# dataswap linuxswap hd51/h7/bre2ze4k/e4hdultra
 
-if [ $BOXTYPE == 'hd51' -o $BOXTYPE == 'h7' -o $BOXTYPE == 'bre2ze4k' -o $BOXTYPE == 'e4hd' ]; then
+if [ $BOXTYPE == 'hd51' -o $BOXTYPE == 'h7' -o $BOXTYPE == 'bre2ze4k' -o $BOXTYPE == 'e4hdultra' ]; then
 	case $6 in
 		[1-2]) REPLY=$6;;
 		*)	echo -e "\nSelect Swap Data and Linux Swap:"

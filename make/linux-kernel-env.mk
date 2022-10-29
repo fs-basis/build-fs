@@ -18,7 +18,7 @@ KERNEL_PATCHES_ARM     = $(HD51_PATCHES)
 KERNEL_DTB_VER         = bcm7445-bcm97445svmb.dtb
 endif
 
-ifeq ($(BOXTYPE), e4hd)
+ifeq ($(BOXTYPE), e4hdultra)
 KERNEL_VER             = 4.10.12
 KERNEL_DATE            = 20180424
 KERNEL_TYPE            = $(BOXTYPE)
@@ -26,7 +26,7 @@ KERNEL_SRC             = linux-$(KERNEL_VER)-arm.tar.gz
 KERNEL_URL             = http://source.mynonpublic.com/gfutures
 KERNEL_CONFIG          = $(BOXTYPE)_defconfig
 KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_VER)
-KERNEL_PATCHES_ARM     = $(E4HD_PATCHES)
+KERNEL_PATCHES_ARM     = $(E4HDULTRA_PATCHES)
 endif
 
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))

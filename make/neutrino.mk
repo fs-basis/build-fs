@@ -110,11 +110,11 @@ N_CONFIG_OPTS += --enable-flac
 NEUTRINO_DEPS += $(D)/flac
 endif
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hd))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hdultra))
 N_CONFIG_OPTS += --with-lcddev=/dev/fb1
 endif
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hd vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hdultra vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k))
 N_CONFIG_OPTS += --enable-graphlcd
 NEUTRINO_DEPS += $(D)/graphlcd
 endif

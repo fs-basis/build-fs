@@ -19,7 +19,7 @@ HD51_PATCHES = \
 		armbox/hd51_export_pmpoweroffprepare.patch \
 		armbox/4_10_fix-multiple-defs-yyloc.patch
 
-E4HD_PATCHES = \
+E4HDULTRA_PATCHES = \
 		armbox/hd51_TBS-fixes-for-4.10-kernel.patch \
 		armbox/hd51_0001-Support-TBS-USB-drivers-for-4.6-kernel.patch \
 		armbox/hd51_0001-TBS-fixes-for-4.6-kernel.patch \
@@ -32,16 +32,16 @@ E4HD_PATCHES = \
 		armbox/hd51_blacklist_mmc0.patch \
 		armbox/hd51_export_pmpoweroffprepare.patch \
 		armbox/4_10_fix-multiple-defs-yyloc.patch \
-		armbox/e4hd_v3-1-3-media-si2157-Add-support-for-Si2141-A10.patch \
-		armbox/e4hd_v3-2-3-media-si2168-add-support-for-Si2168-D60.patch \
-		armbox/e4hd_v3-3-3-media-dvbsky-MyGica-T230C-support.patch \
-		armbox/e4hd_v3-3-4-media-dvbsky-MyGica-T230C-support.patch \
-		armbox/e4hd_v3-3-5-media-dvbsky-MyGica-T230C-support.patch \
-		armbox/e4hd_0002-cp1emu-do-not-use-bools-for-arithmetic.patch \
-		armbox/e4hd_move-default-dialect-to-SMB3.patch \
-		armbox/e4hd_add-more-devices-rtl8xxxu.patch \
-		armbox/e4hd_0005-xbox-one-tuner-4.10.patch \
-		armbox/e4hd_0006-dvb-media-tda18250-support-for-new-silicon-tuner.patch \
+		armbox/e4hdultra_v3-1-3-media-si2157-Add-support-for-Si2141-A10.patch \
+		armbox/e4hdultra_v3-2-3-media-si2168-add-support-for-Si2168-D60.patch \
+		armbox/e4hdultra_v3-3-3-media-dvbsky-MyGica-T230C-support.patch \
+		armbox/e4hdultra_v3-3-4-media-dvbsky-MyGica-T230C-support.patch \
+		armbox/e4hdultra_v3-3-5-media-dvbsky-MyGica-T230C-support.patch \
+		armbox/e4hdultra_0002-cp1emu-do-not-use-bools-for-arithmetic.patch \
+		armbox/e4hdultra_move-default-dialect-to-SMB3.patch \
+		armbox/e4hdultra_add-more-devices-rtl8xxxu.patch \
+		armbox/e4hdultra_0005-xbox-one-tuner-4.10.patch \
+		armbox/e4hdultra_0006-dvb-media-tda18250-support-for-new-silicon-tuner.patch \
 
 COMMON_PATCHES_3_14 = \
 		armbox/vuplus_common/3_14_bcm_genet_disable_warn.patch \
