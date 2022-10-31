@@ -623,9 +623,9 @@ $(D)/neutrino-release: neutrino-release-base neutrino-release-$(BOXTYPE)
 #	rm -f $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/radiomode.jpg
 #	rm -f $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/start.jpg
 #
-	ln -sf /var/tuxbox/plugins $(RELEASE_DIR)/var/plugins
-	ln -sf /var/tuxbox/webchannels $(RELEASE_DIR)/var/webchannels
-	ln -sf /var/tuxbox/webscripts $(RELEASE_DIR)/var/webscripts
+#	ln -sf /var/tuxbox/plugins $(RELEASE_DIR)/var/plugins
+#	ln -sf /var/tuxbox/webchannels $(RELEASE_DIR)/var/webchannels
+#	ln -sf /var/tuxbox/webscripts $(RELEASE_DIR)/var/webscripts
 #	ln -sf /var/tuxbox $(RELEASE_DIR)/lib/tuxbox
 
 #
