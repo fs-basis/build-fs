@@ -14,16 +14,6 @@ $(TARGET_DIR)/.version:
 	echo "imagedir=$(BOXTYPE)" >> $@
 	echo "devs=$(MAINTAINER)" >> $@
 
-# -----------------------------------------------------------------------------
-ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
-e2-multiboot:
-#	touch $(TARGET_DIR)/usr/bin/enigma2
-#	echo -e "$(FLAVOUR) `sed -n 's/\#define PACKAGE_VERSION "//p' $(N_OBJDIR)/config.h | sed 's/"//'` \\\n \\\l\n" > $(TARGET_DIR)/etc/issue
-#	touch $(TARGET_DIR)/var/lib/opkg/status
-	cp -a $(TARGET_DIR)/.version $(TARGET_DIR)/etc/image-version
-endif
-# -----------------------------------------------------------------------------
-
 AUDIODEC = ffmpeg
 
 NEUTRINO_DEPS  = $(D)/bootstrap $(KERNEL) $(D)/system-tools
@@ -303,9 +293,6 @@ neutrino: $(D)/neutrino.do_prepare $(D)/neutrino.config.status $(D)/neutrino.do_
 	PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR)
 	make $(TARGET_DIR)/.version
-ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
-	make e2-multiboot
-endif
 	touch $(D)/$(notdir $@)
 	$(HOST_DIR)/bin/qrencode -o $(TARGET_DIR)/usr/share/tuxbox/neutrino/icons/qr.png "$(GIT_URL)" -m 1 -s 5
 	make neutrino-release
@@ -330,9 +317,6 @@ neutrino-plugins: $(D)/neutrino-plugins.do_prepare $(D)/neutrino-plugins.config.
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR)
 	make $(TARGET_DIR)/.version
 	make $(NEUTRINO_PLUGINS)
-ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
-	make e2-multiboot
-endif
 	touch $(D)/$(notdir $@)
 	$(HOST_DIR)/bin/qrencode -o $(TARGET_DIR)/usr/share/tuxbox/neutrino/icons/qr.png "$(GIT_URL)" -m 1 -s 5
 	make neutrino-release
