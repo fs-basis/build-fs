@@ -1,8 +1,0 @@
-# These drivers are available to the user for selection in
-# the Neutrino Kernel Options menue.
-#
-#
-ch341					# CH 341 USB-to-serial
-cp210x					# CP 210X USB-to-Network
-ftdi_sio				# FTDI_SIO USB-to-serial
-pl2303					# Prolific PL-2303 USB-to-serial

@@ -99,128 +99,6 @@ neutrino-release-e4hdultra:
 	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
 
 #
-# vuduo4k
-#
-neutrino-release-vuduo4k:
-	install -m 0755 $(SKEL_ROOT)/release/halt_vuduo4k $(RELEASE_DIR)/etc/init.d/halt
-	cp -f $(SKEL_ROOT)/release/fstab_vuduo4k $(RELEASE_DIR)/etc/fstab
-	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
-	rm -f $(RELEASE_DIR)/lib/modules/fpga_directc.ko
-ifeq ($(VU_MULTIBOOT), 1)
-	cp $(SKEL_ROOT)/release/vmlinuz-initrd-7278b1 $(RELEASE_DIR)/boot/
-else
-	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7278b1 $(RELEASE_DIR)/boot/
-endif
-	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
-	cp -f $(SKEL_ROOT)/release/bp3flash.sh $(RELEASE_DIR)/usr/bin/
-	cp -f $(SKEL_ROOT)/release/nvram $(RELEASE_DIR)/usr/bin/
-
-#
-# vuduo4kse
-#
-neutrino-release-vuduo4kse:
-	install -m 0755 $(SKEL_ROOT)/release/halt_vuduo4kse $(RELEASE_DIR)/etc/init.d/halt
-	cp -f $(SKEL_ROOT)/release/fstab_vuduo4kse $(RELEASE_DIR)/etc/fstab
-	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
-	rm -f $(RELEASE_DIR)/lib/modules/fpga_directc.ko
-ifeq ($(VU_MULTIBOOT), 1)
-	cp $(SKEL_ROOT)/release/vmlinuz-initrd-7445d0_vuduo4kse $(RELEASE_DIR)/boot/vmlinuz-initrd-7445d0
-else
-	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7445d0 $(RELEASE_DIR)/boot/
-endif
-	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
-	cp -f $(SKEL_ROOT)/release/nvram $(RELEASE_DIR)/usr/bin/
-
-#
-# vuuno4kse
-#
-neutrino-release-vuuno4kse:
-	install -m 0755 $(SKEL_ROOT)/release/halt_vuuno4kse $(RELEASE_DIR)/etc/init.d/halt
-	cp -f $(SKEL_ROOT)/release/fstab_vuuno4kse $(RELEASE_DIR)/etc/fstab
-	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
-	rm -f $(RELEASE_DIR)/lib/modules/fpga_directc.ko
-ifeq ($(VU_MULTIBOOT), 1)
-	cp $(SKEL_ROOT)/release/vmlinuz-initrd-7439b0_se $(RELEASE_DIR)/boot/vmlinuz-initrd-7439b0
-else
-	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7439b0 $(RELEASE_DIR)/boot/
-endif
-	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
-	cp -f $(SKEL_ROOT)/release/nvram $(RELEASE_DIR)/usr/bin/
-
-#
-# vuzero4k
-#
-neutrino-release-vuzero4k:
-	install -m 0755 $(SKEL_ROOT)/release/halt_vuzero4k $(RELEASE_DIR)/etc/init.d/halt
-	cp -f $(SKEL_ROOT)/release/fstab_vuzero4k $(RELEASE_DIR)/etc/fstab
-	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
-	rm -f $(RELEASE_DIR)/lib/modules/fpga_directc.ko
-ifeq ($(VU_MULTIBOOT), 1)
-	cp $(SKEL_ROOT)/release/vmlinuz-initrd-7260a0 $(RELEASE_DIR)/boot/
-else
-	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7260a0 $(RELEASE_DIR)/boot/
-endif
-	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
-	cp -f $(SKEL_ROOT)/release/nvram $(RELEASE_DIR)/usr/bin/
-
-#
-# vuultimo4k
-#
-neutrino-release-vuultimo4k:
-	install -m 0755 $(SKEL_ROOT)/release/halt_vuultimo4k $(RELEASE_DIR)/etc/init.d/halt
-	cp -f $(SKEL_ROOT)/release/fstab_vuultimo4k $(RELEASE_DIR)/etc/fstab
-	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
-	rm -f $(RELEASE_DIR)/lib/modules/fpga_directc.ko
-ifeq ($(VU_MULTIBOOT), 1)
-	cp $(SKEL_ROOT)/release/vmlinuz-initrd-7445d0 $(RELEASE_DIR)/boot/
-else
-	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7445d0 $(RELEASE_DIR)/boot/
-endif
-	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
-	cp -f $(SKEL_ROOT)/release/nvram $(RELEASE_DIR)/usr/bin/
-
-#
-# vuuno4k
-#
-neutrino-release-vuuno4k:
-	install -m 0755 $(SKEL_ROOT)/release/halt_vuuno4k $(RELEASE_DIR)/etc/init.d/halt
-	cp -f $(SKEL_ROOT)/release/fstab_vuuno4k $(RELEASE_DIR)/etc/fstab
-	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
-	rm -f $(RELEASE_DIR)/lib/modules/fpga_directc.ko
-ifeq ($(VU_MULTIBOOT), 1)
-	cp $(SKEL_ROOT)/release/vmlinuz-initrd-7439b0 $(RELEASE_DIR)/boot/
-else
-	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7439b0 $(RELEASE_DIR)/boot/
-endif
-	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
-	cp -f $(SKEL_ROOT)/release/nvram $(RELEASE_DIR)/usr/bin/
-
-#
-# vusolo4k
-#
-neutrino-release-vusolo4k:
-	install -m 0755 $(SKEL_ROOT)/release/halt_vusolo4k $(RELEASE_DIR)/etc/init.d/halt
-	cp -f $(SKEL_ROOT)/release/fstab_vusolo4k $(RELEASE_DIR)/etc/fstab
-	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
-	rm -f $(RELEASE_DIR)/lib/modules/fpga_directc.ko
-ifeq ($(VU_MULTIBOOT), 1)
-	cp $(SKEL_ROOT)/release/vmlinuz-initrd-7366c0 $(RELEASE_DIR)/boot/
-else
-	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7366c0 $(RELEASE_DIR)/boot/
-endif
-	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
-	cp -f $(SKEL_ROOT)/release/nvram $(RELEASE_DIR)/usr/bin/
-
-#
-# vuduo
-#
-neutrino-release-vuduo:
-	install -m 0755 $(SKEL_ROOT)/release/halt_vuduo $(RELEASE_DIR)/etc/init.d/halt
-	cp -f $(SKEL_ROOT)/release/fstab_vuduo $(RELEASE_DIR)/etc/fstab
-	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
-	cp $(TARGET_DIR)/boot/kernel_cfe_auto.bin $(RELEASE_DIR)/boot/
-
-#
 # neutrino-release-base
 #
 # the following target creates the common file base
@@ -246,7 +124,7 @@ neutrino-release-base:
 	install -d $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/logo
 	install -d $(RELEASE_DIR)/usr/share/lua/5.2
 #
-#ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+#ifeq ($(BOXARCH), $(filter $(BOXARCH), arm))
 #	install -d $(RELEASE_DIR)/var/lib/{nfs,modules,opkg}
 #else
 	install -d $(RELEASE_DIR)/var/lib/{nfs,modules}
@@ -275,11 +153,7 @@ neutrino-release-base:
 	cp -dp $(SKEL_ROOT)/sbin/MAKEDEV $(RELEASE_DIR)/sbin/
 	ln -sf ../sbin/MAKEDEV $(RELEASE_DIR)/dev/MAKEDEV
 	ln -sf ../../sbin/MAKEDEV $(RELEASE_DIR)/lib/udev/MAKEDEV
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k, vuduo4k, vuultimo4k, vuuno4k, vuuno4kse, vuzero4k))
-	cp -aR $(SKEL_ROOT)/etc/mdev_vu/* $(RELEASE_DIR)/etc/mdev/
-else
 	cp -aR $(SKEL_ROOT)/etc/mdev/* $(RELEASE_DIR)/etc/mdev/
-endif
 	cp -aR $(SKEL_ROOT)/etc/mdev_$(BOXARCH).conf $(RELEASE_DIR)/etc/mdev.conf
 	cp -aR $(SKEL_ROOT)/usr/share/udhcpc/* $(RELEASE_DIR)/usr/share/udhcpc/
 	cp -aR $(SKEL_ROOT)/usr/share/zoneinfo/* $(RELEASE_DIR)/usr/share/zoneinfo/
@@ -378,7 +252,7 @@ endif
 #
 #
 ################################################################################
-ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm))
 ################################################################################
 #
 #
@@ -433,7 +307,7 @@ endif
 # copy root_neutrino
 #
 	cp -aR $(SKEL_ROOT)/root_neutrino/* $(RELEASE_DIR)/
-ifneq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 h7 e4hdultra vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 h7 e4hdultra))
 	rm -f $(RELEASE_DIR)/var/tuxbox/config/cables.xml
 	rm -f $(RELEASE_DIR)/var/tuxbox/config/terrestrial.xml
 endif
@@ -519,7 +393,7 @@ endif
 #
 # delete unnecessary files
 #
-ifeq ($(BOXARCH), $(filter $(BOXARCH), sh4 mips))
+ifeq ($(BOXARCH), $(filter $(BOXARCH), sh4))
 	rm -f $(RELEASE_DIR)/etc/mdev/ttyUSB-check.sh
 endif
 ifeq ($(BOXARCH), $(filter $(BOXARCH), sh4))
@@ -571,7 +445,7 @@ endif
 	rm -f $(RELEASE_DIR)/usr/bin/pic2m2v
 	rm -f $(RELEASE_DIR)/usr/bin/mk_cmds
 	rm -f $(RELEASE_DIR)/usr/bin/{gdbus-codegen,glib-*,gtester-report}
-ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm))
 	rm -rf $(RELEASE_DIR)/dev.static
 	rm -rf $(RELEASE_DIR)/ram
 	rm -rf $(RELEASE_DIR)/root

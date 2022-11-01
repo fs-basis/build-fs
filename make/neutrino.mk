@@ -30,7 +30,7 @@ NEUTRINO_DEPS += $(D)/lua $(D)/luaexpat $(D)/luacurl $(D)/luasocket $(D)/luafeed
 #NEUTRINO_DEPS += $(D)/libfribidi
 NEUTRINO_DEPS += $(LOCAL_NEUTRINO_DEPS)
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs912 ufs913 vuduo))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs912 ufs913))
 NEUTRINO_DEPS += $(D)/ntfs_3g
 ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910))
 NEUTRINO_DEPS += $(D)/mtd_utils
@@ -78,10 +78,9 @@ N_CONFIG_OPTS += --with-boxtype=$(BOXTYPE)
 #N_CONFIG_OPTS += --disable-webif
 #N_CONFIG_OPTS += --enable-fribidi
 
-ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm))
 N_CONFIG_OPTS += --enable-reschange
 #N_CONFIG_OPTS += --disable-arm-acc
-#N_CONFIG_OPTS += --disable-mips-acc
 N_CONFIG_OPTS += --enable-pip
 #N_CONFIG_OPTS += --enable-quadpip
 endif
@@ -104,7 +103,7 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hdultra))
 N_CONFIG_OPTS += --with-lcddev=/dev/fb1
 endif
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hdultra vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hdultra))
 N_CONFIG_OPTS += --enable-graphlcd
 NEUTRINO_DEPS += $(D)/graphlcd
 endif

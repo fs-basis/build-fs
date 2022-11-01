@@ -29,8 +29,7 @@ if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 3                    : Neutrino variant (1-2)"
 	echo "Parameter 4                    : External LCD support (1-4)"
 	echo "Parameter 5 (HD51/H7/BRE2ZE4K) : Swap Data and Linux Swap (1-2)"
-	echo "Parameter 6 (ARM/MIPS)         : GCC Version (1-7)"
-	echo "Parameter 7 (ARM VU+)          : Single/Multiboot (1-2)"
+	echo "Parameter 6 (ARM)              : GCC Version (1-7)"
 	exit
 fi
 
@@ -49,20 +48,11 @@ case $1 in
 		echo "    3)  UFS-913"
 		echo "    4)  UFS-922"
 		echo
-		echo "  arm-based receivers"
-		echo "  VU+"
-		echo "   41)  VU+ Solo 4K       42)  VU+ Uno 4K          43)  VU+ Ultimo 4K"
-		echo "   44)  VU+ Zero 4K       45)  VU+ Uno 4K SE       46)  VU+ Duo 4K"
-		echo "   47)  VU+ Duo 4K SE"
-		echo
 		echo "  AX/Mut@nt              Air Digital              WWIO"
 		echo -e "   \033[01;32m51)  HD51\033[00m              57)  ZGEMMA H7           58)  WWIO BRE2ZE 4K"
 		echo
 		echo "  AXAS"
 		echo "   66)  AXAS E4HD 4K Ultra"
-		echo
-		echo "  mips-based receivers"
-		echo "   70)  VU+ Duo"
 		echo
 		read -p "Select target (1-70)? ";;
 esac
@@ -73,21 +63,12 @@ case "$REPLY" in
 	 3) BOXARCH="sh4";BOXTYPE="ufs913";;
 	 4) BOXARCH="sh4";BOXTYPE="ufs922";;
 
-	41) BOXARCH="arm";BOXTYPE="vusolo4k";;
-	42) BOXARCH="arm";BOXTYPE="vuuno4k";;
-	43) BOXARCH="arm";BOXTYPE="vuultimo4k";;
-	44) BOXARCH="arm";BOXTYPE="vuzero4k";;
-	45) BOXARCH="arm";BOXTYPE="vuuno4kse";;
-	46) BOXARCH="arm";BOXTYPE="vuduo4k";;
-	47) BOXARCH="arm";BOXTYPE="vuduo4kse";;
-
 	51) BOXARCH="arm";BOXTYPE="hd51";;
 	57) BOXARCH="arm";BOXTYPE="h7";;
 	58) BOXARCH="arm";BOXTYPE="bre2ze4k";;
 
 	66) BOXARCH="arm";BOXTYPE="e4hdultra";;
 
-	70) BOXARCH="mips";BOXTYPE="vuduo";;
 	 *) BOXARCH="arm";BOXTYPE="hd51";;
 esac
 echo "BOXARCH=$BOXARCH" > config
@@ -127,7 +108,7 @@ if [ "$BOXARCH" == "sh4" ]; then
 	done
 fi
 
-if [ "$LOCAL_FFMPEG_BOXTYPE_LIST" == "$BOXTYPE" -o "$BOXARCH" == "arm" -o "$BOXARCH" == "mips" ]; then
+if [ "$LOCAL_FFMPEG_BOXTYPE_LIST" == "$BOXTYPE" -o "$BOXARCH" == "arm" ]; then
 	case $2 in
 		[1-3]) REPLY=$2;;
 		*)	echo -e "\nFFMPEG version:"
@@ -157,9 +138,9 @@ case $3 in
 	[1-6]) REPLY=$3;;
 	*)	echo -e "\nOptimization:"
 		echo -e "   \033[01;32m1)  optimization for size\033[00m"
-		echo "   2)  optimization normal (current only SH4 or ARM/MIPS with GCC 6)"
+		echo "   2)  optimization normal (current only SH4 or ARM with GCC 6)"
 		echo "   3)  optimization for size, incl. PNG/JPG"
-		echo "   4)  optimization normal (current only SH4 or ARM/MIPS with GCC 6), incl. PNG/JPG"
+		echo "   4)  optimization normal (current only SH4 or ARM with GCC 6), incl. PNG/JPG"
 		echo "   5)  Kernel debug"
 		echo "   6)  debug (includes Kernel debug)"
 		read -p "Select optimization (1-6)? ";;
@@ -189,8 +170,8 @@ echo "OPTIMIZE_PICS=$OPTIMIZE_PICS" >> config
 case $4 in
 	[1-4]) REPLY=$4;;
 	*)	echo -e "\nWhich Neutrino variant do you want to build:"
-		echo -e "   \033[01;32m1)  neutrino-fs-master         [ arm/sh4/vu ]\033[00m"
-		echo "   2)  neutrino-fs-test           [ arm/sh4 ]  !! NO LCD4L GLCD SUPPORT NO VU BOX"
+		echo -e "   \033[01;32m1)  neutrino-fs-master         [ arm/sh4 ]\033[00m"
+		echo "   2)  neutrino-fs-test           [ arm/sh4 ]  !! NO LCD4L GLCD SUPPORT"
 		read -p "Select Image to build   (1-2)? ";;
 esac
 
@@ -244,8 +225,8 @@ echo "SWAPDATA=$SWAPDATA" >> config
 fi
 ##############################################
 
-# gcc version for ARM/MIPS
-if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
+# gcc version for ARM
+if [ $BOXARCH == 'arm' ]; then
 	case $7 in
 		[1-7]) REPLY=$7;;
 		*)	echo -e "\nSelect GCC version:"
@@ -273,27 +254,6 @@ if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
 else
 	echo "BS_GCC_VER=4.8.4" >> config
 fi
-
-##############################################
-
-# Multiboot for VUPLUS_ARM
-if [ $BOXTYPE == 'vusolo4k' -o $BOXTYPE == 'vuduo4k' -o $BOXTYPE == 'vuduo4kse' -o $BOXTYPE == 'vuultimo4k' -o $BOXTYPE == 'vuuno4k' -o $BOXTYPE == 'vuuno4kse' -o $BOXTYPE == 'vuzero4k' ]; then
-	case $8 in
-		[1-2]) REPLY=$8;;
-		*)	echo -e "\nNormal or MultiBoot:"
-			echo -e "   \033[01;32m1)  Normal\033[00m"
-			echo "   2)  Multiboot"
-			read -p "Select boot mode (1-2)? ";;
-	esac
-
-	case "$REPLY" in
-		1) VU_MULTIBOOT="0";;
-		2) VU_MULTIBOOT="1";;
-		*) VU_MULTIBOOT="0";;
-	esac
-	echo "VU_MULTIBOOT=$VU_MULTIBOOT" >> config
-fi
-
 ##############################################
 
 echo " "

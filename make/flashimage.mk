@@ -13,16 +13,6 @@ endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hdultra))
 	$(MAKE) flash-image-$(BOXTYPE)-multi-disk flash-image-$(BOXTYPE)-multi-rootfs
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
-ifeq ($(VU_MULTIBOOT), 1)
-	$(MAKE) flash-image-vu-multi-rootfs
-else
-	$(MAKE) flash-image-vu-rootfs
-endif
-endif
-ifeq ($(BOXTYPE), vuduo)
-	$(MAKE) flash-image-vuduo
-endif
 	$(TUXBOX_CUSTOMIZE)
 
 ofg \
@@ -30,18 +20,12 @@ ofgimage:
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hdultra))
 	$(MAKE) flash-image-$(BOXTYPE)-multi-rootfs
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
-	$(MAKE) flash-image-vu-rootfs
-endif
 	$(TUXBOX_CUSTOMIZE)
 
 oi \
 online-image:
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hdultra))
 	$(MAKE) flash-image-$(BOXTYPE)-online
-endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
-	$(MAKE) flash-image-vu-online
 endif
 	$(TUXBOX_CUSTOMIZE)
 
@@ -254,121 +238,3 @@ flash-image-$(BOXTYPE)-disk-image:
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
 endif
-
-### armbox vu+
-# general
-ifeq ($(BOXTYPE), vuduo4k)
-VU_PREFIX = vuplus/duo4k
-VU_INITRD = vmlinuz-initrd-7278b1
-VU_FR = echo This file forces a reboot after the update. > $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/reboot.update
-endif
-ifeq ($(BOXTYPE), vuduo4kse)
-VU_PREFIX = vuplus/duo4kse
-VU_INITRD = vmlinuz-initrd-7445d0
-VU_FR = echo This file forces a reboot after the update. > $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/reboot.update
-endif
-ifeq ($(BOXTYPE), vuuno4kse)
-VU_PREFIX = vuplus/uno4kse
-VU_INITRD = vmlinuz-initrd-7439b0
-VU_FR = echo This file forces a reboot after the update. > $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/reboot.update
-endif
-ifeq ($(BOXTYPE), vuzero4k)
-VU_PREFIX = vuplus/zero4k
-VU_INITRD = vmlinuz-initrd-7260a0
-VU_FR = echo This file forces the update. > $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/force.update
-endif
-ifeq ($(BOXTYPE), vuultimo4k)
-VU_PREFIX = vuplus/ultimo4k
-VU_INITRD = vmlinuz-initrd-7445d0
-VU_FR = echo This file forces a reboot after the update. > $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/reboot.update
-endif
-ifeq ($(BOXTYPE), vuuno4k)
-VU_PREFIX = vuplus/uno4k
-VU_INITRD = vmlinuz-initrd-7439b0
-VU_FR = echo This file forces the update. > $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/force.update
-endif
-ifeq ($(BOXTYPE), vusolo4k)
-VU_PREFIX = vuplus/solo4k
-VU_INITRD = vmlinuz-initrd-7366c0
-VU_FR = echo This file forces a reboot after the update. > $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/reboot.update
-endif
-
-flash-image-vu-multi-rootfs:
-	# Create final USB-image
-	mkdir -p $(IMAGE_BUILD_DIR)/$(VU_PREFIX)
-	cp $(RELEASE_DIR)/boot/$(VU_INITRD) $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/initrd_auto.bin
-	cp $(RELEASE_DIR)/boot/zImage $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/kernel1_auto.bin
-	cp $(RELEASE_DIR)/boot/zImage $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/kernel2_auto.bin
-	cp $(RELEASE_DIR)/boot/zImage $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/kernel3_auto.bin
-	cp $(RELEASE_DIR)/boot/zImage $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/kernel4_auto.bin
-	cd $(RELEASE_DIR); \
-	tar -cvf $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/rootfs.tar --exclude=zImage* --exclude=vmlinuz-initrd* . > /dev/null 2>&1; \
-	bzip2 $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/rootfs.tar
-	mv $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/rootfs.tar.bz2 $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/rootfs1.tar.bz2
-	$(VU_FR)
-	echo This file forces creating partitions. > $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/mkpart.update
-	echo Dummy for update. > $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/kernel_auto.bin
-	echo Dummy for update. > $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/rootfs.tar.bz2
-	echo $(BOXTYPE)_$(FLAVOUR)_multi_usb_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/imageversion
-	cd $(IMAGE_BUILD_DIR) && \
-	zip -r $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_$(FLAVOUR)_multi_usb_$(shell date '+%d.%m.%Y-%H.%M').zip $(VU_PREFIX)/rootfs*.tar.bz2 $(VU_PREFIX)/initrd_auto.bin $(VU_PREFIX)/kernel*_auto.bin $(VU_PREFIX)/*.update $(VU_PREFIX)/imageversion
-	# cleanup
-	rm -rf $(IMAGE_BUILD_DIR)
-
-flash-image-vu-rootfs:
-	# Create final USB-image
-	mkdir -p $(IMAGE_BUILD_DIR)/$(VU_PREFIX)
-	cp $(RELEASE_DIR)/boot/$(VU_INITRD) $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/initrd_auto.bin
-	cp $(RELEASE_DIR)/boot/zImage $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/kernel_auto.bin
-	cd $(RELEASE_DIR); \
-	tar -cvf $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/rootfs.tar --exclude=zImage* --exclude=vmlinuz-initrd* . > /dev/null 2>&1; \
-	bzip2 $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/rootfs.tar
-	$(VU_FR)
-	echo This file forces creating partitions. > $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/mkpart.update
-	echo $(BOXTYPE)_$(FLAVOUR)_usb_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/imageversion
-	cd $(IMAGE_BUILD_DIR) && \
-	zip -r $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_$(FLAVOUR)_usb_$(shell date '+%d.%m.%Y-%H.%M').zip $(VU_PREFIX)/rootfs.tar.bz2 $(VU_PREFIX)/initrd_auto.bin $(VU_PREFIX)/kernel_auto.bin $(VU_PREFIX)/*.update $(VU_PREFIX)/imageversion
-	# cleanup
-	rm -rf $(IMAGE_BUILD_DIR)
-
-flash-image-vu-online:
-	# Create final USB-image
-	mkdir -p $(IMAGE_BUILD_DIR)/$(VU_PREFIX)
-	cp $(RELEASE_DIR)/boot/$(VU_INITRD) $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/initrd_auto.bin
-	cp $(RELEASE_DIR)/boot/zImage $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/kernel_auto.bin
-	cd $(RELEASE_DIR); \
-	tar -cvf $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/rootfs.tar --exclude=zImage* --exclude=vmlinuz-initrd* . > /dev/null 2>&1; \
-	bzip2 $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/rootfs.tar
-	$(VU_FR)
-	echo This file forces creating partitions. > $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/mkpart.update
-	echo $(BOXTYPE)_$(FLAVOUR)_usb_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(VU_PREFIX)/imageversion
-	cd $(IMAGE_BUILD_DIR)/$(VU_PREFIX) && \
-	tar -cvzf $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_$(FLAVOUR)_usb_$(shell date '+%d.%m.%Y-%H.%M').tgz rootfs.tar.bz2 initrd_auto.bin kernel_auto.bin *.update imageversion
-	# cleanup
-	rm -rf $(IMAGE_BUILD_DIR)
-
-### mipsbox vuduo
-# general
-VUDUO_PREFIX = vuplus/duo
-
-flash-image-vuduo:
-	# Create final USB-image
-	mkdir -p $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)
-	touch $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/reboot.update
-	cp $(RELEASE_DIR)/boot/kernel_cfe_auto.bin $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)
-	mkfs.ubifs -r $(RELEASE_DIR) -o $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/root_cfe_auto.ubi -m 2048 -e 126976 -c 4096 -F
-	echo '[ubifs]' > $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/ubinize.cfg
-	echo 'mode=ubi' >> $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/ubinize.cfg
-	echo 'image=$(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/root_cfe_auto.ubi' >> $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/ubinize.cfg
-	echo 'vol_id=0' >> $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/ubinize.cfg
-	echo 'vol_type=dynamic' >> $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/ubinize.cfg
-	echo 'vol_name=rootfs' >> $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/ubinize.cfg
-	echo 'vol_flags=autoresize' >> $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/ubinize.cfg
-	ubinize -o $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/root_cfe_auto.jffs2 -m 2048 -p 128KiB $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/ubinize.cfg
-	rm -f $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/root_cfe_auto.ubi
-	rm -f $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/ubinize.cfg
-	echo $(BOXTYPE)_$(FLAVOUR)_usb_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/imageversion
-	cd $(IMAGE_BUILD_DIR)/ && \
-	zip -r $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_$(FLAVOUR)_usb_$(shell date '+%d.%m.%Y-%H.%M').zip $(VUDUO_PREFIX)*
-	# cleanup
-	rm -rf $(IMAGE_BUILD_DIR)

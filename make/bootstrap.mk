@@ -276,9 +276,6 @@ $(D)/bootstrap: $(BOOTSTRAP)
 # system-tools
 #
 SYSTEM_TOOLS  = $(D)/busybox
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
-SYSTEM_TOOLS += $(D)/bash
-endif
 SYSTEM_TOOLS += $(D)/zlib
 SYSTEM_TOOLS += $(D)/sysvinit
 SYSTEM_TOOLS += $(D)/diverse-tools
@@ -293,7 +290,7 @@ SYSTEM_TOOLS += $(D)/vsftpd
 SYSTEM_TOOLS += $(D)/autofs
 #SYSTEM_TOOLS += $(D)/dvbsnoop
 SYSTEM_TOOLS += $(D)/fbshot
-ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm))
 SYSTEM_TOOLS += $(D)/ofgwrite
 SYSTEM_TOOLS += $(D)/f2fs-tools
 endif
@@ -365,7 +362,7 @@ $(D)/directories:
 	install -d $(TARGET_INCLUDE_DIR)/linux
 	install -d $(TARGET_INCLUDE_DIR)/linux/dvb
 	install -d $(TARGET_DIR)/var/{etc,lib,run}
-ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm))
 	install -d $(TARGET_DIR)/var/lib/{misc,nfs,opkg}
 else
 	install -d $(TARGET_DIR)/var/lib/{misc,nfs}

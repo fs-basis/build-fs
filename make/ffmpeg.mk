@@ -2,7 +2,7 @@
 # ffmpeg
 #
 ################################################################################
-ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm))
 FFM = 1
 else ifeq ($(BOXTYPE), $(filter $(BOXTYPE), $(LOCAL_FFMPEG_BOXTYPE_LIST)))
 FFM = 1
@@ -52,7 +52,7 @@ endif
 ifeq ($(BOXARCH), arm)
 FFMPEG_CONF_OPTS  += --cpu=cortex-a15
 endif
-ifeq ($(BOXARCH), $(filter $(BOXARCH), mips sh4))
+ifeq ($(BOXARCH), $(filter $(BOXARCH), sh4))
 FFMPEG_CONF_OPTS  += --cpu=generic
 endif
 

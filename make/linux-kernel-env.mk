@@ -29,69 +29,6 @@ KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_VER)
 KERNEL_PATCHES_ARM     = $(E4HDULTRA_PATCHES)
 endif
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
-KERNEL_TYPE            = $(BOXTYPE)
-ifeq ($(BOXTYPE), vuduo4k)
-KERNEL_VER             = 4.1.45-1.17
-KERNEL_SRC_VER         = 4.1-1.17
-KERNEL_PATCHES_ARM     = $(VUDUO4K_PATCHES)
-endif
-ifeq ($(BOXTYPE), vuduo4kse)
-KERNEL_VER             = 4.1.45-1.17
-KERNEL_SRC_VER         = 4.1-1.17
-KERNEL_PATCHES_ARM     = $(VUDUO4KSE_PATCHES)
-endif
-ifeq ($(BOXTYPE), vuuno4kse)
-KERNEL_VER             = 4.1.20-1.9
-KERNEL_SRC_VER         = 4.1-1.9
-KERNEL_PATCHES_ARM     = $(VUUNO4KSE_PATCHES)
-endif
-ifeq ($(BOXTYPE), vuzero4k)
-KERNEL_VER             = 4.1.20-1.9
-KERNEL_SRC_VER         = 4.1-1.9
-KERNEL_PATCHES_ARM     = $(VUZERO4K_PATCHES)
-endif
-ifeq ($(BOXTYPE), vuultimo4k)
-KERNEL_VER             = 3.14.28-1.12
-KERNEL_SRC_VER         = 3.14-1.12
-KERNEL_PATCHES_ARM     = $(VUULTIMO4K_PATCHES)
-endif
-ifeq ($(BOXTYPE), vuuno4k)
-KERNEL_VER             = 3.14.28-1.12
-KERNEL_SRC_VER         = 3.14-1.12
-KERNEL_PATCHES_ARM     = $(VUUNO4K_PATCHES)
-endif
-ifeq ($(BOXTYPE), vusolo4k)
-KERNEL_VER             = 3.14.28-1.8
-KERNEL_SRC_VER         = 3.14-1.8
-KERNEL_PATCHES_ARM     = $(VUSOLO4K_PATCHES)
-endif
-KERNEL_SRC             = stblinux-${KERNEL_SRC_VER}.tar.bz2
-KERNEL_URL             = http://code.vuplus.com/download/release/kernel
-ifeq ($(VU_MULTIBOOT), 1)
-KERNEL_CONFIG          = $(BOXTYPE)_defconfig_multi
-else
-KERNEL_CONFIG          = $(BOXTYPE)_defconfig
-endif
-KERNEL_DIR             = $(BUILD_TMP)/linux
-endif
-
-# -----------------------------------------------------------------------------
-
-#
-# mips
-#
-ifeq ($(BOXTYPE), vuduo)
-KERNEL_VER             = 3.9.6
-KERNEL_TYPE            = vuduo
-KERNEL_SRC_VER         = 3.9.6
-KERNEL_SRC             = stblinux-${KERNEL_SRC_VER}.tar.bz2
-KERNEL_URL             = http://code.vuplus.com/download/release/kernel
-KERNEL_CONFIG          = vuduo_defconfig
-KERNEL_DIR             = $(BUILD_TMP)/linux
-KERNEL_PATCHES_MIPS    = $(VUDUO_PATCHES)
-endif
-
 # -----------------------------------------------------------------------------
 
 #

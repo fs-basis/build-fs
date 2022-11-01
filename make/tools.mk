@@ -532,14 +532,11 @@ TOOLS += $(D)/tools-ustslave
 TOOLS += $(D)/tools-vfdctl
 endif
 #
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k e4hdultra))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hdultra))
 TOOLS += $(D)/tools-oled_ctrl
 endif
 #
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
-TOOLS += $(D)/tools-initfb
-TOOLS += $(D)/tools-turnoff_power
-endif
+
 #
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hdultra))
 TOOLS += $(D)/tools-initfb
