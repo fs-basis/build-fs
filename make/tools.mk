@@ -534,11 +534,6 @@ endif
 #
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hdultra))
 TOOLS += $(D)/tools-oled_ctrl
-endif
-#
-
-#
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hdultra))
 TOOLS += $(D)/tools-initfb
 endif
 #
