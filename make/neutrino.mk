@@ -100,11 +100,9 @@ NEUTRINO_DEPS += $(D)/flac
 endif
 
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hdultra))
-N_CONFIG_OPTS += --with-lcddev=/dev/fb1
-endif
-
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hdultra))
+N_CONFIG_OPTS += --enable-fs
 N_CONFIG_OPTS += --enable-graphlcd
+N_CONFIG_OPTS += --with-lcddev=/dev/fb1
 NEUTRINO_DEPS += $(D)/graphlcd
 endif
 
