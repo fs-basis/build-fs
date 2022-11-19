@@ -282,7 +282,9 @@ endif
 	cp -R $(TARGET_DIR)/lib/* $(RELEASE_DIR)/lib/
 	rm -f $(RELEASE_DIR)/lib/*.{a,o,la}
 	chmod 755 $(RELEASE_DIR)/lib/*
+ifeq ($(BOXARCH), $(filter $(BOXARCH), sh4))
 	ln -s /var/tuxbox/plugins/libfx2.so $(RELEASE_DIR)/lib/libfx2.so
+endif
 	cp -R $(TARGET_LIB_DIR)/* $(RELEASE_DIR)/usr/lib/
 	rm -rf $(RELEASE_DIR)/usr/lib/{engines,gconv,libxslt-plugins,pkgconfig,python$(PYTHON_VER),sigc++-2.0}
 	rm -f $(RELEASE_DIR)/usr/lib/*.{a,o,la}
