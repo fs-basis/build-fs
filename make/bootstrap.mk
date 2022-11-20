@@ -361,7 +361,11 @@ $(D)/directories:
 	install -d $(TARGET_LIB_DIR)/pkgconfig
 	install -d $(TARGET_INCLUDE_DIR)/linux
 	install -d $(TARGET_INCLUDE_DIR)/linux/dvb
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm))
+	install -d $(TARGET_DIR)/var/{lib,run}
+else
 	install -d $(TARGET_DIR)/var/{etc,lib,run}
+endif
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm))
 	install -d $(TARGET_DIR)/var/lib/{misc,nfs,opkg}
 else

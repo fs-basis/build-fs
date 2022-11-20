@@ -107,7 +107,11 @@ neutrino-release-base:
 	rm -rf $(RELEASE_DIR) || true
 	install -d $(RELEASE_DIR)
 	install -d $(RELEASE_DIR)/{bin,boot,dev,dev.static,etc,hdd,lib,media,mnt,proc,ram,root,sbin,swap,sys,tmp,usr,var}
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm))
+	install -d $(RELEASE_DIR)/var/{bin,boot,emu,epg,httpd,keys,lib,tuxbox}
+else
 	install -d $(RELEASE_DIR)/var/{bin,boot,emu,etc,epg,httpd,keys,lib,tuxbox}
+endif
 	install -d $(RELEASE_DIR)/var/tuxbox/{config,control,icons,locale,plugins,themes,webscripts,webchannels}
 	install -d $(RELEASE_DIR)/var/tuxbox/config/zapit
 #
@@ -142,15 +146,20 @@ neutrino-release-base:
 	ln -sf usr/share $(RELEASE_DIR)/share
 	ln -sf /usr/share/tuxbox/neutrino/icons/logo $(RELEASE_DIR)/logos
 	ln -sf /usr/share/tuxbox/neutrino/icons/logo $(RELEASE_DIR)/var/httpd/logos
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm))
+	touch $(RELEASE_DIR)/etc/.firstboot
+else
 	touch $(RELEASE_DIR)/var/etc/.firstboot
+endif
 	cp -a $(TARGET_DIR)/bin/* $(RELEASE_DIR)/bin/
 	cp -a $(TARGET_DIR)/usr/bin/* $(RELEASE_DIR)/usr/bin/
 	cp -a $(TARGET_DIR)/sbin/* $(RELEASE_DIR)/sbin/
 	cp -a $(TARGET_DIR)/usr/sbin/* $(RELEASE_DIR)/usr/sbin/
 	cp -dp $(TARGET_DIR)/.version $(RELEASE_DIR)/
-	ln -sf /.version $(RELEASE_DIR)/var/etc/.version
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm))
-	ln -sf /.version $(RELEASE_DIR)/var/etc/image-version
+	cp -dp $(TARGET_DIR)/.version $(RELEASE_DIR)/etc
+else
+	ln -sf /.version $(RELEASE_DIR)/var/etc/.version
 endif
 	cp $(TARGET_DIR)/boot/$(KERNELNAME) $(RELEASE_DIR)/boot/
 	ln -sf /proc/mounts $(RELEASE_DIR)/etc/mtab
@@ -474,11 +483,16 @@ $(D)/neutrino-release: neutrino-release-base neutrino-release-$(BOXTYPE)
 #
 # nicht die feine Art, aber funktioniert ;)
 #
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm))
+	ln -sf /etc $(RELEASE_DIR)/var
+else
 	cp -dpfr $(RELEASE_DIR)/etc $(RELEASE_DIR)/var
 	rm -fr $(RELEASE_DIR)/etc
 	ln -sf var/etc $(RELEASE_DIR)/etc
 # FS	ln -sf /var/etc $(RELEASE_DIR)/etc 
 #
+#
+endif
 	ln -s /tmp $(RELEASE_DIR)/lib/init
 	ln -s /tmp $(RELEASE_DIR)/var/lib/urandom
 	ln -s /tmp $(RELEASE_DIR)/var/lock
