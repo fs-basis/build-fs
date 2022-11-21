@@ -143,7 +143,7 @@ endif
 	ln -s ../init.d/sendsigs $(RELEASE_DIR)/etc/rc.d/rc6.d/S20sendsigs
 	ln -s ../init.d/umountfs $(RELEASE_DIR)/etc/rc.d/rc6.d/S40umountfs
 	ln -s ../init.d/reboot $(RELEASE_DIR)/etc/rc.d/rc6.d/S90reboot
-	ln -sf usr/share $(RELEASE_DIR)/share
+	ln -sf /usr/share $(RELEASE_DIR)/share
 	ln -sf /usr/share/tuxbox/neutrino/icons/logo $(RELEASE_DIR)/logos
 	ln -sf /usr/share/tuxbox/neutrino/icons/logo $(RELEASE_DIR)/var/httpd/logos
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm))
@@ -488,8 +488,8 @@ ifeq ($(BOXARCH), $(filter $(BOXARCH), arm))
 else
 	cp -dpfr $(RELEASE_DIR)/etc $(RELEASE_DIR)/var
 	rm -fr $(RELEASE_DIR)/etc
-	ln -sf var/etc $(RELEASE_DIR)/etc
-# FS	ln -sf /var/etc $(RELEASE_DIR)/etc 
+	ln -sf /var/etc $(RELEASE_DIR)/etc
+#DD	ln -sf var/etc $(RELEASE_DIR)/etc
 #
 #
 endif
