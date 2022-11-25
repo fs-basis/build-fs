@@ -1697,6 +1697,7 @@ GRAPHLCD_URL = https://github.com/fs-basis/graphlcd.git
 GRAPHLCD_PATCH = graphlcd-git-$(GRAPHLCD_VER).patch
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hdultra))
 GRAPHLCD_PATCH += graphlcd-e4hdultra.patch
+GRAPHLCD_PATCH += graphlcd-framebuffer.patch
 endif
 
 $(ARCHIVE)/$(GRAPHLCD_SOURCE):
