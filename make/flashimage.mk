@@ -54,8 +54,8 @@ $(BOXTYPE)_BOOT_IMAGE = boot.img
 $(BOXTYPE)_IMAGE_LINK = $($(BOXTYPE)_IMAGE_NAME).ext4
 $(BOXTYPE)_IMAGE_ROOTFS_SIZE = 294912
 
-ifeq ($(BOXTYPE),$(filter $(BOXMODEL),bre2ze4k h7 hd51 e4hdultra))
-ifeq ($(BOXTYPE),$(filter $(BOXMODEL),e4hdultra))
+ifeq ($(BOXTYPE),$(filter $(BOXTYPE),bre2ze4k h7 hd51 e4hdultra))
+ifeq ($(BOXTYPE),$(filter $(BOXTYPE),e4hdultra))
 HD5X_DRIVER = e4hd
 else
 HD5X_DRIVER = $(BOXTYPE)
