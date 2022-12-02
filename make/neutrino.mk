@@ -81,8 +81,7 @@ N_CONFIG_OPTS += --with-boxtype=$(BOXTYPE)
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm))
 N_CONFIG_OPTS += --enable-reschange
 #N_CONFIG_OPTS += --disable-arm-acc
-N_CONFIG_OPTS += --enable-pip
-#N_CONFIG_OPTS += --enable-quadpip
+#N_CONFIG_OPTS += --enable-pip
 endif
 
 ifeq ($(AUDIODEC), ffmpeg)
