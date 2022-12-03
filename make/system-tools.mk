@@ -1664,7 +1664,7 @@ $(D)/dvbsnoop: $(D)/bootstrap $(D)/kernel
 #
 # openvpn
 #
-OPENVPN_VER = 2.5.7
+OPENVPN_VER = 2.5.8
 OPENVPN_SOURCE = openvpn-$(OPENVPN_VER).tar.xz
 
 $(ARCHIVE)/$(OPENVPN_SOURCE):
