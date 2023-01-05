@@ -31,21 +31,143 @@ index 74385de..bfe2895 100644
  {
  	if (tag) {
 diff --git a/util/dvbdate/dvbdate.c b/util/dvbdate/dvbdate.c
-index f0df437..a808416 100644
+index f0df437..6b5f4d4 100644
 --- a/util/dvbdate/dvbdate.c
 +++ b/util/dvbdate/dvbdate.c
-@@ -309,7 +309,10 @@ int atsc_scan_date(time_t *rx_time, unsigned int to)
+@@ -309,7 +309,14 @@ int atsc_scan_date(time_t *rx_time, unsigned int to)
   */
  int set_time(time_t * new_time)
  {
--	if (stime(new_time)) {
++#if (__GLIBC__ == 2 && __GLIBC_MINOR__ > 30) || (__GLIBC__ > 2)
 +	struct timespec s = {0};
 +	s.tv_sec = new_time;
 +
 +	if (clock_settime(CLOCK_REALTIME, &s)) {
++#else
+ 	if (stime(new_time)) {
++#endif
  		perror("Unable to set time");
  		return -1;
  	}
+diff --git a/util/femon/femon.c b/util/femon/femon.c
+index a50fe17..f0dc817 100644
+--- a/util/femon/femon.c
++++ b/util/femon/femon.c
+@@ -42,16 +42,20 @@
+ static char *usage_str =
+     "\nusage: femon [options]\n"
+     "     -H        : human readable output\n"
++    "     -M        : minimalized output\n"
+     "     -A        : Acoustical mode. A sound indicates the signal quality.\n"
+     "     -r        : If 'Acoustical mode' is active it tells the application\n"
+     "                 is called remotely via ssh. The sound is heard on the 'real'\n"
+     "                 machine but. The user has to be root.\n"
++    "     -t number : use given cycle time (default 1.00)\n"
+     "     -a number : use given adapter (default 0)\n"
+     "     -f number : use given frontend (default 0)\n"
+     "     -c number : samples to take (default 0 = infinite)\n\n";
+ 
+ int sleep_time=1000000;
++float fl_sleep_time=1;
+ int acoustical_mode=0;
++int minimalized=0;
+ int remote=0;
+ 
+ static void usage(void)
+@@ -67,7 +71,8 @@ int check_frontend (struct dvbfe_handle *fe, int human_readable, unsigned int co
+ 	struct dvbfe_info fe_info;
+ 	unsigned int samples = 0;
+ 	FILE *ttyFile=NULL;
+-	
++	struct timeval now;
++
+ 	// We dont write the "beep"-codes to stdout but to /dev/tty1.
+ 	// This is neccessary for Thin-Client-Systems or Streaming-Boxes
+ 	// where the computer does not have a monitor and femon is called via ssh.
+@@ -90,12 +95,25 @@ int check_frontend (struct dvbfe_handle *fe, int human_readable, unsigned int co
+ 
+ 	do {
+ 		if (dvbfe_get_info(fe, FE_STATUS_PARAMS, &fe_info, DVBFE_INFO_QUERYTYPE_IMMEDIATE, 0) != FE_STATUS_PARAMS) {
++		    if (!minimalized)
+ 			fprintf(stderr, "Problem retrieving frontend information: %m\n");
+ 		}
+ 
+-
++		gettimeofday(&now, NULL);
++		int milli = now.tv_usec / 1000;
++		char buffer[80] = "";
++		strftime(buffer, 80, "%a %b %d %Y - %H:%M:%S", localtime(&now.tv_sec));
++		char ntime[84] = "";
++		sprintf(ntime, "%s.%03d", buffer, milli);
+ 
+ 		if (human_readable) {
++		    if (minimalized) {
++                       printf ("%s | sig %3u%% | snr %3u%% | ber %d",
++				ntime,
++				(fe_info.signal_strength * 100) / 0xffff,
++				(fe_info.snr * 100) / 0xffff,
++				fe_info.ber);
++		    } else {
+                        printf ("status %c%c%c%c%c | signal %3u%% | snr %3u%% | ber %d | unc %d | ",
+ 				fe_info.signal ? 'S' : ' ',
+ 				fe_info.carrier ? 'C' : ' ',
+@@ -106,7 +124,15 @@ int check_frontend (struct dvbfe_handle *fe, int human_readable, unsigned int co
+ 				(fe_info.snr * 100) / 0xffff,
+ 				fe_info.ber,
+ 				fe_info.ucblocks);
++		    }
+ 		} else {
++		    if (minimalized) {
++			printf ("%s | sig %04x | snr %04x | ber %08x",
++				ntime,
++				fe_info.signal_strength,
++				fe_info.snr,
++				fe_info.ber);
++		    } else {
+ 			printf ("status %c%c%c%c%c | signal %04x | snr %04x | ber %08x | unc %08x | ",
+ 				fe_info.signal ? 'S' : ' ',
+ 				fe_info.carrier ? 'C' : ' ',
+@@ -117,9 +143,11 @@ int check_frontend (struct dvbfe_handle *fe, int human_readable, unsigned int co
+ 				fe_info.snr,
+ 				fe_info.ber,
+ 				fe_info.ucblocks);
++		    }
+ 		}
+ 
+ 		if (fe_info.lock)
++		    if (!minimalized)
+ 			printf("FE_HAS_LOCK");
+ 
+ 		// create beep if acoustical_mode enabled
+@@ -188,7 +216,7 @@ int main(int argc, char *argv[])
+ 	int human_readable = 0;
+ 	int opt;
+ 
+-       while ((opt = getopt(argc, argv, "rAHa:f:c:")) != -1) {
++       while ((opt = getopt(argc, argv, "rAMHa:f:c:t:")) != -1) {
+ 		switch (opt)
+ 		{
+ 		default:
+@@ -200,12 +228,19 @@ int main(int argc, char *argv[])
+ 		case 'c':
+ 			count = strtoul(optarg, NULL, 0);
+ 			break;
++		case 't':
++			fl_sleep_time = strtof(optarg, NULL);
++			sleep_time=fl_sleep_time*1000000;
++			break;
+ 		case 'f':
+ 			frontend = strtoul(optarg, NULL, 0);
+ 			break;
+ 		case 'H':
+ 			human_readable = 1;
+ 			break;
++		case 'M':
++			minimalized = 1;
++			break;
+ 		case 'A':
+ 			// Acoustical mode: we have to reduce the delay between
+ 			// checks in order to hear nice sound
 diff --git a/util/scan/Makefile b/util/scan/Makefile
 index 32d1f1c..51b3777 100644
 --- a/util/scan/Makefile
