@@ -7,6 +7,7 @@ tools-clean:
 #	-$(MAKE) -C $(TOOLS_DIR)/asc2uni distclean
 	-$(MAKE) -C $(TOOLS_DIR)/devinit distclean
 	-$(MAKE) -C $(TOOLS_DIR)/evremote2 distclean
+#	-$(MAKE) -C $(TOOLS_DIR)/femon distclean
 	-$(MAKE) -C $(TOOLS_DIR)/flashtool-fup distclean
 	-$(MAKE) -C $(TOOLS_DIR)/flashtool-mup distclean
 	-$(MAKE) -C $(TOOLS_DIR)/flashtool_mup distclean
@@ -82,6 +83,19 @@ $(D)/tools-evremote2: $(D)/bootstrap
 	$(START_BUILD)
 	set -e; cd $(TOOLS_DIR)/evremote2; \
 		$(CONFIGURE_TOOLS) \
+			--prefix= \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(TOUCH)
+
+#
+# femon
+#
+$(D)/tools-femon: $(D)/bootstrap
+	$(START_BUILD)
+	set -e; cd $(TOOLS_DIR)/femon; \
+		$(CONFIGURE_TOOLS) CPPFLAGS="$(CPPFLAGS)" \
 			--prefix= \
 		; \
 		$(MAKE); \
@@ -511,6 +525,7 @@ $(D)/tools-own-tools: $(D)/bootstrap $(D)/libcurl $(D)/e2fsprogs
 	$(TOUCH)
 #
 TOOLS  = $(D)/tools-aio-grab
+#TOOLS += $(D)/tools-femon
 TOOLS += $(D)/tools-msgbox
 TOOLS += $(D)/tools-satfind
 TOOLS += $(D)/tools-showiframe
