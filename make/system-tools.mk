@@ -1406,7 +1406,11 @@ $(D)/htop: $(D)/bootstrap $(D)/ncurses $(ARCHIVE)/$(HTOP_SOURCE)
 #
 # ethtool
 #
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hdultra))
 ETHTOOL_VER = 6.2
+else
+ETHTOOL_VER = 6.0
+endif
 ETHTOOL_SOURCE = ethtool-$(ETHTOOL_VER).tar.xz
 ETHTOOL_PATCH = ethtool-$(ETHTOOL_VER).patch
 
