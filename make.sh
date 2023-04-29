@@ -31,7 +31,7 @@ if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 6 (HD51/H7/BRE2ZE4K/E4HDULTRA): Swap Data and Linux Swap (1-3, 81-83)"
 	echo "Parameter 7 (HD51/H7/BRE2ZE4K/E4HDULTRA): Kernel size in MB (default: 8)"
 	echo "Parameter 8 (HD51/H7/BRE2ZE4K/E4HDULTRA): Swap size in MB (default: 128)"
-	echo "Parameter 9 (ARM)                       : GCC Version (1-7)"
+	echo "Parameter 9 (ARM)                       : GCC Version (1-8)"
 	exit
 fi
 
@@ -298,8 +298,9 @@ if [ $BOXARCH == 'arm' ]; then
 			echo "   4)  GCC version  9.5.0"
 			echo "   5)  GCC version 10.4.0"
 			echo "   6)  GCC version 11.3.0"
-			echo "   7)  GCC version 12.2.0 (not yet ready)"
-			read -p "Select GCC version (1-7)? ";;
+#			echo "   7)  GCC version 12.2.0 (not yet ready)"
+#			echo "   8)  GCC version 13.1.0 (not yet ready)"
+			read -p "Select GCC version (1-8)? ";;
 	esac
 
 	case "$REPLY" in
@@ -310,6 +311,7 @@ if [ $BOXARCH == 'arm' ]; then
 		5) BS_GCC_VER="10.4.0";;
 		6) BS_GCC_VER="11.3.0";;
 		7) BS_GCC_VER="12.2.0";;
+		8) BS_GCC_VER="13.1.0";;
 		*) BS_GCC_VER="8.5.0";;
 	esac
 	echo "BS_GCC_VER=$BS_GCC_VER" >> config
