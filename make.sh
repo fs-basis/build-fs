@@ -23,13 +23,13 @@ fi
 ##############################################
 
 if [ "$1" == -h ] || [ "$1" == --help ]; then
-	echo "Parameter 1                    : Target system (1-70)"
-	echo "Parameter 2 (not UFS910/UFS922 : FFMPEG Version (1-3)"
-	echo "Parameter 2                    : Optimization (1-6)"
-	echo "Parameter 3                    : Neutrino variant (1-2)"
-	echo "Parameter 4                    : External LCD support (1-4)"
-	echo "Parameter 5 (HD51/H7/BRE2ZE4K) : Swap Data and Linux Swap (1-2)"
-	echo "Parameter 6 (ARM)              : GCC Version (1-7)"
+	echo "Parameter 1                             : Target system (1-70)"
+	echo "Parameter 2 (not UFS910/UFS922)         : FFMPEG Version (1-3)"
+	echo "Parameter 2                             : Optimization (1-6)"
+	echo "Parameter 3                             : Neutrino variant (1-2)"
+	echo "Parameter 4                             : External LCD support (1-4)"
+	echo "Parameter 5 (HD51/H7/BRE2ZE4K/E4HDULTRA): Swap Data and Linux Swap (1-3, 81-83)"
+	echo "Parameter 6 (ARM)                       : GCC Version (1-7)"
 	exit
 fi
 
@@ -209,17 +209,26 @@ echo "EXTERNAL_LCD=$EXTERNAL_LCD" >> config
 
 if [ $BOXTYPE == 'hd51' -o $BOXTYPE == 'h7' -o $BOXTYPE == 'bre2ze4k' -o $BOXTYPE == 'e4hdultra' ]; then
 	case $6 in
-		[1-2]) REPLY=$6;;
+		[1-3] | 8[1-3]) REPLY=$6;;
 		*)	echo -e "\nSelect Swap Data and Linux Swap:"
-			echo -e "   1)  Swap OFF"
-			echo -e "   \033[01;32m2)  Swap ON\033[00m"
-			read -p "Select SWAP support (1-2)? ";;
+			echo -e "   \033[01;32m 1)  Swap OFF\033[00m"
+			echo -e "    2)  Swap ON (1x linux swap, 1x ext4 swap)"
+			echo -e "    3)  Swap ON (1x linux swap)"
+			echo    "   AXAS E4HD 4K Ultra - 8 GB FLASH version:"
+			echo -e "   81)  Swap OFF\033[00m"
+			echo -e "   82)  Swap ON (1x linux swap, 1x ext4 swap)"
+			echo -e "   83)  Swap ON (1x linux swap)"
+			read -p "Select SWAP support (1-3, 81-83)? ";;
 	esac
 
 case "$REPLY" in
-	1) SWAPDATA="0";;
-	2) SWAPDATA="1";;
-	*) SWAPDATA="1";;
+	1)  SWAPDATA="0";;
+	2)  SWAPDATA="1";;
+	3)  SWAPDATA="2";;
+	81) SWAPDATA="80";;
+	82) SWAPDATA="81";;
+	83) SWAPDATA="82";;
+	*)  SWAPDATA="1";;
 esac
 echo "SWAPDATA=$SWAPDATA" >> config
 fi
