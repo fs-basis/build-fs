@@ -25,11 +25,13 @@ fi
 if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 1                             : Target system (1-70)"
 	echo "Parameter 2 (not UFS910/UFS922)         : FFMPEG Version (1-3)"
-	echo "Parameter 2                             : Optimization (1-6)"
-	echo "Parameter 3                             : Neutrino variant (1-2)"
-	echo "Parameter 4                             : External LCD support (1-4)"
-	echo "Parameter 5 (HD51/H7/BRE2ZE4K/E4HDULTRA): Swap Data and Linux Swap (1-3, 81-83)"
-	echo "Parameter 6 (ARM)                       : GCC Version (1-7)"
+	echo "Parameter 3                             : Optimization (1-6)"
+	echo "Parameter 4                             : Neutrino variant (1-2)"
+	echo "Parameter 5                             : External LCD support (1-4)"
+	echo "Parameter 6 (HD51/H7/BRE2ZE4K/E4HDULTRA): Swap Data and Linux Swap (1-3, 81-83)"
+	echo "Parameter 7 (HD51/H7/BRE2ZE4K/E4HDULTRA): Kernel size in MB (default: 8)"
+	echo "Parameter 8 (HD51/H7/BRE2ZE4K/E4HDULTRA): Swap size in MB (default: 128)"
+	echo "Parameter 9 (ARM)                       : GCC Version (1-7)"
 	exit
 fi
 
@@ -214,30 +216,81 @@ if [ $BOXTYPE == 'hd51' -o $BOXTYPE == 'h7' -o $BOXTYPE == 'bre2ze4k' -o $BOXTYP
 			echo -e "   \033[01;32m 1)  Swap OFF\033[00m"
 			echo -e "    2)  Swap ON (1x linux swap, 1x ext4 swap)"
 			echo -e "    3)  Swap ON (1x linux swap)"
-			echo    "   AXAS E4HD 4K Ultra - 8 GB FLASH version:"
-			echo -e "   81)  Swap OFF\033[00m"
-			echo -e "   82)  Swap ON (1x linux swap, 1x ext4 swap)"
-			echo -e "   83)  Swap ON (1x linux swap)"
-			read -p "Select SWAP support (1-3, 81-83)? ";;
+			if [ $BOXTYPE == 'e4hdultra' ]; then
+				echo ""
+				echo    "   AXAS E4HD 4K Ultra - 8 GB FLASH version:"
+				echo -e "   81)  Swap OFF\033[00m"
+				echo -e "   82)  Swap ON (1x linux swap, 1x ext4 swap)"
+				echo -e "   83)  Swap ON (1x linux swap)"
+				read -p "Select SWAP support (1-3, 81-83)? "
+			else
+				read -p "Select SWAP support (1-3)? "
+			fi;;
 	esac
 
 	case "$REPLY" in
-		1)  SWAPDATA="0";;
-		2)  SWAPDATA="1";;
-		3)  SWAPDATA="2";;
-		81) SWAPDATA="80";;
-		82) SWAPDATA="81";;
-		83) SWAPDATA="82";;
-		*)  SWAPDATA="1";;
+		1)  SWAPDATA="0"
+		    SWPCNT=0;;
+		2)  SWAPDATA="1"
+		    SWPCNT=2;;
+		3)  SWAPDATA="2"
+		    SWPCNT=1;;
+		81) SWAPDATA="80"
+		    SWPCNT=0;;
+		82) SWAPDATA="81"
+		    SWPCNT=2;;
+		83) SWAPDATA="82"
+		    SWPCNT=1;;
+		*)  SWAPDATA="0"
+		    SWPCNT=0;;
 	esac
 	echo "SWAPDATA=$SWAPDATA" >> config
+
+	[ $SWAPDATA -gt 79 -a $SWAPDATA -lt 83 ] && EMMC_IMAGE_SIZE=7634944 || EMMC_IMAGE_SIZE=3817472
+	echo "EMMC_IMAGE_SIZE=$EMMC_IMAGE_SIZE" >> config
+
+	case $7 in
+		[6-9]|1[0-9]) REPLY=$7;;
+		*)	echo ""
+			read -p $'Kernelsize in MB, 6..19 \033[01;32m(default: 8)\033[00m? ' REPLY;;
+	esac
+	[ ! -z $REPLY ] && KERNEL_PARTITION_SIZE=$(($REPLY*1024)) || KERNEL_PARTITION_SIZE=8192
+	echo "KERNEL_PARTITION_SIZE=$KERNEL_PARTITION_SIZE" >> config
+
+	if [ $SWPCNT -gt 0 ]; then
+		case $8 in
+			[1-9][0-9]|[1-9][0-9][0-9]|10[0-2][0-4]) REPLY=$8;;
+			*)	echo ""
+				read -p $'Swapsize in MB, 10..1024 \033[01;32m(default: 128)\033[00m? ' REPLY;;
+		esac
+		[ ! -z $REPLY ] && SWAP_DATA_PARTITION_SIZE=$(($REPLY*1024)) || SWAP_DATA_PARTITION_SIZE=131072
+		echo "SWAP_DATA_PARTITION_SIZE=$SWAP_DATA_PARTITION_SIZE" >> config
+	else
+		SWAP_DATA_PARTITION_SIZE=0
+		echo "SWAP_DATA_PARTITION_SIZE=$SWAP_DATA_PARTITION_SIZE" >> config
+	fi
+
+	BOOT_PARTITION_SIZE=1024
+	ROOTFS_PARTITION_SIZE_MULTI=`expr $EMMC_IMAGE_SIZE \- $BOOT_PARTITION_SIZE \- $SWAP_DATA_PARTITION_SIZE \* $SWPCNT \- $KERNEL_PARTITION_SIZE \* 4`
+	ROOTFS_PARTITION_SIZE_MULTI=`expr $ROOTFS_PARTITION_SIZE_MULTI \/ 4 \- 768`
+	echo "ROOTFS_PARTITION_SIZE_MULTI=$ROOTFS_PARTITION_SIZE_MULTI" >> config
+
+	echo ""
+	echo "---------------------------------------------------------"
+	echo "Using flashsize                 : $EMMC_IMAGE_SIZE	($(($EMMC_IMAGE_SIZE/1024)) MB)"
+	echo "---------------------------------------------------------"
+	echo "BOOT_PARTITION_SIZE         (1x): $BOOT_PARTITION_SIZE		($(($BOOT_PARTITION_SIZE/1024)) MB)"
+	echo "KERNEL_PARTITION_SIZE       (4x): $KERNEL_PARTITION_SIZE		($(($KERNEL_PARTITION_SIZE/1024)) MB)"
+	[ $SWPCNT -gt 0 ] && echo "SWAP_DATA_PARTITION_SIZE    (${SWPCNT}x): $SWAP_DATA_PARTITION_SIZE	($(($SWAP_DATA_PARTITION_SIZE/1024)) MB)"
+	echo "ROOTFS_PARTITION_SIZE_MULTI (4x): $ROOTFS_PARTITION_SIZE_MULTI	($(($ROOTFS_PARTITION_SIZE_MULTI/1024)) MB)"
+	echo "---------------------------------------------------------"
 fi
 ##############################################
 
 # gcc version for ARM
 if [ $BOXARCH == 'arm' ]; then
-	case $7 in
-		[1-7]) REPLY=$7;;
+	case $9 in
+		[1-7]) REPLY=$9;;
 		*)	echo -e "\nSelect GCC version:"
 			echo "   1)  GCC version  6.5.0"
 			echo "   2)  GCC version  7.5.0"
