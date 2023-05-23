@@ -27,6 +27,7 @@ tools-clean:
 #	-$(MAKE) -C $(TOOLS_DIR)/spf_tool distclean
 	-$(MAKE) -C $(TOOLS_DIR)/stfbcontrol distclean
 	-$(MAKE) -C $(TOOLS_DIR)/streamproxy distclean
+	-$(MAKE) -C $(TOOLS_DIR)/sysinfo distclean
 #	-$(MAKE) -C $(TOOLS_DIR)/tfd2mtd distclean
 #	-$(MAKE) -C $(TOOLS_DIR)/tffpctl distclean
 	-$(MAKE) -C $(TOOLS_DIR)/turnoff_power distclean
@@ -387,6 +388,21 @@ $(D)/tools-streamproxy: $(D)/bootstrap
 	$(TOUCH)
 
 #
+# sysinfo
+#
+$(D)/tools-sysinfo: $(D)/bootstrap $(D)/libpng $(D)/freetype
+	$(START_BUILD)
+	set -e; cd $(TOOLS_DIR)/sysinfo; \
+		$(CONFIGURE_TOOLS) \
+			--prefix= \
+			--with-boxmodel=$(BOXTYPE) \
+			--with-boxtype=$(BOXTYPE) \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(TOUCH)
+
+#
 # tfd2mtd
 #
 $(D)/tools-tfd2mtd: $(D)/bootstrap
@@ -543,6 +559,7 @@ TOOLS += $(D)/tools-flashtool-pad
 TOOLS += $(D)/tools-fp_control
 TOOLS += $(D)/tools-stfbcontrol
 TOOLS += $(D)/tools-streamproxy
+#TOOLS += $(D)/tools-sysinfo
 TOOLS += $(D)/tools-ustslave
 TOOLS += $(D)/tools-vfdctl
 endif
