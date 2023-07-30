@@ -57,9 +57,20 @@ CCACHE                = /usr/bin/ccache
 
 BUILD                ?= $(shell /usr/share/libtool/config.guess 2>/dev/null || /usr/share/libtool/config/config.guess 2>/dev/null || /usr/share/misc/config.guess 2>/dev/null)
 
-ifeq ($(BOXARCH), sh4)
-CCACHE_DIR            = $(HOME)/.ccache-bs-sh4-fs
+CCACHE_DIR            = $(HOME)/.ccache-bs-$(BOXARCH)-fs/$(CROSSTOOL_GCC_VER)-kernel-$(KERNEL_VER)
 export CCACHE_DIR
+
+HOST_CCACHE_BIN       = /usr/bin/ccache
+HOST_CCACHE_BINDIR    = $(HOST_DIR)/bin
+
+define HOST_CCACHE_LINK
+                        ln -sf $(HOST_CCACHE_BIN) $(HOST_CCACHE_BINDIR)/cc
+                        ln -sf $(HOST_CCACHE_BIN) $(HOST_CCACHE_BINDIR)/c++
+                        ln -sf $(HOST_CCACHE_BIN) $(HOST_CCACHE_BINDIR)/gcc
+                        ln -sf $(HOST_CCACHE_BIN) $(HOST_CCACHE_BINDIR)/g++
+endef
+
+ifeq ($(BOXARCH), sh4)
 TARGET               ?= sh4-linux
 BOXARCH              ?= sh4
 KERNELNAME            = uImage
@@ -67,8 +78,6 @@ TARGET_MARCH_CFLAGS   =
 endif
 
 ifeq ($(BOXARCH), arm)
-CCACHE_DIR            = $(HOME)/.ccache-bs-arm-fs
-export CCACHE_DIR
 TARGET               ?= arm-cortex-linux-gnueabihf
 BOXARCH              ?= arm
 KERNELNAME            = zImage
