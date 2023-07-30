@@ -663,7 +663,7 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
 $(D)/libjpeg: $(D)/jpeg
 	@touch $@
 else
-$(D)/libjpeg: $(D)/libjpeg_turbo2
+$(D)/libjpeg: $(D)/libjpeg_turbo
 	@touch $@
 endif
 
