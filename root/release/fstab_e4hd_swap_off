@@ -5,7 +5,7 @@
 proc		/proc			proc	defaults					0	0
 sysfs		/sys			sysfs	defaults					0	0
 debugfs		/sys/kernel/debug	debugfs	defaults					0	0
-tmpfs		/tmp			tmpfs	defaults,size=250M					0	0
+tmpfs		/tmp			tmpfs	defaults,size=500M					0	0
 tmpfs		/media			tmpfs	defaults,size=10M					0	0
 tmpfs		/mnt			tmpfs	defaults,size=10M					0	0
 devpts		/dev/pts		devpts	defaults					0	0
