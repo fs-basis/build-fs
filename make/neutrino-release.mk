@@ -509,6 +509,8 @@ else
 #
 #
 endif
+	ln -sf /var/tuxbox/webscripts $(RELEASE_DIR)/var/webtv
+
 	ln -s /tmp $(RELEASE_DIR)/lib/init
 	ln -s /tmp $(RELEASE_DIR)/var/lib/urandom
 	ln -s /tmp $(RELEASE_DIR)/var/lock
