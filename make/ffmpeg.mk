@@ -16,7 +16,7 @@ FFMPEG_SNAP =
 FFMPEG_GITVER = 80131321c4
 else
 ifeq ($(FFMPEG_EXPERIMENTAL), 1)
-FFMPEG_VER = 4.4.4
+FFMPEG_VER = 6.1.1
 FFMPEG_SNAP = -$(FFMPEG_VER)
 FFMPEG_PATCH  = $(PATCHES)/ffmpeg/$(FFMPEG_VER)
 FFMPEG_SOURCE = ffmpeg-$(FFMPEG_VER).tar.xz
@@ -42,6 +42,8 @@ ifeq ($(FFMPEG_EXPERIMENTAL), 1)
 FFMPEG_CONF_OPTS  += --enable-libxml2
 FFMPEG_CONF_OPTS  += --enable-libfreetype
 FFMPEG_CONF_OPTS  += --disable-x86asm
+FFMPEG_DEPS = $(D)/harfbuzz
+FFMPEG_CONF_OPTS  += --enable-libharfbuzz
 #FFMPEG_CONF_OPTS  += --enable-filter=overlay
 else
 FFMPEG_CONF_OPTS  += --enable-libxml2
