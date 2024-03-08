@@ -1997,3 +1997,36 @@ $(D)/ofgwrite: $(D)/bootstrap $(ARCHIVE)/$(OFGWRITE_SOURCE)
 	install -m 755 $(BUILD_TMP)/ofgwrite-fs/ofgwrite $(TARGET_DIR)/usr/bin
 	$(REMOVE)/ofgwrite-fs
 	$(TOUCH)
+
+#
+# kmod
+#
+#KMOD_VER =
+KMOD_PATCH = kmod.patch
+
+$(D)/kmod: $(D)/bootstrap $(ARCHIVE)/$(KMOD_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/kmod
+	set -e; if [ -d $(ARCHIVE)/kmod.git ]; \
+		then cd $(ARCHIVE)/kmod.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/kmod-project/kmod.git kmod.git; \
+		fi
+	cp -ra $(ARCHIVE)/kmod.git $(BUILD_TMP)/kmod
+	(cd $(BUILD_TMP)/kmod; git checkout $(KMOD_VER);); \
+	$(CHDIR)/kmod; \
+		$(call apply_patches, $(KMOD_PATCH)); \
+		$(BUILDENV) \
+		$(CONFIGURE) \
+			--prefix=/usr \
+			--disable-manpages \
+			--disable-test-modules \
+			--disable-logging \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	cd $(TARGET_DIR)/usr/bin && for target in depmod insmod lsmod modinfo modprobe rmmod; do \
+	ln -sf /usr/bin/kmod $$target; \
+	done
+	$(REWRITE_LIBTOOL)/libkmod.la
+	$(REMOVE)/kmod
+	$(TOUCH)
