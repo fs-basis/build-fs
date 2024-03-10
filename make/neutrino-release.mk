@@ -404,15 +404,6 @@ endif
 	fi
 
 #
-# minisatip
-#
-	if [ -e $(TARGET_DIR)/usr/bin/minisatip -a -d $(TARGET_DIR)/usr/share/minisatip/html ]; then \
-		mkdir -p $(RELEASE_DIR)/usr/share/minisatip; \
-		cp -aR $(TARGET_DIR)/usr/share/minisatip/html $(RELEASE_DIR)/usr/share/minisatip; \
-		rm -f $(RELEASE_DIR)/usr/lib/libdvbcsa*; \
-	fi
-
-#
 # dropbear
 #
 	if [ -d $(RELEASE_DIR)/etc/dropbear ]; then \
