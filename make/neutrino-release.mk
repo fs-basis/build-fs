@@ -404,6 +404,24 @@ endif
 	fi
 
 #
+# oscam
+#
+	if [ -e $(TARGET_DIR)/../oscam-svn/oscam*libusb ]; then \
+		cp -f $(TARGET_DIR)/../oscam-svn/oscam*libusb $(RELEASE_DIR)/var/emu/oscam; \
+	fi
+	if [ -e $(TARGET_DIR)/../oscam-svn/oscam*libdvbcsa ]; then \
+		cp -f $(TARGET_DIR)/../oscam-svn/oscam*libdvbcsa $(RELEASE_DIR)/var/emu/oscam; \
+	fi
+ifeq ($(BOXARCH), sh4)
+	if [ -e $(TARGET_DIR)/../oscam-svn/oscam*libdvbcsa ]; then \
+		mv -f $(RELEASE_DIR)/usr/lib/libdvbcsa* $(RELEASE_DIR)/var/lib/; \
+		ln -s /var/lib/libdvbcsa.so $(RELEASE_DIR)/usr/lib/libdvbcsa.so; \
+		ln -s /var/lib/libdvbcsa.so.1 $(RELEASE_DIR)/usr/lib/libdvbcsa.so.1; \
+		ln -s /var/lib/libdvbcsa.so.1.0.1 $(RELEASE_DIR)/usr/lib/libdvbcsa.so.1.0.1; \
+	fi
+endif
+
+#
 # dropbear
 #
 	if [ -d $(RELEASE_DIR)/etc/dropbear ]; then \
