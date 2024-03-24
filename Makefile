@@ -108,7 +108,7 @@ include make/driver-$(BOXARCH).mk
 ifeq ($(BOXARCH), sh4)
 include make/crosstool-sh4.mk
 endif
-ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm))
 include make/crosstool.mk
 endif
 include make/root-etc.mk
