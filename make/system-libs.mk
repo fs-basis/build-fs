@@ -416,41 +416,6 @@ endif
 	$(TOUCH)
 
 #
-# timezone
-#
-TZDATA_VER = 2016a
-TZDATA_SOURCE = tzdata$(TZDATA_VER).tar.gz
-TZDATA_ZONELIST = africa antarctica asia australasia europe northamerica southamerica pacificnew etcetera backward
-DEFAULT_TIMEZONE ?= "CET"
-#ln -s /usr/share/zoneinfo/<country>/<city> /etc/localtime
-
-$(ARCHIVE)/$(TZDATA_SOURCE):
-	$(DOWNLOAD) ftp://ftp.iana.org/tz/releases/$(TZDATA_SOURCE)
-
-$(D)/timezone: $(D)/bootstrap find-zic $(ARCHIVE)/$(TZDATA_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/timezone
-	mkdir $(BUILD_TMP)/timezone
-	tar -C $(BUILD_TMP)/timezone -xf $(ARCHIVE)/$(TZDATA_SOURCE)
-	$(CHDIR)/timezone; \
-		unset ${!LC_*}; LANG=POSIX; LC_ALL=POSIX; export LANG LC_ALL; \
-		for zone in $(TZDATA_ZONELIST); do \
-			zic -d zoneinfo -L /dev/null -y yearistype.sh $$zone ; \
-			: zic -d zoneinfo/posix -L /dev/null -y yearistype.sh $$zone ; \
-			: zic -d zoneinfo/right -L leapseconds -y yearistype.sh $$zone ; \
-		done; \
-		install -d -m 0755 $(TARGET_DIR)/usr/share $(TARGET_DIR)/etc; \
-		cp -a zoneinfo $(TARGET_DIR)/usr/share/; \
-		cp -v zone.tab iso3166.tab $(TARGET_DIR)/usr/share/zoneinfo/; \
-		# Install default timezone
-		if [ -e $(TARGET_DIR)/usr/share/zoneinfo/$(DEFAULT_TIMEZONE) ]; then \
-			echo ${DEFAULT_TIMEZONE} > $(TARGET_DIR)/etc/timezone; \
-		fi; \
-	install -m 0644 $(SKEL_ROOT)/etc/timezone.xml $(TARGET_DIR)/etc/
-	$(REMOVE)/timezone
-	$(TOUCH)
-
-#
 # freetype
 #
 FREETYPE_VER = 2.11.0
@@ -1390,38 +1355,6 @@ $(D)/sqlite: $(D)/bootstrap $(ARCHIVE)/$(SQLITE_SOURCE)
 	$(REWRITE_LIBTOOL)/libsqlite3.la
 	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,sqlite3)
 	$(REMOVE)/sqlite-autoconf-$(SQLITE_VER)
-	$(TOUCH)
-
-#
-# libsoup
-#
-LIBSOUP_VER_MAJOR = 2.50
-LIBSOUP_VER_MINOR = 0
-LIBSOUP_VER = $(LIBSOUP_VER_MAJOR).$(LIBSOUP_VER_MINOR)
-LIBSOUP_SOURCE = libsoup-$(LIBSOUP_VER).tar.xz
-
-$(ARCHIVE)/$(LIBSOUP_SOURCE):
-	$(DOWNLOAD) https://download.gnome.org/sources/libsoup/$(LIBSOUP_VER_MAJOR)/$(LIBSOUP_SOURCE)
-
-$(D)/libsoup: $(D)/bootstrap $(D)/sqlite $(D)/libxml2 $(D)/libglib2 $(ARCHIVE)/$(LIBSOUP_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/libsoup-$(LIBSOUP_VER)
-	$(UNTAR)/$(LIBSOUP_SOURCE)
-	$(CHDIR)/libsoup-$(LIBSOUP_VER); \
-		$(CONFIGURE) \
-			--prefix=/usr \
-			--datarootdir=/.remove \
-			--disable-more-warnings \
-			--without-gnome \
-			--disable-gtk-doc \
-			--disable-gtk-doc-html \
-			--disable-gtk-doc-pdf \
-		; \
-		$(MAKE); \
-		$(MAKE) install DESTDIR=$(TARGET_DIR) itlocaledir=$$(TARGET_DIR)/.remove
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libsoup-2.4.pc
-	$(REWRITE_LIBTOOL)/libsoup-2.4.la
-	$(REMOVE)/libsoup-$(LIBSOUP_VER)
 	$(TOUCH)
 
 #

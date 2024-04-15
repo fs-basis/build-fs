@@ -674,32 +674,6 @@ $(D)/nano: $(D)/bootstrap $(ARCHIVE)/$(NANO_SOURCE)
 	$(TOUCH)
 
 #
-# rsync
-#
-RSYNC_VER = 3.1.3
-RSYNC_SOURCE = rsync-$(RSYNC_VER).tar.gz
-
-$(ARCHIVE)/$(RSYNC_SOURCE):
-	$(DOWNLOAD) https://rsync.samba.org/ftp/rsync/src/$(RSYNC_SOURCE)
-
-$(D)/rsync: $(D)/bootstrap $(ARCHIVE)/$(RSYNC_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/rsync-$(RSYNC_VER)
-	$(UNTAR)/$(RSYNC_SOURCE)
-	$(CHDIR)/rsync-$(RSYNC_VER); \
-		$(CONFIGURE) \
-			--prefix=/usr \
-			--mandir=/.remove \
-			--sysconfdir=/etc \
-			--disable-debug \
-			--disable-locale \
-		; \
-		$(MAKE) all; \
-		$(MAKE) install-all DESTDIR=$(TARGET_DIR)
-	$(REMOVE)/rsync-$(RSYNC_VER)
-	$(TOUCH)
-
-#
 # fuse
 #
 FUSE_VER = 2.9.9
@@ -785,33 +759,6 @@ $(D)/sdparm: $(D)/bootstrap $(ARCHIVE)/$(SDPARM_SOURCE)
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	rm -f $(addprefix $(TARGET_DIR)/sbin/,sas_disk_blink scsi_ch_swp)
 	$(REMOVE)/sdparm-$(SDPARM_VER)
-	$(TOUCH)
-
-#
-# hddtemp
-#
-HDDTEMP_VER = 0.3-beta15
-HDDTEMP_SOURCE = hddtemp-$(HDDTEMP_VER).tar.bz2
-
-$(ARCHIVE)/$(HDDTEMP_SOURCE):
-	$(DOWNLOAD) http://savannah.c3sl.ufpr.br/hddtemp/$(HDDTEMP_SOURCE)
-
-$(D)/hddtemp: $(D)/bootstrap $(ARCHIVE)/$(HDDTEMP_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/hddtemp-$(HDDTEMP_VER)
-	$(UNTAR)/$(HDDTEMP_SOURCE)
-	$(CHDIR)/hddtemp-$(HDDTEMP_VER); \
-		$(CONFIGURE) \
-			--prefix= \
-			--mandir=/.remove \
-			--datadir=/.remove \
-			--with-db_path=/var/hddtemp.db \
-		; \
-		$(MAKE) all; \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
-		install -d $(TARGET_DIR)/var/tuxbox/config
-		install -m 644 $(SKEL_ROOT)/release/hddtemp.db $(TARGET_DIR)/var
-	$(REMOVE)/hddtemp-$(HDDTEMP_VER)
 	$(TOUCH)
 
 #
