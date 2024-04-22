@@ -116,7 +116,7 @@ if [ "$LOCAL_FFMPEG_BOXTYPE_LIST" == "$BOXTYPE" -o "$BOXARCH" == "arm" ]; then
 		*)	echo -e "\nFFMPEG version:"
 			echo -e "   \033[01;32m1)  FFMPEG 4.4.4\033[00m"
 			echo "   2)  FFMPEG 6.1.1   [experimental]"
-			echo "   3)  FFMPEG 6.x.x   [git snapshot]"
+			echo "   3)  FFMPEG 7.x.x   [git snapshot]"
 			read -p "Select FFMPEG Version (1-3)? ";;
 	esac
 
