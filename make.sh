@@ -297,7 +297,7 @@ if [ $BOXARCH == 'arm' ]; then
 			echo -e "   \033[01;32m3)  GCC version  8.5.0\033[00m"
 			echo "   4)  GCC version  9.5.0"
 			echo "   5)  GCC version 10.5.0"
-			echo "   6)  GCC version 11.4.0"
+			echo "   6)  GCC version 11.5.0"
 			read -p "Select GCC version (1-6)? ";;
 	esac
 
