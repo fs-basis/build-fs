@@ -910,7 +910,7 @@ $(D)/autofs: $(D)/bootstrap $(D)/e2fsprogs $(AUTOFS_LIBNSL) $(ARCHIVE)/$(AUTOFS_
 #
 # wget
 #
-WGET_VER = 1.24.5
+WGET_VER = 1.25.0
 WGET_SOURCE = wget-$(WGET_VER).tar.gz
 WGET_PATCH = wget-$(WGET_VER).patch
 
