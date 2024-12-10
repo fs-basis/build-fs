@@ -94,6 +94,7 @@ OSCAM_CONFIG ?= 	--enable \
 		WITH_NEUTRINO \
 		WITH_SSL
 
+OSCAM_VER = 527d8e1a
 OSCAM_PATCH = $(OSCAM_LOCAL_PATCH)
 
 $(D)/oscam.do_prepare:
@@ -109,6 +110,7 @@ $(D)/oscam.do_prepare:
 	cp -ra $(ARCHIVE)/$(OSCAM_FLAVOUR_DIR) $(SOURCE_DIR)/$(OSCAM_SOURCE_DIR); \
 	cp -ra $(SOURCE_DIR)/$(OSCAM_SOURCE_DIR) $(SOURCE_DIR)/$(OSCAM_SOURCE_DIR).org
 	set -e; cd $(SOURCE_DIR)/$(OSCAM_SOURCE_DIR); \
+		git checkout $(OSCAM_VER); \
 		$(call apply_patches, $(OSCAM_PATCH)); \
 		 $(SHELL) ./config.sh --disable all \
 			$(OSCAM_CONFIG)
