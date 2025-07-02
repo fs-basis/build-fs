@@ -32,7 +32,7 @@ NEUTRINO_DEPS += $(LOCAL_NEUTRINO_DEPS)
 
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs912 ufs913))
 NEUTRINO_DEPS += $(D)/ntfs_3g
-ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910))
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
 NEUTRINO_DEPS += $(D)/mtd_utils
 NEUTRINO_DEPS += $(D)/gptfdisk
 endif
