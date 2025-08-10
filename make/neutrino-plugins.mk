@@ -19,7 +19,7 @@ $(D)/neutrino-plugin.do_prepare:
 	rm -rf $(SOURCE_DIR)/neutrino-plugins
 	rm -rf $(SOURCE_DIR)/neutrino-plugins.org
 	set -e; if [ -d $(ARCHIVE)/plugins.git ]; \
-		then cd $(ARCHIVE)/plugins.git; git pull; \
+		then cd $(ARCHIVE)/plugins.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/fs-basis/plugins.git plugins.git; \
 		fi
 	cp -ra $(ARCHIVE)/plugins.git $(SOURCE_DIR)/neutrino-plugins
@@ -82,7 +82,7 @@ $(D)/bestbitrate:
 	$(START_BUILD)
 	$(REMOVE)/plugins-lua
 	set -e; if [ -d $(ARCHIVE)/plugins-lua.git ]; \
-		then cd $(ARCHIVE)/plugins-lua.git; git pull; \
+		then cd $(ARCHIVE)/plugins-lua.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/fs-basis/plugins-lua.git plugins-lua.git; \
 		fi
 	cp -ra $(ARCHIVE)/plugins-lua.git $(BUILD_TMP)/plugins-lua
@@ -100,7 +100,7 @@ $(D)/neutrino-plugin-settings-update:
 	$(START_BUILD)
 	$(REMOVE)/settings-update
 	set -e; if [ -d $(ARCHIVE)/settings-update.git ]; \
-		then cd $(ARCHIVE)/settings-update.git; git pull; \
+		then cd $(ARCHIVE)/settings-update.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/horsti58/lua-data.git settings-update.git; \
 		fi
 	cp -ra $(ARCHIVE)/settings-update.git $(BUILD_TMP)/settings-update
@@ -115,7 +115,7 @@ $(D)/mediathek:
 	$(START_BUILD)
 	$(REMOVE)/plugins-lua
 	set -e; if [ -d $(ARCHIVE)/plugins-lua.git ]; \
-		then cd $(ARCHIVE)/plugins-lua.git; git pull; \
+		then cd $(ARCHIVE)/plugins-lua.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/fs-basis/plugins-lua.git plugins-lua.git; \
 		fi
 	cp -ra $(ARCHIVE)/plugins-lua.git $(BUILD_TMP)/plugins-lua
@@ -134,7 +134,7 @@ $(D)/mtv:
 	$(START_BUILD)
 	$(REMOVE)/plugins-lua
 	set -e; if [ -d $(ARCHIVE)/plugins-lua.git ]; \
-		then cd $(ARCHIVE)/plugins-lua.git; git pull; \
+		then cd $(ARCHIVE)/plugins-lua.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/fs-basis/plugins-lua.git plugins-lua.git; \
 		fi
 	cp -ra $(ARCHIVE)/plugins-lua.git $(BUILD_TMP)/plugins-lua
@@ -152,7 +152,7 @@ $(D)/n24: $(D)/bootstrap
 	$(START_BUILD)
 	$(REMOVE)/plugins-lua
 	set -e; if [ -d $(ARCHIVE)/plugins-lua.git ]; \
-		then cd $(ARCHIVE)/plugins-lua.git; git pull; \
+		then cd $(ARCHIVE)/plugins-lua.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/fs-basis/plugins-lua.git plugins-lua.git; \
 		fi
 	cp -ra $(ARCHIVE)/plugins-lua.git $(BUILD_TMP)/plugins-lua
@@ -170,7 +170,7 @@ $(D)/netzkino: $(D)/bootstrap
 	$(START_BUILD)
 	$(REMOVE)/plugins-lua
 	set -e; if [ -d $(ARCHIVE)/plugins-lua.git ]; \
-		then cd $(ARCHIVE)/plugins-lua.git; git pull; \
+		then cd $(ARCHIVE)/plugins-lua.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/fs-basis/plugins-lua.git plugins-lua.git; \
 		fi
 	cp -ra $(ARCHIVE)/plugins-lua.git $(BUILD_TMP)/plugins-lua
@@ -187,7 +187,7 @@ $(D)/spiegel:
 	$(START_BUILD)
 	$(REMOVE)/plugins-lua
 	set -e; if [ -d $(ARCHIVE)/plugins-lua.git ]; \
-		then cd $(ARCHIVE)/plugins-lua.git; git pull; \
+		then cd $(ARCHIVE)/plugins-lua.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/fs-basis/plugins-lua.git plugins-lua.git; \
 		fi
 	cp -ra $(ARCHIVE)/plugins-lua.git $(BUILD_TMP)/plugins-lua
@@ -205,7 +205,7 @@ $(D)/tierwelt:
 	$(START_BUILD)
 	$(REMOVE)/plugins-lua
 	set -e; if [ -d $(ARCHIVE)/plugins-lua.git ]; \
-		then cd $(ARCHIVE)/plugins-lua.git; git pull; \
+		then cd $(ARCHIVE)/plugins-lua.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/fs-basis/plugins-lua.git plugins-lua.git; \
 		fi
 	cp -ra $(ARCHIVE)/plugins-lua.git $(BUILD_TMP)/plugins-lua

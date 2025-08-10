@@ -483,7 +483,7 @@ $(D)/dosfstools: bootstrap
 	$(START_BUILD)
 	$(REMOVE)/dosfstools
 	set -e; if [ -d $(ARCHIVE)/dosfstools.git ]; \
-		then cd $(ARCHIVE)/dosfstools.git; git pull; \
+		then cd $(ARCHIVE)/dosfstools.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/dosfstools/dosfstools.git dosfstools.git; \
 		fi
 	cp -ra $(ARCHIVE)/dosfstools.git $(BUILD_TMP)/dosfstools
@@ -1322,7 +1322,7 @@ $(D)/dvbsnoop: $(D)/bootstrap $(D)/kernel
 	$(START_BUILD)
 	$(REMOVE)/dvbsnoop
 	set -e; if [ -d $(ARCHIVE)/dvbsnoop.git ]; \
-		then cd $(ARCHIVE)/dvbsnoop.git; git pull; \
+		then cd $(ARCHIVE)/dvbsnoop.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/Duckbox-Developers/dvbsnoop.git dvbsnoop.git; \
 		fi
 	cp -ra $(ARCHIVE)/dvbsnoop.git $(BUILD_TMP)/dvbsnoop
@@ -1493,7 +1493,7 @@ $(D)/dropbearmulti: $(D)/bootstrap
 	$(START_BUILD)
 	$(REMOVE)/dropbearmulti
 	set -e; if [ -d $(ARCHIVE)/dropbearmulti.git ]; \
-		then cd $(ARCHIVE)/dropbearmulti.git; git pull; \
+		then cd $(ARCHIVE)/dropbearmulti.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/mkj/dropbear.git dropbearmulti.git; \
 		fi
 	cp -ra $(ARCHIVE)/dropbearmulti.git $(BUILD_TMP)/dropbearmulti
@@ -1583,7 +1583,7 @@ $(D)/dvb-apps: $(D)/bootstrap $(ARCHIVE)/$(DVB_APPS_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/dvb-apps
 	set -e; if [ -d $(ARCHIVE)/dvb-apps.git ]; \
-		then cd $(ARCHIVE)/dvb-apps.git; git pull; \
+		then cd $(ARCHIVE)/dvb-apps.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/openpli-arm/dvb-apps.git dvb-apps.git; \
 		fi
 	cp -ra $(ARCHIVE)/dvb-apps.git $(BUILD_TMP)/dvb-apps
@@ -1604,7 +1604,7 @@ $(D)/ofgwrite: $(D)/bootstrap $(ARCHIVE)/$(OFGWRITE_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/ofgwrite-fs
 	set -e; if [ -d $(ARCHIVE)/ofgwrite-fs.git ]; \
-		then cd $(ARCHIVE)/ofgwrite-fs.git; git pull; \
+		then cd $(ARCHIVE)/ofgwrite-fs.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/fs-basis/ofgwrite-fs.git ofgwrite-fs.git; \
 		fi
 	cp -ra $(ARCHIVE)/ofgwrite-fs.git $(BUILD_TMP)/ofgwrite-fs
