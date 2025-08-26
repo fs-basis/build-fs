@@ -125,7 +125,7 @@ UBOOT_PATCH  =  u-boot-$(UBOOT_VER).patch
 $(ARCHIVE)/u-boot-$(UBOOT_VER).tar.bz2:
 	$(DOWNLOAD) ftp://ftp.denx.de/pub/u-boot/u-boot-$(UBOOT_VER).tar.bz2
 
-$(D)/uboot: bootstrap $(ARCHIVE)/u-boot-$(UBOOT_VER).tar.bz2
+$(D)/uboot: $(D)/bootstrap $(ARCHIVE)/u-boot-$(UBOOT_VER).tar.bz2
 	$(START_BUILD)
 	$(REMOVE)/u-boot-$(UBOOT_VER)
 	$(UNTAR)/u-boot-$(UBOOT_VER).tar.bz2
