@@ -1606,7 +1606,7 @@ $(D)/libdpf: $(D)/bootstrap $(D)/libusb_compat $(ARCHIVE)/$(LIBDPF_SOURCE)
 #
 LCD4LINUX_PATCH = lcd4linux.patch
 
-$(D)/lcd4linux: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb $(D)/libdpf
+$(D)/lcd4linux: $(D)/bootstrap $(D)/libjpeg $(D)/gd $(D)/libusb_compat $(D)/libusb $(D)/libdpf
 	$(START_BUILD)
 	$(REMOVE)/lcd4linux
 	set -e; if [ -d $(ARCHIVE)/lcd4linux.git ]; \
