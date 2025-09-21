@@ -41,7 +41,7 @@ $(D)/lua: $(D)/bootstrap $(D)/ncurses $(ARCHIVE)/$(LUAPOSIX_SOURCE) $(ARCHIVE)/$
 ifeq ($(BOXARCH), sh4)
 LUACURL_VER = 9ac72c7
 else
-LUACURL_VER = e0b1d2e
+LUACURL_VER = 9f8b6db
 endif
 LUACURL_SOURCE = luacurl-git-$(LUACURL_VER).tar.bz2
 LUACURL_URL = https://github.com/Lua-cURL/Lua-cURLv3.git
