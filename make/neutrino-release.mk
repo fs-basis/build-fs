@@ -123,11 +123,7 @@ neutrino-release-base:
 	rm -rf $(RELEASE_DIR) || true
 	install -d $(RELEASE_DIR)
 	install -d $(RELEASE_DIR)/{bin,boot,dev,dev.static,etc,hdd,lib,media,mnt,proc,ram,root,sbin,swap,sys,tmp,usr,var}
-ifeq ($(BOXARCH), $(filter $(BOXARCH), arm))
-	install -d $(RELEASE_DIR)/var/{bin,boot,emu,epg,httpd,keys,lib,tuxbox}
-else
 	install -d $(RELEASE_DIR)/var/{bin,boot,emu,etc,epg,httpd,keys,lib,tuxbox}
-endif
 	install -d $(RELEASE_DIR)/var/tuxbox/{config,control,icons,locale,plugins,themes,webscripts,webchannels}
 	install -d $(RELEASE_DIR)/var/tuxbox/config/zapit
 #
@@ -144,13 +140,8 @@ endif
 	install -d $(RELEASE_DIR)/usr/share/tuxbox/neutrino
 	install -d $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/logo
 	install -d $(RELEASE_DIR)/usr/share/lua/5.2
-#
-#ifeq ($(BOXARCH), $(filter $(BOXARCH), arm))
-#	install -d $(RELEASE_DIR)/var/lib/{nfs,modules,opkg}
-#else
 	install -d $(RELEASE_DIR)/var/lib/{nfs,modules}
-#endif
-#
+
 	mkdir -p $(RELEASE_DIR)/etc/rc.d/rc0.d
 	ln -s ../init.d/sendsigs $(RELEASE_DIR)/etc/rc.d/rc0.d/S20sendsigs
 	ln -s ../init.d/umountfs $(RELEASE_DIR)/etc/rc.d/rc0.d/S40umountfs
@@ -159,24 +150,17 @@ endif
 	ln -s ../init.d/sendsigs $(RELEASE_DIR)/etc/rc.d/rc6.d/S20sendsigs
 	ln -s ../init.d/umountfs $(RELEASE_DIR)/etc/rc.d/rc6.d/S40umountfs
 	ln -s ../init.d/reboot $(RELEASE_DIR)/etc/rc.d/rc6.d/S90reboot
-	ln -sf /usr/share $(RELEASE_DIR)/share
+	ln -sf usr/share $(RELEASE_DIR)/share
 	ln -sf /usr/share/tuxbox/neutrino/icons/logo $(RELEASE_DIR)/logos
 	ln -sf /usr/share/tuxbox/neutrino/icons/logo $(RELEASE_DIR)/var/httpd/logos
-ifeq ($(BOXARCH), $(filter $(BOXARCH), arm))
-	touch $(RELEASE_DIR)/etc/.firstboot
-else
 	touch $(RELEASE_DIR)/var/etc/.firstboot
-endif
 	cp -a $(TARGET_DIR)/bin/* $(RELEASE_DIR)/bin/
 	cp -a $(TARGET_DIR)/usr/bin/* $(RELEASE_DIR)/usr/bin/
 	cp -a $(TARGET_DIR)/sbin/* $(RELEASE_DIR)/sbin/
 	cp -a $(TARGET_DIR)/usr/sbin/* $(RELEASE_DIR)/usr/sbin/
 	cp -dp $(TARGET_DIR)/.version $(RELEASE_DIR)/
-ifeq ($(BOXARCH), $(filter $(BOXARCH), arm))
-	cp -dp $(TARGET_DIR)/.version $(RELEASE_DIR)/etc
-else
-	ln -sf /.version $(RELEASE_DIR)/var/etc/.version
-endif
+	cp -dp $(TARGET_DIR)/.version $(RELEASE_DIR)/var/etc/image-version
+#	ln -sf /.version $(RELEASE_DIR)/var/etc/.version
 	cp $(TARGET_DIR)/boot/$(KERNELNAME) $(RELEASE_DIR)/boot/
 	ln -sf /proc/mounts $(RELEASE_DIR)/etc/mtab
 	cp -dp $(SKEL_ROOT)/sbin/MAKEDEV $(RELEASE_DIR)/sbin/
@@ -511,36 +495,18 @@ $(D)/neutrino-release: neutrino-release-base neutrino-release-$(BOXTYPE)
 #
 # nicht die feine Art, aber funktioniert ;)
 #
-ifeq ($(BOXARCH), $(filter $(BOXARCH), arm))
-	ln -sf /etc $(RELEASE_DIR)/var
-else
 	cp -dpfr $(RELEASE_DIR)/etc $(RELEASE_DIR)/var
 	rm -fr $(RELEASE_DIR)/etc
-	ln -sf /var/etc $(RELEASE_DIR)/etc
-#DD	ln -sf var/etc $(RELEASE_DIR)/etc
+	ln -sf var/etc $(RELEASE_DIR)/etc
 #
-#
-endif
 	ln -sf /var/tuxbox/webscripts $(RELEASE_DIR)/var/webtv
-
+#
 	ln -s /tmp $(RELEASE_DIR)/lib/init
 	ln -s /tmp $(RELEASE_DIR)/var/lib/urandom
 	ln -s /tmp $(RELEASE_DIR)/var/lock
 	ln -s /tmp $(RELEASE_DIR)/var/log
 	ln -s /tmp $(RELEASE_DIR)/var/run
 	ln -s /tmp $(RELEASE_DIR)/var/tmp
-#
-#	rm -f $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/mp3-?.jpg
-#	rm -f $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/mp3.jpg
-#	rm -f $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/shutdown.jpg
-#	rm -f $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/radiomode.jpg
-#	rm -f $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/start.jpg
-#
-#	ln -sf /var/tuxbox/plugins $(RELEASE_DIR)/var/plugins
-#	ln -sf /var/tuxbox/webchannels $(RELEASE_DIR)/var/webchannels
-#	ln -sf /var/tuxbox/webscripts $(RELEASE_DIR)/var/webscripts
-#	ln -sf /var/tuxbox $(RELEASE_DIR)/lib/tuxbox
-
 #
 # linux-strip all
 #
