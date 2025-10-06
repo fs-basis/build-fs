@@ -307,7 +307,7 @@ if [ $BOXARCH == 'arm' ]; then
 		3) BS_GCC_VER="8.5.0";;
 		4) BS_GCC_VER="9.5.0";;
 		5) BS_GCC_VER="10.5.0";;
-		6) BS_GCC_VER="11.4.0";;
+		6) BS_GCC_VER="11.5.0";;
 		*) BS_GCC_VER="8.5.0";;
 	esac
 	echo "BS_GCC_VER=$BS_GCC_VER" >> config
