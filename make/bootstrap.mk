@@ -29,6 +29,47 @@ endif
 	fi
 
 #
+# host_python
+#
+PYTHON_VER_MAJOR = 2.7
+PYTHON_VER_MINOR = 18
+PYTHON_VER = $(PYTHON_VER_MAJOR).$(PYTHON_VER_MINOR)
+PYTHON_SOURCE = Python-$(PYTHON_VER).tar.xz
+HOST_PYTHON_PATCH = python-$(PYTHON_VER).patch
+
+$(ARCHIVE)/$(PYTHON_SOURCE):
+	$(DOWNLOAD) https://www.python.org/ftp/python/$(PYTHON_VER)/$(PYTHON_SOURCE)
+
+$(D)/host_python: $(ARCHIVE)/$(PYTHON_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/Python-$(PYTHON_VER)
+	$(UNTAR)/$(PYTHON_SOURCE)
+	$(CHDIR)/Python-$(PYTHON_VER); \
+		$(call apply_patches, $(HOST_PYTHON_PATCH)); \
+		autoconf; \
+		CONFIG_SITE= \
+		OPT="$(HOST_CFLAGS)" \
+		./configure $(SILENT_OPT) \
+			--without-cxx-main \
+			--with-threads \
+		; \
+		$(MAKE) python Parser/pgen; \
+		mv python ./hostpython; \
+		mv Parser/pgen ./hostpgen; \
+		\
+		$(MAKE) distclean; \
+		./configure $(SILENT_OPT) \
+			--prefix=$(HOST_DIR) \
+			--sysconfdir=$(HOST_DIR)/etc \
+			--without-cxx-main \
+			--with-threads \
+		; \
+		$(MAKE) all install; \
+		cp ./hostpgen $(HOST_DIR)/bin/pgen
+	$(REMOVE)/Python-$(PYTHON_VER)
+	$(TOUCH)
+
+#
 # host_pkgconfig
 #
 HOST_PKGCONFIG_VER = 0.29.2
