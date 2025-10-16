@@ -24,7 +24,7 @@ fi
 
 if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 1                             : Target system (1-70)"
-	echo "Parameter 2 (not UFS910/UFS922)         : FFMPEG Version (1-3)"
+	echo "Parameter 2 (not UFS910/UFS922)         : FFMPEG Version (1-4)"
 	echo "Parameter 3                             : Optimization (1-6)"
 	echo "Parameter 4                             : Neutrino variant (1-2)"
 	echo "Parameter 5                             : External LCD support (1-4)"
@@ -112,25 +112,28 @@ fi
 
 if [ "$LOCAL_FFMPEG_BOXTYPE_LIST" == "$BOXTYPE" -o "$BOXARCH" == "arm" ]; then
 	case $2 in
-		[1-3]) REPLY=$2;;
+		[1-4]) REPLY=$2;;
 		*)	echo -e "\nFFMPEG version:"
 			echo -e "   \033[01;32m1)  FFMPEG 4.4.6\033[00m"
 			echo "   2)  FFMPEG 6.1.2   [experimental]"
-			echo "   3)  FFMPEG 7.x.x   [git snapshot]"
+			echo "   3)  FFMPEG 6.1.3   [experimental]"
+			echo "   4)  FFMPEG 7.x.x   [git snapshot]"
 			read -p "Select FFMPEG Version (1-3)? ";;
 	esac
 
 	case "$REPLY" in
-		1)  FFMPEG_EXPERIMENTAL="0"
+		1)  FFFMPEG_VER="4.4.6"
 		    FFMPEG_SNAPSHOT="0";;
-		2)  FFMPEG_EXPERIMENTAL="1"
+		2)  FFMPEG_VER="6.1.2"
 		    FFMPEG_SNAPSHOT="0";;
-		3)  FFMPEG_EXPERIMENTAL="0"
+		3)  FFMPEG_VER="6.1.3"
+		    FFMPEG_SNAPSHOT="0";;
+		4)  FFMPEG_VER="0"
 		    FFMPEG_SNAPSHOT="1";;
-		*)  FFMPEG_EXPERIMENTAL="0"
+		*)  FFMPEG_VER="4.4.6"
 		    FFMPEG_SNAPSHOT="0";;
 	esac
-	echo "FFMPEG_EXPERIMENTAL=$FFMPEG_EXPERIMENTAL" >> config
+	echo "FFMPEG_VER=$FFMPEG_VER" >> config
 	echo "FFMPEG_SNAPSHOT=$FFMPEG_SNAPSHOT" >> config
 fi
 

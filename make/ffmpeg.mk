@@ -16,16 +16,25 @@ FFMPEG_PATCH  = $(PATCHES)/ffmpeg/$(FFMPEG_VER)
 FFMPEG_SNAP =
 FFMPEG_GITVER = e1ef33d
 else
-ifeq ($(FFMPEG_EXPERIMENTAL), 1)
+ifeq ($(FFMPEG_VER), 6.1.3)
+FFMPEG_VER = 6.1.3
+FFMPEG_SNAP = -$(FFMPEG_VER)
+FFMPEG_PATCH  = $(PATCHES)/ffmpeg/$(FFMPEG_VER)
+FFMPEG_SOURCE = ffmpeg-$(FFMPEG_VER).tar.xz
+else
+ifeq ($(FFMPEG_VER), 6.1.2)
 FFMPEG_VER = 6.1.2
 FFMPEG_SNAP = -$(FFMPEG_VER)
 FFMPEG_PATCH  = $(PATCHES)/ffmpeg/$(FFMPEG_VER)
 FFMPEG_SOURCE = ffmpeg-$(FFMPEG_VER).tar.xz
 else
+ifeq ($(FFMPEG_VER), 4.4.6)
 FFMPEG_VER = 4.4.6
 FFMPEG_SNAP = -$(FFMPEG_VER)
 FFMPEG_PATCH  = $(PATCHES)/ffmpeg/$(FFMPEG_VER)
 FFMPEG_SOURCE = ffmpeg-$(FFMPEG_VER).tar.xz
+endif
+endif
 endif
 endif
 
@@ -39,7 +48,7 @@ FFMPEG_DEPS       += $(D)/harfbuzz
 FFMPEG_CONF_OPTS  += --enable-libharfbuzz
 #FFMPEG_CONF_OPTS  += --enable-filter=overlay
 else
-ifeq ($(FFMPEG_EXPERIMENTAL), 1)
+ifeq ($(FFMPEG_VER), $(filter $(FFMPEG_VER), 6.1.2 6.1.3))
 FFMPEG_CONF_OPTS  += --enable-libxml2
 FFMPEG_CONF_OPTS  += --enable-libfreetype
 FFMPEG_CONF_OPTS  += --disable-x86asm
@@ -47,10 +56,12 @@ FFMPEG_DEPS       += $(D)/harfbuzz
 FFMPEG_CONF_OPTS  += --enable-libharfbuzz
 #FFMPEG_CONF_OPTS  += --enable-filter=overlay
 else
+ifeq ($(FFMPEG_VER), $(filter $(FFMPEG_VER), 4.4.6))
 FFMPEG_CONF_OPTS  += --enable-libxml2
 FFMPEG_CONF_OPTS  += --enable-libfreetype
 FFMPEG_CONF_OPTS  += --disable-x86asm
 #FFMPEG_CONF_OPTS  += --enable-filter=overlay
+endif
 endif
 endif
 
