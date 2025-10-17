@@ -43,7 +43,7 @@ if [ "$1" != "" ]; then
 	echo "OPTIMIZATIONS=size" >> config
 	echo "OPTIMIZE_PICS=1" >> config
 	echo "EXTERNAL_LCD=none" >> config
-	echo "FLAVOUR=neutrino-ddt" >> config
+	echo "FLAVOUR=neutrino-fs" >> config
 	echo "SWAPDATA=0" >> config
 	echo "VU_MULTIBOOT=1" >> config
 	case $1 in
