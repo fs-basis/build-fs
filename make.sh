@@ -45,7 +45,6 @@ if [ "$1" != "" ]; then
 	echo "EXTERNAL_LCD=none" >> config
 	echo "FLAVOUR=neutrino-fs" >> config
 	echo "SWAPDATA=0" >> config
-	echo "VU_MULTIBOOT=1" >> config
 	case $1 in
 		ufs910|ufs912|ufs913|ufs922)
 			echo "BOXARCH=sh4" >> config
