@@ -56,7 +56,7 @@ $(D)/ncurses: $(D)/bootstrap $(ARCHIVE)/$(NCURSES_SOURCE)
 #
 LIBFFI_VER = 3.2.1
 LIBFFI_SOURCE = libffi-$(LIBFFI_VER).tar.gz
-# opLIBFFI_PATCH = libffi-$(LIBFFI_VER).patch
+LIBFFI_PATCH  = libffi-$(LIBFFI_VER).patch
 
 $(ARCHIVE)/$(LIBFFI_SOURCE):
 	$(DOWNLOAD) ftp://sourceware.org/pub/libffi/$(LIBFFI_SOURCE)
