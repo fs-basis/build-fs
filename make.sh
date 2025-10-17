@@ -24,7 +24,7 @@ fi
 
 if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 1                             : Target system (1-70)"
-	echo "Parameter 2 (not UFS910/UFS922)         : FFMPEG Version (1-4)"
+	echo "Parameter 2 (not UFS910/UFS922)         : FFMPEG Version (1-5)"
 	echo "Parameter 3                             : Optimization (1-6)"
 	echo "Parameter 4                             : Neutrino variant (1-2)"
 	echo "Parameter 5                             : External LCD support (1-4)"
@@ -33,6 +33,35 @@ if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 8 (HD51/H7/BRE2ZE4K/E4HDULTRA): Swap size in MB (default: 128)"
 	echo "Parameter 9 (ARM)                       : GCC Version (1-6)"
 	exit
+fi
+
+##############################################
+
+if [ "$1" != "" ]; then
+	# defaults
+	echo "BOXTYPE=$1" > config
+	echo "OPTIMIZATIONS=size" >> config
+	echo "OPTIMIZE_PICS=1" >> config
+	echo "EXTERNAL_LCD=none" >> config
+	echo "FLAVOUR=neutrino-ddt" >> config
+	echo "SWAPDATA=0" >> config
+	echo "VU_MULTIBOOT=1" >> config
+	case $1 in
+		ufs910|ufs912|ufs913|ufs922)
+			echo "BOXARCH=sh4" >> config
+			echo "BS_GCC_VER=4.8.4" >> config
+			[ "$1" == "ufs910" -o "$1" == "ufs922" ] && echo "FFMPEG_VER=2.8" >> config || echo "FFMPEG_VER=4.4" >> config
+			make printenv
+			exit
+		;;
+		hd51|h7|bre2ze4k|e4hdultra)
+			echo "BOXARCH=arm" >> config
+			echo "BS_GCC_VER=8.5.0" >> config
+			echo "FFMPEG_VER=4.4" >> config
+			make printenv
+			exit
+		;;
+	esac
 fi
 
 ##############################################
@@ -106,35 +135,49 @@ if [ "$BOXARCH" == "sh4" ]; then
 		if [ "$BOXTYPE" == "$i" ]; then
 			LOCAL_FFMPEG_BOXTYPE_LIST=$BOXTYPE
 			echo "LOCAL_FFMPEG_BOXTYPE_LIST=$LOCAL_FFMPEG_BOXTYPE_LIST" >> config
+			case $2 in
+				[1-3]) REPLY=$2;;
+				*)	echo -e "\nFFMPEG version:"
+					echo "   1)  FFMPEG 3.4 GIT"
+					echo -e "   \033[01;32m2)  FFMPEG 4.4 GIT\033[00m"
+					echo "   3)  FFMPEG 5.1 GIT [experimental]"
+					read -p "Select FFMPEG version (1-3)? "
+					;;
+			esac
+
+			case "$REPLY" in
+				1)  FFMPEG_VER="3.4";;
+				2)  FFMPEG_VER="4.4";;
+				3)  FFMPEG_VER="5.1";;
+				*)  FFMPEG_VER="4.4";;
+			esac
+			echo "FFMPEG_VER=$FFMPEG_VER" >> config
 		fi
 	done
-fi
-
-if [ "$LOCAL_FFMPEG_BOXTYPE_LIST" == "$BOXTYPE" -o "$BOXARCH" == "arm" ]; then
+	[ -z "$FFMPEG_VER" ] && echo "FFMPEG_VER=2.8" >> config
+elif [ "$BOXARCH" == "arm" ]; then
+	CNT=0
 	case $2 in
-		[1-4]) REPLY=$2;;
+		[1-5]) REPLY=$2;;
 		*)	echo -e "\nFFMPEG version:"
-			echo -e "   \033[01;32m1)  FFMPEG 4.4.6\033[00m"
-			echo "   2)  FFMPEG 6.1.2   [experimental]"
-			echo "   3)  FFMPEG 6.1.3   [experimental]"
-			echo "   4)  FFMPEG 7.x.x   [git snapshot]"
-			read -p "Select FFMPEG Version (1-3)? ";;
+			echo -e "   \033[01;32m1)  FFMPEG 4.4    GIT\033[00m" && CNT=$(($CNT+1))
+			echo "   2)  FFMPEG 6.1    GIT [experimental]" && CNT=$(($CNT+1))
+			echo "   3)  FFMPEG 7.1    GIT [experimental]" && CNT=$(($CNT+1))
+			echo "   4)  FFMPEG 8.0    GIT [experimental]" && CNT=$(($CNT+1))
+			echo "   5)  FFMPEG MASTER GIT [experimental]" && CNT=$(($CNT+1))
+			read -p "Select FFMPEG version (1-$CNT)? "
+			;;
 	esac
 
 	case "$REPLY" in
-		1)  FFFMPEG_VER="4.4.6"
-		    FFMPEG_SNAPSHOT="0";;
-		2)  FFMPEG_VER="6.1.2"
-		    FFMPEG_SNAPSHOT="0";;
-		3)  FFMPEG_VER="6.1.3"
-		    FFMPEG_SNAPSHOT="0";;
-		4)  FFMPEG_VER="0"
-		    FFMPEG_SNAPSHOT="1";;
-		*)  FFMPEG_VER="4.4.6"
-		    FFMPEG_SNAPSHOT="0";;
+		1)  FFMPEG_VER="4.4";;
+		2)  FFMPEG_VER="6.1";;
+		3)  FFMPEG_VER="7.1";;
+		4)  FFMPEG_VER="8.0";;
+		5)  FFMPEG_VER="master";;
+		*)  FFMPEG_VER="4.4";;
 	esac
 	echo "FFMPEG_VER=$FFMPEG_VER" >> config
-	echo "FFMPEG_SNAPSHOT=$FFMPEG_SNAPSHOT" >> config
 fi
 
 ##############################################
