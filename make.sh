@@ -264,7 +264,7 @@ if [ $BOXTYPE == 'hd51' -o $BOXTYPE == 'h7' -o $BOXTYPE == 'bre2ze4k' -o $BOXTYP
 			if [ $BOXTYPE == 'e4hdultra' ]; then
 				echo ""
 				echo    "   AXAS E4HD 4K Ultra - 8 GB FLASH version:"
-				echo -e "   81)  Swap OFF\033[00m"
+				echo -e "   81)  Swap OFF"
 				echo -e "   82)  Swap ON (1x linux swap, 1x ext4 swap)"
 				echo -e "   83)  Swap ON (1x linux swap)"
 				read -p "Select SWAP support (1-3, 81-83)? "
