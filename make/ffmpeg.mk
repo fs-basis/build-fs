@@ -51,7 +51,6 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/libass $(
 
 	$(CHDIR)/ffmpeg-$(FFMPEG_VER); \
 		$(call apply_patches, $(FFMPEG_PATCH)); \
-#		$(call apply_patches, $(FFMPEG2_PATCH)); \
 		./configure $(SILENT_OPT) \
 			--disable-ffplay \
 			--disable-ffprobe \
@@ -398,7 +397,6 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 	$(CHDIR)/ffmpeg; \
 		git checkout -q release/$(FFMPEG_VER); \
 		$(call apply_patches, $(FFMPEG_PATCH)); \
-#		$(call apply_patches, $(FFMPEG2_PATCH)); \
 		./configure $(SILENT_OPT) \
 			--disable-ffserver \
 			--disable-ffplay \
