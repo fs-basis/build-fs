@@ -735,19 +735,19 @@ $(D)/libjpeg_turbo: $(D)/bootstrap $(ARCHIVE)/$(LIBJPEG_TURBO_SOURCE)
 #
 # libpng
 #
-LIBPNG_VER = 1.6.50
+LIBPNG_VER = 83b23a8
 LIBPNG_VER_X = 16
-LIBPNG_SOURCE = libpng-$(LIBPNG_VER).tar.xz
 
-$(ARCHIVE)/$(LIBPNG_SOURCE):
-	$(DOWNLOAD) https://sourceforge.net/projects/libpng/files/libpng$(LIBPNG_VER_X)/$(LIBPNG_VER)/$(LIBPNG_SOURCE) || \
-	$(DOWNLOAD) https://sourceforge.net/projects/libpng/files/libpng$(LIBPNG_VER_X)/older-releases/$(LIBPNG_VER)/$(LIBPNG_SOURCE)
-
-$(D)/libpng: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(LIBPNG_SOURCE)
+$(D)/libpng: $(D)/bootstrap $(D)/zlib
 	$(START_BUILD)
-	$(REMOVE)/libpng-$(LIBPNG_VER)
-	$(UNTAR)/$(LIBPNG_SOURCE)
-	$(CHDIR)/libpng-$(LIBPNG_VER); \
+	$(REMOVE)/libpng
+	set -e; if [ -d $(ARCHIVE)/libpng.git ]; \
+		then cd $(ARCHIVE)/libpng.git; git pull || true; \
+		else cd $(ARCHIVE); git clone https://github.com/pnggroup/libpng.git libpng.git; \
+		fi
+	cp -ra $(ARCHIVE)/libpng.git $(BUILD_TMP)/libpng
+	$(CHDIR)/libpng; \
+		git checkout -q $(LIBPNG_VER); \
 		$(call apply_patches, $(LIBPNG_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -760,10 +760,10 @@ $(D)/libpng: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(LIBPNG_SOURCE)
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 		sed -e 's:^prefix=.*:prefix="$(TARGET_DIR)/usr":' -i $(TARGET_DIR)/usr/bin/libpng$(LIBPNG_VER_X)-config; \
 		mv $(TARGET_DIR)/usr/bin/libpng*-config $(HOST_DIR)/bin/
-	$(REWRITE_LIBTOOL)/libpng16.la
+	$(REWRITE_LIBTOOL)/libpng$(LIBPNG_VER_X).la
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libpng$(LIBPNG_VER_X).pc
 	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,pngfix png-fix-itxt)
-	$(REMOVE)/libpng-$(LIBPNG_VER)
+	$(REMOVE)/libpng
 	$(TOUCH)
 
 #
