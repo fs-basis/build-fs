@@ -123,7 +123,7 @@ $(D)/mediathek:
 	$(CHDIR)/plugins-lua; \
 		install -d $(TARGET_DIR)/var/tuxbox/plugins
 		cp -R $(BUILD_TMP)/plugins-lua/mediathek/* $(TARGET_DIR)/var/tuxbox/plugins/
-		rm -f $(TARGET_DIR)/var/tuxbox/plugins/neutrino-mediathek/livestream.lua
+#		rm -f $(TARGET_DIR)/var/tuxbox/plugins/neutrino-mediathek/livestream.lua
 	$(REMOVE)/plugins-lua
 	$(TOUCH)
 
