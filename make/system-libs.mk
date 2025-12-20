@@ -736,8 +736,8 @@ $(D)/libjpeg_turbo: $(D)/bootstrap $(ARCHIVE)/$(LIBJPEG_TURBO_SOURCE)
 # libpng
 #
 #LIBPNG_VER = 49363ad
-LIBPNG_VER = libpng16
-LIBPNG_VER_X = 16
+LIBPNG_VER = 16
+LIBPNG_VER_X = libpng$(LIBPNG_VER)
 
 $(D)/libpng: $(D)/bootstrap $(D)/zlib
 	$(START_BUILD)
@@ -748,7 +748,7 @@ $(D)/libpng: $(D)/bootstrap $(D)/zlib
 		fi
 	cp -ra $(ARCHIVE)/libpng.git $(BUILD_TMP)/libpng
 	$(CHDIR)/libpng; \
-		git checkout -q $(LIBPNG_VER); \
+		git checkout -q $(LIBPNG_VER_X); \
 		$(call apply_patches, $(LIBPNG_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
