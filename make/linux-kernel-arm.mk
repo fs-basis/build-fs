@@ -41,7 +41,7 @@ E4HDULTRA_PATCHES = \
 		armbox/e4hdultra_move-default-dialect-to-SMB3.patch \
 		armbox/e4hdultra_add-more-devices-rtl8xxxu.patch \
 		armbox/e4hdultra_0005-xbox-one-tuner-4.10.patch \
-		armbox/e4hdultra_0006-dvb-media-tda18250-support-for-new-silicon-tuner.patch \
+		armbox/e4hdultra_0006-dvb-media-tda18250-support-for-new-silicon-tuner.patch
 
 #
 # KERNEL
